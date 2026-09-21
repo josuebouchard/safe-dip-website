@@ -18,7 +18,7 @@ const { week, weekNumber, entries, open = false } = Astro.props;
 const total = entries.reduce((sum, e) => sum + e.hours, 0);
 ---
 
-<Accordion title={`Week ${weekNumber} — ${week}`} subtitle={`${total} hours logged`} open={open}>
+<Accordion title={`Week ${weekNumber} — ${week}`} subtitle={`${total} hours logged`} open={open} stacked>
 	<div class="effort-grid">
 		{
 			entries.map((entry) => (
