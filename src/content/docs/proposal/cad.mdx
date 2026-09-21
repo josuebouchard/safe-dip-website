@@ -1,0 +1,59 @@
+---
+title: CAD Drawings & Renderings
+description: Preliminary CAD model and operating envelope of the proposed mechanical design, copied from the senior design proposal.
+---
+
+import { Image } from 'astro:assets';
+import cadPerspective from '../../../assets/proposal/cad/cad-perspective.png';
+import cadFront from '../../../assets/proposal/cad/cad-front.png';
+
+The CAD model below illustrates the proposed mechanical arrangement of the Safe Dip prototype: the relative placement of the horizontal axis, vertical assembly, input station, dipping station, output station, and end effector. The model is preliminary — final dimensions will be established once the selected mechanical components are measured and the required axis travel and clearances are verified.
+
+<Image src={cadPerspective} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — perspective view" />
+
+<Image src={cadFront} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — front view" />
+
+## Preliminary Dimensions
+
+The values below are preliminary and describe the proposed operating envelope of the prototype rather than final fabrication dimensions.
+
+| Dimension | Preliminary Value | Design Purpose |
+|---|---|---|
+| Overall prototype dimensions | 108 × 60 × 80 cm | Defines the approximate laboratory floor space and vertical clearance required by the prototype. |
+| Usable horizontal travel | ≈100 cm | Allows movement between the input, dipping, and output stations. |
+| Usable vertical travel | ≈30 cm | Provides sufficient lifting clearance and programmed immersion depth. |
+| Bath envelope | 30 × 30 × 30 cm | Defines the approximate size of the dipping container accommodated by the prototype. |
+| Clearance above dipping bath | ≈5 cm | Allows the workpiece and end effector to pass above the bath during horizontal transfer. |
+| Maximum workpiece envelope | 10 × 10 cm | Defines the approximate maximum workpiece size supported by the prototype geometry. |
+
+## Mechanical Structure
+
+The frame is assembled from 4040 T-slot aluminum extrusion, forming the horizontal beam, vertical column, and supporting legs. The T-slot profile allows components to be mounted at arbitrary positions along each beam and secured with T-nuts and M5 hardware, simplifying alignment and adjustment of the input, dipping, and output station positions.
+
+The horizontal axis is guided by an MGN12H linear rail and carriage, driven by a GT2 timing belt coupled to a NEMA 23 stepper. The vertical axis uses a TR8x2 leadscrew supported by pillow-block bearings and coupled to a NEMA 23 stepper through a flexible shaft coupler — the leadscrew is mechanically self-locking, so the carriage holds its position without active braking during a power loss or fault. An anti-backlash nut block removes axial play so programmed immersion depth stays repeatable across cycles.
+
+## Leadscrew Payload Calculations
+
+The vertical-axis capacity is determined by combining the leadscrew kinematics with the motor's torque–speed characteristic. For a leadscrew with lead $L$, the required rotational speed follows from the desired linear speed:
+
+$$
+v = n L
+$$
+
+The motor's torque–speed curve then gives the available torque $T(\omega)$ at that operating speed, which converts into the maximum safe payload:
+
+$$
+F_\text{axial} = \frac{2 \pi T(\omega)\, \eta}{L}
+$$
+
+$$
+m_\text{max} = \frac{F_\text{axial}}{g} = \frac{2 \pi T(\omega)\, \eta}{L g}
+$$
+
+$$
+m_\text{safe} = \frac{m_\text{max}}{S} = \frac{2 \pi T(\omega)\, \eta}{S L g}
+$$
+
+Here $L$ is the leadscrew lead — the axial distance the nut travels in one complete revolution. $\eta$ is the mechanical efficiency of the leadscrew, accounting for frictional losses, and $S$ is the safety factor. This design applies $S = 2$ to account for uncertainties in loading, acceleration, drivetrain losses not captured by the nominal efficiency, and variation between theoretical and available motor torque.
+
+The torque used above must be taken from the motor's torque–speed curve at the intended operating speed. Static holding torque must **not** be used for a moving-axis calculation, because available motor torque decreases as rotational speed increases.

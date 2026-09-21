@@ -1,0 +1,181 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	href?: string;
+	fileType?: string;
+	meta?: string;
+	pending?: boolean;
+	pendingNote?: string;
+}
+
+const {
+	title,
+	description,
+	href,
+	fileType = 'FILE',
+	meta,
+	pending = false,
+	pendingNote = 'Coming soon',
+} = Astro.props;
+
+const Tag = pending ? 'div' : 'a';
+const filename = href ? href.split('/').pop() : undefined;
+---
+
+<Tag
+	class:list={['dl-card', { 'dl-card--pending': pending }]}
+	{...pending ? {} : { href, download: filename }}
+>
+	<span class="dl-type" data-type={fileType}>{fileType}</span>
+
+	<span class="dl-body">
+		<span class="dl-title">{title}</span>
+		{description && <span class="dl-desc">{description}</span>}
+		{meta && <span class="dl-meta">{meta}</span>}
+	</span>
+
+	<span class="dl-action">
+		{
+			pending ? (
+				<span class="dl-badge">{pendingNote}</span>
+			) : (
+				<span class="dl-btn">
+					<svg
+						aria-hidden="true"
+						viewBox="0 0 24 24"
+						width="16"
+						height="16"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<path d="M12 3v12" />
+						<path d="m7 11 5 5 5-5" />
+						<path d="M4 20h16" />
+					</svg>
+					Download
+				</span>
+			)
+		}
+	</span>
+</Tag>
+
+<style>
+	.dl-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem 1.25rem;
+		margin-block: 1rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.6rem;
+		background: var(--sl-color-bg-nav);
+		text-decoration: none;
+		color: inherit;
+		transition:
+			border-color 0.15s ease,
+			background 0.15s ease;
+	}
+	a.dl-card:hover {
+		border-color: var(--sl-color-accent);
+		background: var(--sl-color-accent-low);
+	}
+	.dl-card--pending {
+		border-style: dashed;
+		background: transparent;
+	}
+
+	.dl-type {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 3rem;
+		height: 3.5rem;
+		border-radius: 0.35rem;
+		background: var(--sl-color-accent);
+		color: var(--sl-color-white);
+		font-size: 0.65rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+	.dl-card--pending .dl-type {
+		background: var(--sl-color-gray-5);
+		color: var(--sl-color-gray-3);
+	}
+
+	.dl-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		min-width: 0;
+		flex: 1;
+	}
+	.dl-title {
+		font-weight: 600;
+		color: var(--sl-color-white);
+		line-height: 1.3;
+	}
+	.dl-card--pending .dl-title {
+		color: var(--sl-color-gray-2);
+	}
+	.dl-desc {
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+		line-height: 1.45;
+	}
+	.dl-meta {
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-4);
+		margin-top: 0.15rem;
+	}
+
+	.dl-action {
+		flex: none;
+	}
+	.dl-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.5rem 0.9rem;
+		border-radius: 0.35rem;
+		background: var(--sl-color-accent);
+		color: var(--sl-color-white);
+		font-size: var(--sl-text-sm);
+		font-weight: 600;
+		white-space: nowrap;
+	}
+	a.dl-card:hover .dl-btn {
+		background: var(--sl-color-accent-high);
+	}
+	.dl-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.4rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid var(--sl-color-gray-5);
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	@media (max-width: 30rem) {
+		.dl-card {
+			flex-wrap: wrap;
+		}
+		.dl-body {
+			flex-basis: calc(100% - 4rem);
+		}
+		.dl-action {
+			flex-basis: 100%;
+		}
+		.dl-btn,
+		.dl-badge {
+			width: 100%;
+			justify-content: center;
+		}
+	}
+</style>

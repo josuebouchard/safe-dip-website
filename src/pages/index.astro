@@ -1,0 +1,497 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { LinkButton } from '@astrojs/starlight/components';
+import { Image } from 'astro:assets';
+import josue from '../assets/team/josue.jpg';
+import adriano from '../assets/team/adriano.jpg';
+import hotDipStation from '../assets/problem/hot-dip-station.jpg';
+import cadPerspective from '../assets/proposal/cad/cad-perspective.png';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Safe Dip',
+		template: 'splash',
+	}}
+	hasSidebar={false}
+>
+	<div class="landing">
+		<section class="hero">
+			<p class="eyebrow">Valencia College &middot; ECET Senior Design Capstone</p>
+			<h1>Safe Dip</h1>
+			<p class="tagline">Automated Safety for Hot Dip Coating</p>
+			<p class="lede">
+				An automated pick-and-place system that dips metal components into hot wax
+				baths without a worker needing to be in direct contact with the process.
+			</p>
+			<div class="cta-row">
+				<LinkButton href="/proposal/report-and-presentation/" icon="right-arrow">
+					Read the Proposal
+				</LinkButton>
+				<LinkButton href="/about/" variant="minimal">Meet the Team</LinkButton>
+			</div>
+		</section>
+
+		<section class="block">
+			<h2>The Problem</h2>
+			<p>
+				Hot-dipping processes are used in manufacturing to coat, treat, or finish
+				parts. However, manual operation near heated baths can expose workers to
+				safety risks such as burns, repetitive strain, and inconsistent handling.
+			</p>
+			<p>
+				This project addresses the need for a safer and more controlled way to
+				move metal parts through a dipping process. By automating the pickup,
+				dipping, and unloading sequence, Safe Dip aims to reduce the amount of
+				time an operator spends near the hot wax bath.
+			</p>
+
+			<figure class="figure">
+				<Image
+					src={hotDipStation}
+					alt="A heated wax pot on a rolling cart beside trays of metal parts waiting to be dipped by hand"
+					widths={[640, 960, 1280]}
+					sizes="(min-width: 60rem) 56rem, 92vw"
+				/>
+				<figcaption>
+					The process today: a heated wax pot and the parts staged beside it, each
+					one loaded and retrieved by hand.
+				</figcaption>
+			</figure>
+		</section>
+
+		<section class="block">
+			<h2>Existing Solutions</h2>
+			<p class="block-lede">
+				A short, honest look at how this problem is handled today — and where each
+				approach falls short.
+			</p>
+			<div class="compare-grid">
+				<div class="compare-card">
+					<h3>Manual dipping</h3>
+					<p>
+						<strong>Cost:</strong> low equipment cost, high ongoing labor cost.
+					</p>
+					<p>
+						<strong>Limitations:</strong> direct burn/chemical exposure risk;
+						dwell time and immersion depth vary operator to operator.
+					</p>
+				</div>
+				<div class="compare-card">
+					<h3>Dip-spin machines (EFFCO DS-250, MS800)</h3>
+					<p><strong>Cost:</strong> $15k–$80k.</p>
+					<p><strong>Limitations:</strong> batch-only — no individual part handling, no pick-and-place, and manual basket loading/unloading.</p>
+				</div>
+				<div class="compare-card">
+					<h3>Single-purpose fastener coaters</h3>
+					<p><strong>Cost:</strong> $3k–$30k.</p>
+					<p><strong>Limitations:</strong> fixed to one chemical and one fastener geometry; no pick-and-place or variable dip depth.</p>
+				</div>
+				<div class="compare-card">
+					<h3>Full robotic dip cells (Emmeti WAX-ON, South Shore)</h3>
+					<p><strong>Cost:</strong> $50k–$150k+.</p>
+					<p><strong>Limitations:</strong> true pick-and-place and variable depth, but priced and sized for industrial lines, not small-scale or research use.</p>
+				</div>
+			</div>
+			<p class="compare-more"><a href="/proposal/comparable-products/">Full comparison, product-by-product →</a></p>
+		</section>
+
+		<section class="block">
+			<h2>Our Solution</h2>
+			<p>
+				The proposed solution is a small automated <strong>pick-and-place</strong>
+				system — a mechanism that picks up a part from one fixed location and
+				places it at another, following a repeatable, programmed motion path —
+				designed to move metallic components through a hot wax dipping process.
+				The system is expected to:
+			</p>
+			<ol class="sequence">
+				<li>Detect or receive a part from an input area.</li>
+				<li>Pick up the part using an electromagnet.</li>
+				<li>Move the part horizontally over the wax container.</li>
+				<li>Lower the part into the wax using a vertical motion system.</li>
+				<li>Raise the part after the dipping step.</li>
+				<li>Move the part to an output area.</li>
+				<li>Release the part safely.</li>
+				<li>Stop operation through an emergency stop system when needed.</li>
+			</ol>
+
+			<figure class="figure">
+				<Image
+					src={cadPerspective}
+					alt="CAD render of the Safe Dip two-axis Cartesian gantry, showing the horizontal beam, vertical assembly, and dipping station"
+					widths={[640, 960, 1280]}
+					sizes="(min-width: 60rem) 56rem, 92vw"
+				/>
+				<figcaption>
+					The proposed design: a two-axis Cartesian gantry that carries the part
+					between the input station, the dipping bath, and the output station.
+					See <a href="/proposal/cad/">CAD Drawings &amp; Renderings</a> for
+					dimensions and further views.
+				</figcaption>
+			</figure>
+
+			<h3 class="sub">System at a Glance</h3>
+			<p class="block-lede">
+				Safe Dip breaks down into seven subsystems that coordinate to run the
+				load&ndash;dip&ndash;unload cycle:
+			</p>
+			<div class="compare-grid">
+				<div class="compare-card">
+					<h4>Processing Module</h4>
+					<p>Controls the logic of the system and coordinates sensors, motors, and the electromagnet.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Sensing Module</h4>
+					<p>Detects part position, system status, or movement limits.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Movement Module</h4>
+					<p>Controls horizontal and vertical motion.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Electromagnetic End-Effector</h4>
+					<p>Picks up and releases metallic parts.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Power Distribution Module</h4>
+					<p>Supplies power to motors, controller, sensors, and the electromagnet.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Communication Module</h4>
+					<p>Allows the system to send or receive information from a computer or interface.</p>
+				</div>
+				<div class="compare-card">
+					<h4>Emergency Stop Module</h4>
+					<p>Provides a safety shutdown method during abnormal operation.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="block">
+			<h2>Project Objectives</h2>
+			<ul class="objectives">
+				<li><strong>Low cost</strong> — maintain a low-cost design compared to industrial robotic systems.</li>
+				<li><strong>Safety</strong> — improve safety by reducing manual handling near hot wax.</li>
+				<li><strong>Autonomy</strong> — automate the load&ndash;dip&ndash;unload process.</li>
+				<li><strong>Electromagnetic handling</strong> — use an electromagnet to pick up metallic parts.</li>
+				<li><strong>Controlled dipping</strong> — control vertical dipping depth.</li>
+				<li><strong>Repeatable motion</strong> — move the part between input, wax bath, and output positions.</li>
+				<li><strong>Fail-safe operation</strong> — include emergency stop functionality.</li>
+				<li><strong>Modularity</strong> — keep the design modular and suitable for a Senior Design prototype.</li>
+			</ul>
+		</section>
+
+		<section class="block">
+			<h2>Project Status</h2>
+			<p class="block-lede">Where the project stands right now.</p>
+			<ol class="phases">
+				<li>
+					<strong>Concept Development</strong> — identified the safety problem
+					related to manual hot-dipping processes and proposed an automated
+					pick-and-place solution.
+				</li>
+				<li>
+					<strong>Initial System Architecture</strong> — divided the project into
+					major subsystems: sensing, processing, motion, end-effector,
+					communication, power distribution, and emergency stop.
+				</li>
+				<li>
+					<strong>End-Effector Direction</strong> — changed direction from a
+					mechanical claw concept to an electromagnetic pickup concept for
+					metallic tools or parts.
+				</li>
+				<li>
+					<strong>Research &amp; Proposal Development</strong> — researching
+					feasibility, safety considerations, and technical requirements needed
+					to complete the proposal.
+				</li>
+				<li class="phase-future">
+					<strong>Future Work</strong> — CAD models, wiring diagrams, control
+					logic, component selection, test results, and final prototype
+					documentation.
+				</li>
+			</ol>
+		</section>
+
+		<section class="block">
+			<h2>Glossary</h2>
+			<dl class="glossary">
+				<div class="glossary-item">
+					<dt>Pick-and-place</dt>
+					<dd>A mechanism that automatically picks up an object from one location and places it at another along a repeatable path.</dd>
+				</div>
+				<div class="glossary-item">
+					<dt>Block diagram</dt>
+					<dd>A system-level drawing that shows each subsystem as a labeled box, with arrows showing how power, data, or signals flow between them.</dd>
+				</div>
+				<div class="glossary-item">
+					<dt>Power budget</dt>
+					<dd>A tally of how much current every component in the system draws, organized by voltage rail, used to size the power supply correctly.</dd>
+				</div>
+				<div class="glossary-item">
+					<dt>Dwell time</dt>
+					<dd>How long a part is held submerged in the dip bath before being raised back out.</dd>
+				</div>
+				<div class="glossary-item">
+					<dt>End effector</dt>
+					<dd>The part of the mechanism that directly contacts the workpiece — here, an electromagnet that picks up and releases the metal part being dipped.</dd>
+				</div>
+				<div class="glossary-item">
+					<dt>E-stop (emergency stop)</dt>
+					<dd>A dedicated button that immediately cuts power to the system's motors, used to halt motion in an unsafe situation.</dd>
+				</div>
+			</dl>
+		</section>
+
+		<section class="block">
+			<h2>Team</h2>
+			<div class="team-grid">
+				<a class="team-card" href="/about/">
+					<Image src={josue} alt="" width={144} densities={[1, 2]} />
+					<h3>Josué Bouchard</h3>
+					<p class="role">Embedded Firmware &amp; Controls</p>
+					<p class="bio">Studied Computer Engineering at Universidad de Buenos Aires before transferring to Valencia College; aiming toward embedded systems, aerospace, or robotics.</p>
+				</a>
+				<a class="team-card" href="/about/">
+					<Image src={adriano} alt="" width={144} densities={[1, 2]} />
+					<h3>Adriano Duque Mena</h3>
+					<p class="role">Mechanical Design &amp; Assembly</p>
+					<p class="bio">Born in Colón, Matanzas, Cuba; transitioned from Aerospace Engineering to Electrical &amp; Computer Engineering Technology at Valencia College.</p>
+				</a>
+			</div>
+			<p class="team-link"><a href="/about/">Full team page →</a></p>
+		</section>
+	</div>
+</StarlightPage>
+
+<style>
+	.landing {
+		max-width: 60rem;
+		margin-inline: auto;
+		padding-inline: 1rem;
+	}
+
+	.hero {
+		text-align: center;
+		padding-block: 3rem 2.5rem;
+	}
+	.eyebrow {
+		font-size: var(--sl-text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--sl-color-gray-3);
+		margin: 0 0 0.75rem;
+	}
+	.hero h1 {
+		font-size: clamp(2.5rem, 6vw, 4rem);
+		margin: 0;
+		color: var(--sl-color-white);
+	}
+	.tagline {
+		font-size: var(--sl-text-xl);
+		color: var(--sl-color-accent-high);
+		font-weight: 600;
+		margin: 0.5rem 0 1rem;
+	}
+	.lede {
+		max-width: 42rem;
+		margin: 0 auto 1.75rem;
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-lg);
+	}
+	.cta-row {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+
+	.block {
+		padding-block: 2.25rem;
+		border-top: 1px solid var(--sl-color-gray-6);
+	}
+	.block h2 {
+		margin-top: 0;
+		margin-bottom: 0.85rem;
+		line-height: 1.25;
+	}
+	.block-lede {
+		color: var(--sl-color-gray-3);
+		margin-top: 0;
+		margin-bottom: 1.5rem;
+	}
+
+	.figure {
+		margin: 1.75rem 0 0;
+	}
+	.figure :global(img) {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 0.5rem;
+		border: 1px solid var(--sl-color-gray-5);
+		background: var(--sl-color-bg-nav);
+	}
+	.figure figcaption {
+		margin-top: 0.65rem;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+		line-height: 1.5;
+		text-wrap: pretty;
+	}
+
+	.sequence {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 0.5rem 1.5rem;
+		padding-left: 1.25rem;
+		color: var(--sl-color-gray-2);
+	}
+	.sequence li {
+		padding-block: 0.15rem;
+	}
+
+	.sub {
+		margin-top: 2rem;
+		margin-bottom: 0.85rem;
+		font-size: var(--sl-text-lg);
+		line-height: 1.25;
+	}
+
+	.phases {
+		display: grid;
+		gap: 0.75rem;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		counter-reset: phase;
+	}
+	.phases li {
+		counter-increment: phase;
+		padding: 0.75rem 1rem 0.75rem 2.75rem;
+		background: var(--sl-color-bg-nav);
+		border-left: 3px solid var(--sl-color-accent);
+		border-radius: 0.25rem;
+		position: relative;
+		color: var(--sl-color-gray-2);
+	}
+	.phases li::before {
+		content: counter(phase);
+		position: absolute;
+		left: 0.9rem;
+		top: 0.75rem;
+		width: 1.35rem;
+		height: 1.35rem;
+		border-radius: 50%;
+		background: var(--sl-color-accent);
+		color: var(--sl-color-bg);
+		font-size: var(--sl-text-xs);
+		font-weight: 700;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.phases li.phase-future {
+		opacity: 0.7;
+		border-left-style: dashed;
+	}
+
+	.compare-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: 1rem;
+	}
+	.compare-card {
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		padding: 1rem 1.25rem;
+		background: var(--sl-color-bg-nav);
+	}
+	.compare-card h3,
+	.compare-card h4 {
+		margin-top: 0;
+		font-size: var(--sl-text-base);
+	}
+	.compare-card--todo {
+		opacity: 0.6;
+		border-style: dashed;
+	}
+
+	.objectives {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 0.75rem 1.5rem;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	.objectives li {
+		padding: 0.75rem 1rem;
+		background: var(--sl-color-bg-nav);
+		border-left: 3px solid var(--sl-color-accent);
+		border-radius: 0.25rem;
+	}
+
+	.glossary {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		gap: 1.25rem 2rem;
+		margin: 0;
+	}
+	.glossary-item dt {
+		font-weight: 600;
+		color: var(--sl-color-white);
+	}
+	.glossary-item dd {
+		margin: 0.25rem 0 0;
+		color: var(--sl-color-gray-2);
+	}
+
+	.team-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: 1.25rem;
+	}
+	.team-card {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		padding: 1.25rem;
+		background: var(--sl-color-bg-nav);
+		transition: border-color 0.15s ease;
+	}
+	.team-card:hover {
+		border-color: var(--sl-color-accent);
+	}
+	.team-card img {
+		width: 4.5rem;
+		height: 4.5rem;
+		border-radius: 50%;
+		object-fit: cover;
+		margin-bottom: 0.75rem;
+	}
+	.team-card h3 {
+		margin: 0 0 0.15rem;
+		font-size: var(--sl-text-base);
+	}
+	.team-card .role {
+		margin: 0 0 0.5rem;
+		font-size: var(--sl-text-xs);
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--sl-color-accent-high);
+	}
+	.team-card .bio {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+	}
+	.team-link,
+	.compare-more {
+		text-align: center;
+		margin-top: 1.25rem;
+	}
+</style>

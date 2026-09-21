@@ -1,0 +1,64 @@
+/*
+ * Safe Dip theme — blue accent (#2784e1) on a clean, academic neutral palette.
+ * Overrides Starlight's CSS custom properties; see
+ * https://starlight.astro.build/guides/css-and-tailwind/#theming
+ */
+
+:root {
+	/* Accent (blue) scale — light mode */
+	--sl-color-accent-low: #dceaf9;
+	--sl-color-accent: #2784e1;
+	--sl-color-accent-high: #164a80;
+
+	/* Headings/body font pairing: keep Starlight's default sans, add a
+	   monospace-adjacent feel for the engineering tables via font-mono. */
+	--sl-font: 'Public Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* Figures in documentation content */
+.sl-markdown-content figure {
+	margin-block: 1.5rem;
+}
+.sl-markdown-content figure img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.4rem;
+}
+.sl-markdown-content figcaption {
+	margin-top: 0.6rem;
+	font-size: var(--sl-text-sm);
+	color: var(--sl-color-gray-3);
+	line-height: 1.5;
+	text-wrap: pretty;
+}
+
+/* Previous/Next pagination: Starlight's default title size (--sl-text-2xl) is
+   oversized next to body copy. */
+.pagination-links .link-title {
+	font-size: var(--sl-text-base);
+	font-weight: 600;
+}
+
+/* Dark mode: same blue accent, lightened at the "high" end for text contrast;
+   background a step lighter than near-black so long documentation pages
+   stay easy on the eyes. */
+:root[data-theme='dark'] {
+	--sl-color-accent-low: #163a5c;
+	--sl-color-accent: #2784e1;
+	--sl-color-accent-high: #8fc4f4;
+
+	--sl-color-white: #f4f6f8;
+	--sl-color-gray-1: #e3e8ed;
+	--sl-color-gray-2: #c2cad2;
+	--sl-color-gray-3: #8f9aa5;
+	--sl-color-gray-4: #5e6a75;
+	--sl-color-gray-5: #3a4450;
+	--sl-color-gray-6: #262e37;
+	--sl-color-black: #1a2027;
+
+	--sl-color-bg: #1a2027;
+	--sl-color-bg-nav: #1f2630;
+	--sl-color-bg-sidebar: #1f2630;
+	--sl-color-bg-inline-code: #262e39;
+}

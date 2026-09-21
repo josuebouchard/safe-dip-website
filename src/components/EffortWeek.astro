@@ -1,0 +1,77 @@
+---
+import Accordion from './Accordion.astro';
+
+interface Entry {
+	name: string;
+	hours: number;
+	text: string;
+}
+
+interface Props {
+	week: string;
+	weekNumber: number;
+	entries: Entry[];
+	open?: boolean;
+}
+
+const { week, weekNumber, entries, open = false } = Astro.props;
+const total = entries.reduce((sum, e) => sum + e.hours, 0);
+---
+
+<Accordion title={`Week ${weekNumber} — ${week}`} subtitle={`${total} hours logged`} open={open}>
+	<div class="effort-grid">
+		{
+			entries.map((entry) => (
+				<div class="effort-card">
+					<div class="effort-card-head">
+						<span class="effort-name">{entry.name}</span>
+						<span class="effort-hours">{entry.hours}h</span>
+					</div>
+					<p class="effort-text">{entry.text}</p>
+				</div>
+			))
+		}
+	</div>
+</Accordion>
+
+<style>
+	.effort-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.effort-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 0.9rem 1rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+		background: var(--sl-color-bg);
+	}
+	.effort-card-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+	.effort-name {
+		font-weight: 600;
+		color: var(--sl-color-white);
+		font-size: var(--sl-text-sm);
+	}
+	.effort-hours {
+		flex: none;
+		font-weight: 700;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-accent-high);
+	}
+
+	.effort-text {
+		margin: 0;
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-2);
+		line-height: 1.55;
+	}
+</style>

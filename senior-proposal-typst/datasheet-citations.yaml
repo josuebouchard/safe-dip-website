@@ -1,0 +1,149 @@
+stm32f446xe-datasheet:
+  type: report
+  title: "STM32F446xC/E: Arm Cortex-M4 32-bit MCU+FPU, up to 512 KB Flash, 128 KB SRAM, USB OTG, timers, ADCs, and communication interfaces"
+  publisher: "STMicroelectronics"
+  serial-number: "DS10693"
+  url:
+    date: 2026-07-27
+    value: "https://www.st.com/resource/en/datasheet/stm32f446re.pdf"
+
+nucleo64-um1724:
+  type: report
+  title: "STM32 Nucleo-64 Boards (MB1136)"
+  publisher: "STMicroelectronics"
+  date: 2025-09-30
+  edition: "17.0"
+  serial-number: "UM1724"
+  url:
+    date: 2026-07-27
+    value: "https://www.st.com/resource/en/user_manual/um1724-stm32-nucleo64-boards-mb1136-stmicroelectronics.pdf"
+
+vl53l0x-datasheet:
+  type: report
+  title: "VL53L0X Time-of-Flight Ranging Sensor"
+  publisher: "STMicroelectronics"
+  date: 2024-06-07
+  edition: "6.0"
+  serial-number: "DS11555"
+  url:
+    date: 2026-07-27
+    value: "https://www.st.com/resource/en/datasheet/vl53l0x.pdf"
+
+w5500-datasheet:
+  type: report
+  title: "W5500 Datasheet"
+  publisher: "WIZnet Co., Ltd."
+  version: "1.1.0"
+  url:
+    date: 2026-07-27
+    value: "https://docs.wiznet.io/img/products/w5500/W5500_ds_v110e.pdf"
+
+meanwell-lrs350-datasheet:
+  type: report
+  title: "LRS-350 Series: 350 W Single-Output Switching Power Supply"
+  publisher: "MEAN WELL Enterprises Co., Ltd."
+  date: 2025-09-12
+  serial-number: "LRS-350-SPEC"
+  url:
+    date: 2026-07-27
+    value: "https://www.meanwell.com/Upload/PDF/LRS-350/LRS-350-SPEC.PDF"
+
+stepperonline-23hs22-2804s-datasheet:
+  type: report
+  title: "23HS22-2804S NEMA 23 Bipolar Stepper Motor Full Datasheet"
+  publisher: "StepperOnline"
+  url:
+    date: 2026-07-27
+    value: "https://www.omc-stepperonline.com/index.php?file=128%2F23HS22-2804S_Full_Datasheet.pdf&route=product%2Fproduct%2Fget_file"
+
+stepperonline-23hs22-2804s-torque-curve:
+  type: report
+  title: "23HS22-2804S Torque Curve"
+  publisher: "StepperOnline"
+  url:
+    date: 2026-07-27
+    value: "https://www.omc-stepperonline.com/index.php?file=128%2F23HS22-2804S_Torque_Curve.pdf&route=product%2Fproduct%2Fget_file"
+
+stepperonline-dm542te-manual:
+  type: report
+  title: "TE Series Two-Phase Digital Stepper Drive User Manual"
+  publisher: "StepperOnline"
+  serial-number: "DM542TE / DM556TE / DM860TE"
+  url:
+    date: 2026-07-27
+    value: "https://www.omc-stepperonline.com/download/TE%20_series_user_manual.pdf"
+
+ti-sn74ahct125-datasheet:
+  type: report
+  title: "SNx4AHCT125 Quadruple Bus Buffer Gates With 3-State Outputs"
+  publisher: "Texas Instruments"
+  date: 2024-02-14
+  edition: "Revision R"
+  url:
+    date: 2026-07-27
+    value: "https://www.ti.com/lit/gpn/sn74ahct125"
+
+# The report text currently names a 74HCT244 while the bill of materials names
+# an SN74AHCT125N. Keep only the citation matching the final selected device.
+ti-sn74hct244-datasheet:
+  type: report
+  title: "SNx4HCT244 Octal Buffers and Line Drivers With 3-State Outputs"
+  publisher: "Texas Instruments"
+  date: 2025-02-06
+  edition: "Revision I"
+  url:
+    date: 2026-07-27
+    value: "https://www.ti.com/lit/ds/symlink/sn74hct244.pdf"
+
+ti-lm2596-datasheet:
+  type: report
+  title: "LM2596 SIMPLE SWITCHER Power Converter 150-kHz 3-A Step-Down Voltage Regulator"
+  publisher: "Texas Instruments"
+  date: 2023-03-22
+  edition: "Revision G"
+  serial-number: "SNVS124G"
+  url:
+    date: 2026-07-27
+    value: "https://www.ti.com/lit/ds/symlink/lm2596.pdf"
+
+infineon-irlz44n-datasheet:
+  type: report
+  title: "IRLZ44N HEXFET Power MOSFET Datasheet"
+  publisher: "Infineon Technologies AG"
+  url:
+    date: 2026-07-27
+    value: "https://www.infineon.com/assets/row/public/documents/24/49/infineon-irlz44n-datasheet-en.pdf"
+
+vishay-1n4007-datasheet:
+  type: report
+  title: "1N4001 through 1N4007 General-Purpose Plastic Rectifiers"
+  publisher: "Vishay Intertechnology, Inc."
+  url:
+    date: 2026-07-27
+    value: "https://www.vishay.com/en/product/88503/"
+
+baomain-bm-p-80-38:
+  type: web
+  title: "BM-P 80-38 Electromagnet Solenoid, 1000 N Holding Force"
+  publisher: "Baomain"
+  url:
+    date: 2026-07-27
+    value: "https://baomain.com/products/bm-p-80-38"
+
+modbus-application-protocol-v1-1b3:
+  type: report
+  title: "MODBUS Application Protocol Specification V1.1b3"
+  publisher: "Modbus Organization, Inc."
+  version: "1.1b3"
+  url:
+    date: 2026-07-27
+    value: "https://www.modbus.org/docs/Modbus_Application_Protocol_V1_1b3.pdf"
+
+modbus-tcp-implementation-guide-v1-0b:
+  type: report
+  title: "MODBUS Messaging on TCP/IP Implementation Guide V1.0b"
+  publisher: "Modbus Organization, Inc."
+  version: "1.0b"
+  url:
+    date: 2026-07-27
+    value: "https://www.modbus.org/docs/Modbus_Messaging_Implementation_Guide_V1_0b.pdf"
