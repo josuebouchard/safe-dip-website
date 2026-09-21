@@ -1,0 +1,133 @@
+---
+title: Proposal Report & Presentation
+description: The formal written proposal report and presentation deck, with the proposal's abstract and conclusions.
+---
+
+import DownloadCard from '../../../components/DownloadCard.astro';
+import { Image } from 'astro:assets';
+import madbusTest from '../../../assets/proposal/diagrams/madbus-test.png';
+
+The formal Senior Design Proposal — *Safe Dip: A Safety-Oriented Hot-Dip Pick-and-Place System*, EET 4910, submitted 2026-07-27 under Professor Mayra Socarras.
+
+## Downloads
+
+<DownloadCard
+	fileType="PDF"
+	title="Senior Design Proposal"
+	description="The full written proposal: introduction and motivation, similar products, system requirements and specifications, hardware and software design, preliminary testing, non-technical considerations, and supporting calculations."
+	meta="76 pages · 9.5 MB · PDF"
+	href="/safe-dip-senior-design-proposal.pdf"
+/>
+
+<DownloadCard
+	fileType="PPTX"
+	title="Senior Design Proposal Presentation"
+	description="The slide deck presented to the review board, summarizing the problem, proposed design, budget, timeline, and safety architecture."
+	meta="11 MB · PowerPoint (.pptx)"
+	href="/safe-dip-senior-design-presentation.pptx"
+/>
+
+## Abstract
+
+Manual hot-dip coating operations expose workers to elevated temperatures, repetitive strain, and the risk of burns from hot, viscous materials. This project presents Safe Dip, a two-axis Cartesian gantry designed to automate the pick, dip, and place cycle while reducing direct operator exposure. The system provides controlled workpiece positioning, immersion depth, dwell time, and transfer between fixed input, dipping, and output stations.
+
+An STM32 microcontroller coordinates the complete sequence through a cooperative, nonblocking control architecture. Horizontal motion is produced by a stepper-driven timing belt and linear rails, while a stepper-driven leadscrew controls the vertical axis. A conventional electromagnet handles ferromagnetic workpieces, a time-of-flight sensor detects their presence, and normally-closed limit switches provide homing and travel references. Serial and Modbus TCP communications report operating states, sensor information, and fault conditions.
+
+Safety is treated as a primary design consideration. A hardwired Category 0 emergency-stop circuit removes power from the motor drivers independently of the microcontroller, while the electromagnet remains on a separate supply to avoid intentionally releasing a suspended workpiece during a motion stop. The laboratory prototype will be evaluated without a heated coating bath and will demonstrate the integration of the mechanical, electrical, sensing, control, communication, and safety subsystems. Supporting calculations evaluate the design's scalability toward the intended 10 kg payload.
+
+## Contents
+
+| Chapter | Covers |
+|---|---|
+| 1. Introduction | Motivation, similar products, and alternative approaches considered — see [Comparable Products Survey](/proposal/comparable-products/) and [Proposed & Alternate Ideas](/proposal/ideas/). |
+| 2. Proposed Work | System overview, operating limitations, [requirements](/proposal/engineering-requirements/), [project modules](/proposal/block-diagrams/), [specifications](/proposal/engineering-specifications/), [power budget](/proposal/power-budget/), hardware, software, and preliminary work (below). |
+| 3. Non-Technical Considerations | [Monetary budget](/proposal/monetary-budget/), [timeline](/proposal/timeline/), [task distribution](/proposal/task-distribution/), environmental, health and safety, ethical, social, and sustainability aspects. |
+| 4. Conclusion | Summary and suggestions for future work (below). |
+| Appendices | A — leadscrew calculations (see [CAD Drawings & Renderings](/proposal/cad/)); B — [applicable codes and standards](/standards/); C — [meet the team](/about/). |
+
+## Preliminary Work
+
+Before full construction, two subsystems were prototyped ahead of schedule to retire risk early.
+
+### Modbus TCP Communications Prototype
+
+Preliminary work is complete on the communications subsystem: a portable Modbus server library written in C, which separates the Modbus protocol from the target hardware by receiving raw protocol data units and accessing application data through user-provided callback functions. This lets the same protocol implementation be tested on a desktop computer and later integrated into the STM32 firmware without hardware-specific dependencies in the library. It avoids dynamic memory allocation and organizes supported Modbus function codes into separate modules.
+
+The library currently dispatches coils, discrete inputs, input registers, and holding registers. Incoming requests are validated before touching application data, and protocol exception responses are generated for unsupported functions, invalid addresses, invalid values, and internal failures.
+
+A Modbus TCP layer has also been implemented, parsing the seven-byte MBAP header via a small state machine before requesting the remaining PDU bytes — supporting nonblocking communication, since the STM32 doesn't need to wait for an entire request in one operation. This was integrated with the STM32 and W5500 Ethernet library over SPI: the W5500 hardware manages Ethernet/TCP socket operations, while the STM32 periodically checks socket state, receives available bytes, dispatches completed Modbus messages, and transmits responses without blocking the main control loop.
+
+Initial hardware testing used `madbus-cli` as a Modbus TCP client, successfully reading coil values, writing individual coils, writing several coils in one request, and reading the values back from the STM32 — confirming preliminary operation of read-coils, write-single-coil, and write-multiple-coils through the complete computer-to-W5500-to-STM32 path.
+
+<Image src={madbusTest} alt="Preliminary Modbus TCP coil read and write testing using madbus-cli" />
+
+This preliminary work reduces the remaining communications task to defining the final Modbus address map and wiring its callbacks to the Safe Dip operating state, gantry position, sensor information, configuration values, and fault data.
+
+### Stepper-Motor Signal Prototype
+
+Preliminary work was also done generating the stepper-motor STEP signal using STM32 hardware timers. TIM2 was configured in Output Compare toggle mode, so the timer peripheral — not the main application loop — controls output transitions. After each compare event, the interrupt callback schedules the next transition by advancing the compare register by a configurable number of timer ticks; changing this interval changes the STEP frequency without software delays or a blocking pulse-generation loop.
+
+This establishes the basic mechanism that will later be extended in the movement module with pulse counting, acceleration/deceleration, target-position tracking, and independent control of both axes. Testing at this stage was limited to timer configuration and STEP waveform generation — operation with the selected stepper drivers and motors remains part of final implementation and verification.
+
+```c
+// Dynamically controls the half period
+static volatile uint32_t half_period_ticks = 500U;
+
+// Stepper start function
+void stepper_start(void) {
+  // Get counter
+  uint32_t now = __HAL_TIM_GET_COUNTER(&htim2);
+
+  // Set Capture/Compare Register as `now + half_period_ticks`
+  __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, now + half_period_ticks);
+
+  // Start timer + interrupt
+  HAL_TIM_OC_Start_IT(&htim2, TIM_CHANNEL_1);
+}
+
+// Timer compare interrupt
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim) {
+  // Check it comes from correct timer and channel
+  if ((htim->Instance == TIM2) && (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1)) {
+
+    // Get Capture/Compare Register
+    uint32_t previous_compare = __HAL_TIM_GET_COMPARE(htim, TIM_CHANNEL_1);
+
+    // Set updated Capture/Compare Register
+    __HAL_TIM_SET_COMPARE(htim, TIM_CHANNEL_1,
+                          previous_compare + half_period_ticks);
+  }
+}
+```
+
+## Summary and Conclusion
+
+Safe Dip is a safety-oriented pick-dip-place system designed to reduce worker exposure to the hazards associated with manual hot-melt coating operations. The proposed design uses a two-axis Cartesian gantry to detect, acquire, transport, dip, and release a workpiece without requiring the operator to remain near the dipping area.
+
+The system is controlled by an STM32 microcontroller that coordinates the stepper-driven horizontal and vertical axes, the time-of-flight sensor, limit switches, electromagnet, emergency-stop input, and communication interfaces. Serial communication provides the baseline operator interface, while Modbus TCP through the W5500 module allows system states, sensor information, and fault conditions to be observed by external equipment.
+
+Safety is a central consideration in the design. A normally-closed, twist-reset emergency-stop button immediately removes power from the movement subsystem, while the conventional electromagnet remains powered from a separate supply so that actuating the movement emergency stop does not intentionally release the suspended workpiece. Fuses are also included in the prototype power branches to reduce the consequences of electrical faults.
+
+The laboratory prototype will be tested without a heated coating bath and will handle a workpiece of approximately 1 lb under controlled conditions. Successful testing would demonstrate the feasibility of the control, sensing, communication, movement, and emergency-stop architecture, but it would not validate operation at the intended industrial temperature. The conventional electromagnet also cannot provide load retention during a complete loss of magnet power, which remains an important prototype limitation.
+
+Overall, Safe Dip proposes a lower-cost and modular alternative to manual dipping and more expensive industrial robotic systems. The project provides a foundation for determining whether the design can later be developed into a guarded, temperature-rated, and industrially deployable machine.
+
+## Suggestions for Future Work
+
+Future development should first address the safeguards required for operation near a heated coating bath. These additions may include a transparent physical enclosure, interlocked access points, independent overtemperature protection, spill containment, and visual and audible status indicators.
+
+The main focus of future improvements would be hardening the system by providing thermal protection to the mechanism. The conventional electromagnet may also be replaced by an electro-permanent magnet, mechanically locking gripper, or another end effector capable of retaining the workpiece during a complete power failure. Additional sensing could verify that the workpiece has been successfully acquired before movement begins.
+
+Further improvements may include closed-loop position feedback, enhanced fault monitoring, a dedicated operator interface, and standardized communication with upstream and downstream conveyor equipment. After these safeguards are implemented, the system could be evaluated using the intended coating material and operating temperature to measure retention, positioning accuracy, dip consistency, and long-term reliability.
+
+Because the electromagnet is deliberately held during an emergency stop, it also depends on its 12 V supply remaining available. A planned future improvement is a small backup battery on the electromagnet rail, sized to hold the coil energized for a few minutes during a total power loss, so a suspended part isn't dropped when mains power fails rather than merely when the e-stop is actuated.
+
+## Acknowledgements
+
+We would like to express our sincere gratitude to Professor Mayra Socarras for her supervision, guidance, and constructive feedback throughout the development of Safe Dip. Her questions and recommendations encouraged us to examine the project more critically, clarify its scope, and improve the technical, safety, and documentation aspects of the proposed design.
+
+We also thank Dean Lara Sharp and the members of the project review board for dedicating their time to evaluating our work and providing feedback. Their observations have helped us identify areas requiring greater clarity and have contributed to the continued refinement of the project.
+
+We are grateful to Valencia College and the Department of Electrical and Computer Engineering Technology for providing the instruction, facilities, laboratory resources, and technical foundation that made this project possible. We also appreciate the faculty, staff, classmates, and laboratory personnel who shared their knowledge and assistance during the development of this proposal.
+
+Finally, we would like to acknowledge our families, friends, coworkers, and employers for their patience, encouragement, and understanding while we balanced the academic and professional responsibilities associated with this project. Their continued support has been invaluable throughout this process.

@@ -1,0 +1,80 @@
+---
+title: Time & Effort Tracking
+description: Hours logged per team member per week during the build semester.
+---
+
+import EffortWeek from '../../../components/EffortWeek.astro';
+
+Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
+
+<EffortWeek
+	week="09/07 – 09/13, 2026"
+	weekNumber={3}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 5,
+			text: 'Used updated measurements to revise the 3D design: printed a draft plastic field base, developed a mechanism to transfer horizontal motion to the base, and redesigned the vertical movement system with a new 3D-printed lead-screw component, verifying fit and compatibility throughout.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 3,
+			text: 'Was supply-blocked on firmware work: the stepper motor and controller were on hand, but the power supply order ran into issues. Used the time to rebuild the website from scratch with better navigation and clearer content. As of now, the software is approximately 2,107 lines of code (`tokei App/Libraries/modbus/`, Code lines only, excluding comments and blanks).',
+		},
+		{
+			name: 'Group',
+			hours: 1,
+			text: 'Synced to check in on progress and confirm no one had blockers.',
+		},
+	]}
+/>
+
+<EffortWeek
+	week="08/31 – 09/06, 2026"
+	weekNumber={2}
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 3,
+			text: 'Took measurements and installed the linear rails onto the base frame, and identified and obtained the additional components needed for the assembly.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 1,
+			text: "Researched how to map the project's elements to a Modbus-compatible memory layout.",
+		},
+		{
+			name: 'Group',
+			hours: 1,
+			text: 'Synced to check in on progress and confirm no one had blockers.',
+		},
+	]}
+/>
+
+<EffortWeek
+	week="08/23 – 08/30, 2026"
+	weekNumber={1}
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 5,
+			text: 'Gathered and organized the required mechanical components and began assembling the aluminum frame. Took initial measurements, cut and resized excess extrusion, and started mounting the linear rails to the main structure.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 6,
+			text: 'Validated stepper motor pulse generation and corrected a race condition affecting the driver. Completed position/velocity control, integrated start and emergency-stop inputs, and finalized the motion control architecture.',
+		},
+		{
+			name: 'Group',
+			hours: 2,
+			text: 'Met to review available and missing components, organize next steps, and determine the best approach for assembly and integration. Also planned an additional Start/Stop button so normal operation does not rely on the emergency stop.',
+		},
+	]}
+/>
+
+{/* To add a week, copy the block above and place it at the TOP of the list
+    (most recent first). Increment `weekNumber` for the new entry. Entries
+    stay collapsed by default; add an `open` prop only to the newest week,
+    and remove it from the one it replaces. */}

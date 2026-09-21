@@ -1,0 +1,66 @@
+---
+title: Block Diagrams & Flow Charts
+description: System-level block diagrams and software flow charts, copied from the senior design proposal.
+---
+
+import { Image } from 'astro:assets';
+import systemDiagram from '../../../assets/proposal/diagrams/system-block-diagram.svg';
+import hardwareDiagram from '../../../assets/proposal/diagrams/hardware-architecture.svg';
+import mainStructure from '../../../assets/proposal/diagrams/software-main-structure.svg';
+import normalCycle from '../../../assets/proposal/diagrams/software-normal-cycle.svg';
+import sequencer from '../../../assets/proposal/diagrams/software-sequencer.svg';
+import startInstruction from '../../../assets/proposal/diagrams/software-start-instruction.svg';
+import instructionState from '../../../assets/proposal/diagrams/software-instruction-state.svg';
+import estopInterrupt from '../../../assets/proposal/diagrams/software-estop-interrupt.svg';
+
+Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, time-of-flight sensing, and limit switches. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
+
+## System Block Diagram
+
+The system divides into seven modules: power distribution, E-stop, processing, sensing, movement, end effector, and communications.
+
+<Image src={systemDiagram} alt="System-wide block diagram of Safe Dip" />
+
+The power distribution module converts wall power into the voltages the other modules need. The E-stop module performs a Category-0 emergency stop, cutting power to the movement module and alerting the processing module so it can handle the stop gracefully. The processing module is the system's core — the microcontroller that turns inputs into actuator responses, and which also feeds 3.3 V to the other modules through its own power converter. The sensing module covers the time-of-flight sensors, limit switches, and other sensors. The movement module covers the stepper motors and controllers for the horizontal and vertical axes. The effector module grabs the workpiece via an electromagnet, kept modular so the effector type can be swapped later. The communications module adds Ethernet TCP-Modbus support on top of the processing module.
+
+## Hardware Architecture
+
+<Image src={hardwareDiagram} alt="Hardware architecture diagram of Safe Dip" />
+
+This diagram expands the functional modules above into the proposed electrical implementation, identifying power-distribution paths, control signals, sensor connections, communication interfaces, and actuator drivers — and distinguishing the high-power circuitry used by motion/end-effector from the low-voltage circuitry used by processing/sensing/communications.
+
+## Software Flow
+
+The control software runs on the STM32 using a cooperative, nonblocking architecture: rather than one blocking function for the whole pick-dip-place cycle, several modules (cycle sequencer, movement controller, end-effector controller, dwell timer, communications interface) are each processed in bounded steps from the main loop, so the system stays responsive to safety inputs and communications while a movement or timed operation is still in progress.
+
+### Main Software Execution Structure
+
+<Image src={mainStructure} alt="Main software execution structure flowchart" />
+
+### Normal Pick-Dip-Place Instruction Sequence
+
+The normal operating cycle is an ordered sequence of nonblocking instructions grouped into five stages: home, pick, dip, deposit, and release.
+
+<Image src={normalCycle} alt="Normal pick-dip-place instruction sequence flowchart" />
+
+### Cooperative Cycle Sequencer
+
+The sequencer tracks the current instruction's state (`IDLE`, `RUNNING`, `FINISHED`, or `ABORTED`) and advances to the next instruction only once the responsible module reports completion.
+
+<Image src={sequencer} alt="Cooperative cycle sequencer flowchart" />
+
+### Dispatching the Current Instruction
+
+Instruction dispatch is separated from the internal implementation of the movement, end-effector, and timer modules — the sequencer talks to each one only through its public interface.
+
+<Image src={startInstruction} alt="Dispatching the current instruction to its responsible module" />
+
+### Evaluating Instruction State
+
+<Image src={instructionState} alt="Evaluation of the current instruction state flowchart" />
+
+### Emergency-Stop Interrupt Handling
+
+The emergency-stop input is handled asynchronously via an external interrupt, so it's detected regardless of which instruction is currently running. The interrupt itself only records the stop; the sequencer performs the actual abort sequence on its next pass, then requires a deliberate operator reset before resuming.
+
+<Image src={estopInterrupt} alt="Emergency-stop interrupt handling flowchart" />

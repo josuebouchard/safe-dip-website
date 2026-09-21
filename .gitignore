@@ -1,0 +1,82 @@
+# ---------------------------------------------------------------------------
+# Safe Dip website (Astro + Starlight)
+#
+# Rule of thumb: ignore anything that can be regenerated (`npm install`,
+# `npm run build`) or that only matters on one person's machine. Do NOT add
+# blanket `*.pdf` / `*.pptx` rules: public/ contains the submitted proposal
+# and presentation on purpose, and they are served as site downloads.
+# ---------------------------------------------------------------------------
+
+# --- Build output and generated files ---------------------------------------
+dist/
+.astro/
+.vercel/
+.netlify/
+.cache/
+coverage/
+*.tsbuildinfo
+.eslintcache
+
+# --- Dependencies ------------------------------------------------------------
+# package-lock.json is committed on purpose so installs are reproducible.
+node_modules/
+.pnpm-store/
+*.tgz
+
+# --- Logs --------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Secrets and environment variables --------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Typst scratch output ----------------------------------------------------
+# `typst compile` writes next to the source; the deliverable copy of the
+# proposal lives in public/, so in-place output is never tracked.
+senior-proposal-typst/*.pdf
+# Scratch files from the Gantt-chart regeneration recipe in AGENTS.md
+out.svg
+out.pdf
+
+# --- AI assistant local state ------------------------------------------------
+# AGENTS.md / CLAUDE.md are shared project docs and stay tracked.
+.claude/settings.local.json
+.claude/worktrees/
+
+# --- Editors and IDEs --------------------------------------------------------
+# Keep the shared Astro recommendations, ignore personal editor state.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+.zed/
+*.swp
+*.swo
+*.sublime-workspace
+
+# --- Operating system files --------------------------------------------------
+# macOS
+.DS_Store
+.AppleDouble
+._*
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+# Linux
+*~
+.directory
+.Trash-*
+.fuse_hidden*
+
+# --- Scratch and merge leftovers ---------------------------------------------
+tmp/
+*.tmp
+*.bak
+*.orig
+*.rej

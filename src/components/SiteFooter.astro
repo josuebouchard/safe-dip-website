@@ -1,0 +1,50 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+import Lightbox from './Lightbox.astro';
+---
+
+<Default><slot /></Default>
+
+<Lightbox />
+
+<div class="institution-footer">
+	<div class="institution-footer-inner">
+		<p class="org">
+			Valencia College &middot; Electrical &amp; Computer Engineering Technology (ECET)
+		</p>
+		<p class="addr">1800 S Kirkman Rd Bldg 11, Orlando, FL 32811</p>
+		<p class="contact">
+			Safe Dip Senior Design Team &middot; Josué Bouchard &amp; Adriano Duque Mena
+		</p>
+	</div>
+</div>
+
+<style>
+	.institution-footer {
+		border-top: 1px solid var(--sl-color-gray-6);
+		margin-top: 1.5rem;
+		padding: 1.25rem 0;
+	}
+	.institution-footer-inner {
+		max-width: 67.5rem;
+		margin-inline: auto;
+		padding-inline: 1.5rem;
+		text-align: center;
+		font-size: var(--sl-text-xs);
+		color: var(--sl-color-gray-3);
+		line-height: 1.6;
+	}
+	.institution-footer-inner p {
+		margin: 0;
+	}
+	.org {
+		font-weight: 600;
+		color: var(--sl-color-gray-2);
+	}
+	.contact a {
+		color: var(--sl-color-gray-3);
+	}
+	.contact a:hover {
+		color: var(--sl-color-accent-high);
+	}
+</style>

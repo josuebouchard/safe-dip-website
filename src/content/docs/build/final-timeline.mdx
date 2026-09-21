@@ -1,0 +1,41 @@
+---
+title: Final Timeline
+description: Sixteen-week implementation schedule for the build semester.
+---
+
+import { Image } from 'astro:assets';
+import gantt from '../../../assets/proposal/diagrams/gantt-timeline.svg';
+
+The proposed implementation schedule spans sixteen weeks. Mechanical construction and firmware development proceed in parallel so each subsystem can be tested soon after installation. The schedule reserves the final weeks for integrated testing, debugging, refinement, and presentation preparation.
+
+## Gantt Chart
+
+<figure>
+	<Image src={gantt} alt="Sixteen-week Safe Dip implementation schedule as a Gantt chart, grouped into preparation, sensors and conveyor integration, horizontal axis, vertical axis, integration and validation, and project closeout" />
+	<figcaption>Sixteen-week implementation schedule. Yellow bars are owned by Adriano, red by Josué, and blue by both.</figcaption>
+</figure>
+
+## Schedule by Task
+
+| Phase | Task | Weeks | Owner |
+|---|---|---|---|
+| Preparation | Gather materials and components | 1–2 | Both |
+| Preparation | Assemble the metal frame | 2–3 | Adriano |
+| Sensors & Conveyor Integration | Install motion sensors | 2–3 | Both |
+| Sensors & Conveyor Integration | Program and test sensors | 2–4 | Josué / Both |
+| Sensors & Conveyor Integration | Integrate external conveyors | 3–5 | Adriano / Both |
+| Sensors & Conveyor Integration | Program and test conveyor interface | 3–5 | Josué / Both |
+| Horizontal Axis | Install horizontal-axis mechanism | 5–8 | Adriano / Both |
+| Horizontal Axis | Program and test horizontal-axis motion | 5–8 | Josué / Both |
+| Vertical Axis | Install vertical-axis mechanism | 8–12 | Adriano / Both |
+| Vertical Axis | Program and test vertical-axis motion | 8–12 | Josué / Both |
+| Integration & Validation | Debug axes and sensors | 11–13 | Both |
+| Integration & Validation | Test the complete system | 12–13 | Both |
+| Integration & Validation | Debug the complete system | 13–15 | Josué / Both |
+| Integration & Validation | Test rated load under laboratory conditions | 13–15 | Adriano / Both |
+| Project Closeout | Complete final refinements | 15–16 | Both |
+| Project Closeout | Prepare the presentation | 15–16 | Both |
+| Project Closeout | Present the project | 16–17 | Both |
+
+{/* TODO: Once the semester's real dates are locked in, replace the "Weeks"
+    column and the chart with calendar dates. */}

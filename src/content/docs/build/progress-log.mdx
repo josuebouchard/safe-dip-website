@@ -1,0 +1,49 @@
+---
+title: Progress Log
+description: A weekly journal of what was built, tested, and debugged during the build semester.
+---
+
+import Accordion from '../../../components/Accordion.astro';
+
+A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 3 — 09/07/2026–09/13/2026" subtitle="Website rebuild while supply-blocked; vertical movement redesign">
+
+**Josué** — Was supply-blocked on firmware work: the stepper motor and controller were on hand, but the power supply order ran into issues. Used the time to rebuild the website from scratch with better navigation, the same content, and clearer readability.
+
+**Adriano** — Continued taking measurements and used them to modify the 3D design. Printed a draft of the plastic field base and developed a mechanism to transfer the horizontal motion to the base. Also redesigned the vertical movement system, including a new 3D-printed component for the lead screw assembly, allowing the motor's rotational motion to be converted into vertical linear movement. Throughout the process, verified that all components could properly connect and, when necessary, designed adapters or custom 3D-printed solutions to ensure compatibility.
+
+</Accordion>
+
+<Accordion title="Week 2 — 08/31/2026–09/06/2026" subtitle="Linear rails installed; component sourcing">
+
+**Josué** — Researched how to map the project's various elements to a Modbus-compatible memory layout.
+
+**Adriano** — Focused on taking measurements and installing the linear rails onto the base frame. Also identified and obtained the additional components needed for the assembly, while verifying that the parts would properly fit and integrate with the overall structure.
+
+</Accordion>
+
+<Accordion title="Week 1 — 08/24/2026–08/30/2026" subtitle="Motion control validated on hardware; frame assembly begins">
+
+**Josué** — The complete two-axis motion control software was already in place, including Modbus TCP communication, acceleration/deceleration motion planning, operation sequencing, and end-effector control. The software architecture had grown to approximately 1,200 lines across 23 files. However, although the motion control stack had been implemented, the stepper motor pulse generation had not yet been validated on the actual hardware.
+
+This week, the stepper driver was successfully tested and confirmed to generate pulses at the correct frequency and timing. A critical race condition affecting the channel arm/disarm logic was identified and corrected, and the driver now supports both position and velocity control through a unified speed-ramp interface. Temporary motion-control workarounds were also replaced with production-ready abstractions, while the existing motion planner and sequencer required no major changes. Emergency-stop and start-button inputs were integrated into the sequencer, and its internal state logic was simplified to improve reliability and maintainability.
+
+**Adriano** — Focused on gathering and organizing the mechanical components required for the system. He ordered most of the necessary parts online, reviewed the dimensions, and began assembling the main aluminum frame. Initial measurements were taken to verify the overall structure and ensure the components could be positioned correctly before continuing with the final assembly.
+
+Over the weekend, he continued working on the mechanical structure by cutting excess aluminum extrusion and resizing sections of the frame to the required dimensions. He also began attaching the linear rails to the main frame, establishing the mechanical foundation that will support the motion system and the remaining components.
+
+</Accordion>
+
+{/* To add a week, copy the block below to the TOP of the list (most recent
+    first). Entries stay collapsed by default; add an `open` attribute only if
+    you want a specific one expanded on page load.
+
+<Accordion title="Week N" subtitle="One-line summary of the week">
+
+**Josué** — What was worked on, and the result.
+
+**Adriano** — What was worked on, and the result.
+
+</Accordion>
+*/}
