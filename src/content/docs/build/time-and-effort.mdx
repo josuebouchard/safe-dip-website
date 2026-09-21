@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="09/14 – 09/20, 2026"
+	weekNumber={4}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 6,
+			text: 'Worked on the 3D model for the horizontal and vertical movement systems and how they will attach to the main frame. The horizontal mechanism uses a bearing connected to a set of 3D-printed gears, with the inner part of the bearing attached to a cylindrical section extending from the main slider base, so the assembly can move while staying supported and aligned. For the vertical movement, two bearing holders will support the lead screw and attach it to the main base, a brass threaded nut will connect the lead screw to the central magnet holder, and side sliders will guide the magnet and keep it attached to the full structure.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 5,
+			text: 'Assembled the 24 V power supply and calibrated its output to 24.1 V, then connected the power supply, MCU, and stepper motor to the stepper driver. Ran the first successful MCU-to-stepper test: the motor turned 10 times and landed in the same place. Added a landing (creep) speed to stop the stepper driver code from overshooting, and researched 5 V communication with the STM32, settling on its five-volt-tolerant (FT) pins with a common-anode, open-drain configuration.',
+		},
+		{
+			name: 'Group',
+			hours: 1,
+			text: 'Synced to make sure both had the same picture of the mechanical design, discussed some alternatives, and decided to continue the work as proposed in the CAD.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="09/07 – 09/13, 2026"
 	weekNumber={3}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',

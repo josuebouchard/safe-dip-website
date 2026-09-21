@@ -7,6 +7,18 @@ import Accordion from '../../../components/Accordion.astro';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
 
+<Accordion title="Week 4 — 09/14/2026–09/20/2026" subtitle="First MCU-to-stepper test passes; movement systems modeled">
+
+**Josué** — Finally assembled the 24 V power supply and calibrated its output voltage to 24.1 V. Connected the power supply to the stepper driver, the MCU to the stepper driver, and the stepper motor to the stepper driver. Tested the stepper movement code by having the motor turn 10 times and land in the same place successfully. Because the stepper driver code overshot slightly, implemented a landing speed variable (what is usually called creep speed on elevators, a common technique) so the motor arrives smoothly at its destination without overshooting. This was the first successful MCU-to-stepper test.
+
+Also researched 5 V communication with the STM32, since its logic is 3.3 V. Found that the STM32 has FT (five-volt tolerant) pins, and devised a common-anode, open-drain configuration that allows communication with the stepper driver.
+
+**Adriano** — Worked on the 3D model for the horizontal and vertical movement of the project, including how both systems will attach to the main frame. The horizontal movement design consists of a bearing connected to a set of 3D-printed gears. The inner part of the bearing will be attached to a cylindrical section that extends from the main base for the sliders. This design will allow the mechanism to move horizontally while staying supported by the main structure, and the gears will transfer motion to the horizontal assembly.
+
+For the vertical movement, the design uses two holders with bearings to support the lead screw and connect it to the main base. A brass threaded piece on the lead screw will hold the central section of the magnet holder. As the lead screw rotates, the brass piece will move vertically and carry the magnet holder with it. Side sliders placed around the magnet holder will guide its movement and help keep the magnet aligned and attached to the rest of the structure during operation.
+
+</Accordion>
+
 <Accordion title="Week 3 — 09/07/2026–09/13/2026" subtitle="Website rebuild while supply-blocked; vertical movement redesign">
 
 **Josué** — Was supply-blocked on firmware work: the stepper motor and controller were on hand, but the power supply order ran into issues. Used the time to rebuild the website from scratch with better navigation, the same content, and clearer readability.
