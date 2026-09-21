@@ -3,14 +3,16 @@ interface Props {
 	title: string;
 	subtitle?: string;
 	open?: boolean;
+	/** Always put the subtitle on its own line under the title. */
+	stacked?: boolean;
 }
 
-const { title, subtitle, open = false } = Astro.props;
+const { title, subtitle, open = false, stacked = false } = Astro.props;
 ---
 
 <details class="accordion" open={open}>
 	<summary class="accordion-summary">
-		<span class="accordion-heading">
+		<span class:list={['accordion-heading', { 'accordion-heading-stacked': stacked }]}>
 			<span class="accordion-title">{title}</span>
 			{subtitle && <span class="accordion-subtitle">{subtitle}</span>}
 		</span>
@@ -59,6 +61,10 @@ const { title, subtitle, open = false } = Astro.props;
 		align-items: baseline;
 		gap: 0.15rem 0.65rem;
 		min-width: 0;
+	}
+	.accordion-heading-stacked {
+		flex-direction: column;
+		align-items: flex-start;
 	}
 	.accordion-title {
 		font-weight: 600;
