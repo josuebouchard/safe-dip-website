@@ -6,12 +6,10 @@ description: As-built system block diagrams and software flow charts, carried fo
 import { Image } from 'astro:assets';
 import systemDiagram from '../../../assets/proposal/diagrams/system-block-diagram.svg';
 import hardwareDiagram from '../../../assets/proposal/diagrams/hardware-architecture.svg';
-import mainStructure from '../../../assets/proposal/diagrams/software-main-structure.svg';
-import normalCycle from '../../../assets/proposal/diagrams/software-normal-cycle.svg';
-import sequencer from '../../../assets/proposal/diagrams/software-sequencer.svg';
-import startInstruction from '../../../assets/proposal/diagrams/software-start-instruction.svg';
-import instructionState from '../../../assets/proposal/diagrams/software-instruction-state.svg';
-import estopInterrupt from '../../../assets/proposal/diagrams/software-estop-interrupt.svg';
+import mainStructure from '../../../assets/build/diagrams/software-main-structure.svg';
+import normalCycle from '../../../assets/build/diagrams/software-normal-cycle.svg';
+import sequencer from '../../../assets/build/diagrams/software-sequencer.svg';
+import motionPlanner from '../../../assets/build/diagrams/software-motion-planner.svg';
 
 Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, time-of-flight sensing, and limit switches. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
 
@@ -31,36 +29,42 @@ This diagram expands the functional modules above into the proposed electrical i
 
 ## Software Flow
 
-The control software runs on the STM32 using a cooperative, nonblocking architecture: rather than one blocking function for the whole pick-dip-place cycle, several modules (cycle sequencer, movement controller, end-effector controller, dwell timer, communications interface) are each processed in bounded steps from the main loop, so the system stays responsive to safety inputs and communications while a movement or timed operation is still in progress.
+The control software runs on the STM32 using a cooperative, nonblocking architecture. Rather than one blocking function for the whole pick-dip-place cycle, the work is split into modules (the cycle sequencer, one motion planner per axis, and the communications interface) that are each processed in bounded steps from a single main loop. The system therefore stays responsive to the emergency stop, the start button, and communications while a move or a dwell is still in progress.
 
 ### Main Software Execution Structure
 
+After initializing the GPIO, the W5500 Ethernet controller, the Modbus TCP task, and the motion planners, the firmware enters its main loop. Each pass reads the emergency-stop and start buttons first. If the emergency stop is pressed, the sequencer and both axes are stopped and the electromagnet is kept engaged, so a suspended part is never dropped. Otherwise, a start press while the sequencer is idle restarts the cycle from its first operation; the sequencer is then stepped and both motion planners are processed. Communications are serviced on every pass, even during an emergency stop.
+
 <Image src={mainStructure} alt="Main software execution structure flowchart" />
 
-### Normal Pick-Dip-Place Instruction Sequence
+### Normal Pick-Dip-Place Sequence
 
-The normal operating cycle is an ordered sequence of nonblocking instructions grouped into five stages: home, pick, dip, deposit, and release.
+The cycle is an ordered list of nonblocking operations grouped into five stages: home, pick, dip, deposit, and release. After the last operation, the sequence wraps back to the first and the gantry repeats the cycle. Each operation is an absolute objective rather than a blocking procedure: `MOVE_Y_UP`, for example, hands the upper position to the vertical axis's planner and returns immediately.
 
-<Image src={normalCycle} alt="Normal pick-dip-place instruction sequence flowchart" />
+<Image src={normalCycle} alt="Normal pick-dip-place operation sequence flowchart" />
+
+Every operation implements the same two functions. `start()` begins the operation and returns immediately; `poll()` reports whether it is still running or has finished. The sequencer only ever calls these two, so it never needs to know how a move, the electromagnet, or a dwell actually works. Each operation copies the settings it depends on when it starts, so a value changed over Modbus takes effect the next time that operation runs and never alters one already in progress.
+
+Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the time-of-flight sensor to detect a part before the pick stage.
 
 ### Cooperative Cycle Sequencer
 
-The sequencer tracks the current instruction's state (`IDLE`, `RUNNING`, `FINISHED`, or `ABORTED`) and advances to the next instruction only once the responsible module reports completion.
+On each step, the sequencer does nothing if the system is not running. Otherwise, it either starts the current operation or polls it. While the operation reports running, the sequencer does no further work; once it reports finished, the sequencer clears its started flag and advances to the next operation.
 
 <Image src={sequencer} alt="Cooperative cycle sequencer flowchart" />
 
-### Dispatching the Current Instruction
+### Motion Planner
 
-Instruction dispatch is separated from the internal implementation of the movement, end-effector, and timer modules — the sequencer talks to each one only through its public interface.
+Each axis has its own motion planner, which turns a goal into a continuously updated step rate. In position mode, used for every move in the cycle, it drives the axis to a target step; in velocity mode, reserved for homing, it holds a commanded speed. The planner is called for each axis on every pass of the main loop.
 
-<Image src={startInstruction} alt="Dispatching the current instruction to its responsible module" />
+<Image src={motionPlanner} alt="Motion planner process() flowchart" />
 
-### Evaluating Instruction State
+In position mode, the axis accelerates, cruises at its maximum speed, and brakes once the remaining distance falls within the braking distance
 
-<Image src={instructionState} alt="Evaluation of the current instruction state flowchart" />
+$$
+d_\text{brake} = \frac{v^2 - v_\text{land}^2}{2a}
+$$
 
-### Emergency-Stop Interrupt Handling
+It then finishes at a slow landing speed, which lets it stop exactly on the target step instead of overshooting or stalling short of it. The individual STEP pulses are generated by a hardware timer in output-compare mode, so the planner only has to set the speed about once per millisecond.
 
-The emergency-stop input is handled asynchronously via an external interrupt, so it's detected regardless of which instruction is currently running. The interrupt itself only records the stop; the sequencer performs the actual abort sequence on its next pass, then requires a deliberate operator reset before resuming.
-
-<Image src={estopInterrupt} alt="Emergency-stop interrupt handling flowchart" />
+The emergency stop is enforced first by hardware: the normally closed button cuts the stepper drivers' 24 V supply directly, independently of the firmware. The firmware response above supplements that path; releasing the button never resumes motion on its own, and a deliberate start press is required.
