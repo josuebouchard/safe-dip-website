@@ -24,13 +24,15 @@ import cadPerspective from '../assets/proposal/cad/cad-perspective.png';
 				An automated pick-and-place system that dips metal components into hot wax
 				baths without a worker needing to be in direct contact with the process.
 			</p>
-			<div class="cta-row">
-				<LinkButton href="/proposal/report-and-presentation/" icon="right-arrow">
-					Read the Proposal
-				</LinkButton>
-				<LinkButton href="/build/progress-log/" variant="secondary">
-					Follow the Build
-				</LinkButton>
+			<div class="cta">
+				<div class="cta-row">
+					<LinkButton href="/proposal/report-and-presentation/" icon="right-arrow">
+						Read the Proposal
+					</LinkButton>
+					<LinkButton href="/build/progress-log/" variant="secondary">
+						Follow the Build
+					</LinkButton>
+				</div>
 				<LinkButton href="/about/" variant="minimal">Meet the Team</LinkButton>
 			</div>
 		</section>
@@ -303,6 +305,20 @@ import cadPerspective from '../assets/proposal/cad/cad-perspective.png';
 		color: var(--sl-color-gray-2);
 		font-size: var(--sl-text-lg);
 	}
+	.cta {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+		/* Stands in for the buttons' own margins, zeroed below. */
+		padding-block: 1rem;
+	}
+	/* Starlight gives each LinkButton a vertical margin, which doubles the
+	   gap once they are stacked; spacing comes from the gaps instead. */
+	.cta :global(.sl-link-button) {
+		margin: 0;
+	}
+
 	.cta-row {
 		display: flex;
 		gap: 1rem;
