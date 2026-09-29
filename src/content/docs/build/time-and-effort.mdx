@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="09/21 – 09/27, 2026"
+	weekNumber={5}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 6,
+			text: 'Turned the X- and Y-axis movement concept into a full-scale 3D design from real dimensions: added two supported linear rails and four bearing blocks to the frame model, and began designing the mounting plate that connects the bearing blocks to the moving assembly, with measured screw locations and countersunk holes.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 8,
+			text: 'Wired up the complete 13-step Home → Pick → Dip → Deposit → Release cycle in firmware, with start-button restart and emergency-stop handling, fixed the inverted button logic, and cleaned up the stepper driver and motion planner. Tested one stepper motor with open-loop positioning, with promising results. Began updating the firmware (Modbus parameter mapping, fault reporting, and limit-switch homing) and the software section of the Senior Design report to reflect the current design.',
+		},
+		{
+			name: 'Group',
+			hours: 2,
+			text: 'Tested the electromagnet: measured its resistance, estimated its current at 1.2 A (1.5 A budgeted for headroom), and checked its holding strength qualitatively with a hammer.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="09/14 – 09/20, 2026"
 	weekNumber={4}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',
