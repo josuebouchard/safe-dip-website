@@ -70,6 +70,8 @@ const { hasSidebar } = Astro.locals.starlightRoute;
 			display: grid;
 			/* title | search | sections (take the free space) | icons */
 			grid-template-columns: auto minmax(0, 18rem) 1fr auto;
+			/* As in Starlight's header: keeps the row centred, so the logo lines up across pages */
+			align-content: center;
 		}
 	}
 </style>
