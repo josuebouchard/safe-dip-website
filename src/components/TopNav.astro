@@ -1,0 +1,170 @@
+---
+// Horizontal site navigation for pages without the docs sidebar (the landing
+// page). Built from Starlight's own sidebar data, so pages added to the
+// sidebar in astro.config.mjs show up here automatically.
+const { sidebar } = Astro.locals.starlightRoute;
+
+// The sidebar labels are long; the top bar needs short ones.
+const SHORT_LABELS: Record<string, string> = {
+	'About / Meet the Team': 'About',
+	'Senior Design Proposal': 'Proposal',
+	'Senior Design / Build': 'Build',
+	'Engineering Standards & Compliance Codes': 'Standards',
+};
+
+const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
+---
+
+<nav class="top-nav not-content" aria-label="Site sections">
+	<ul>
+		{
+			sidebar.map((entry) =>
+				entry.type === 'link' ? (
+					<li>
+						<a class="top-nav-item" href={entry.href}>
+							{shortLabel(entry.label)}
+						</a>
+					</li>
+				) : (
+					<li>
+						<details class="top-nav-group">
+							<summary class="top-nav-item">{shortLabel(entry.label)}</summary>
+							<ul class="top-nav-menu">
+								{entry.entries.map(
+									(child) =>
+										child.type === 'link' && (
+											<li>
+												<a href={child.href}>{child.label}</a>
+											</li>
+										)
+								)}
+							</ul>
+						</details>
+					</li>
+				)
+			)
+		}
+	</ul>
+</nav>
+
+<script>
+	// Keep one dropdown open at a time, and close it on an outside click or Escape.
+	const groups = [...document.querySelectorAll<HTMLDetailsElement>('.top-nav-group')];
+
+	const closeAll = (except?: HTMLDetailsElement) => {
+		for (const group of groups) {
+			if (group !== except) group.open = false;
+		}
+	};
+
+	for (const group of groups) {
+		group.addEventListener('toggle', () => {
+			if (group.open) closeAll(group);
+		});
+	}
+
+	document.addEventListener('click', (event) => {
+		if (!(event.target as Element).closest('.top-nav-group')) closeAll();
+	});
+
+	document.addEventListener('keydown', (event) => {
+		if (event.key !== 'Escape') return;
+		const open = groups.find((group) => group.open);
+		if (!open) return;
+		open.open = false;
+		open.querySelector('summary')?.focus();
+	});
+</script>
+
+<style>
+	.top-nav {
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.top-nav > ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.25rem 0.5rem;
+		margin: 0;
+		padding: 0.5rem 1rem;
+		list-style: none;
+	}
+
+	.top-nav li {
+		margin: 0;
+	}
+
+	.top-nav-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.4rem 0.75rem;
+		border-radius: 0.4rem;
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-sm);
+		font-weight: 600;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.top-nav-item:hover,
+	.top-nav-group[open] > .top-nav-item {
+		color: var(--sl-color-white);
+		background: var(--sl-color-gray-6);
+	}
+
+	.top-nav-group {
+		position: relative;
+	}
+
+	summary.top-nav-item {
+		list-style: none;
+	}
+	summary.top-nav-item::-webkit-details-marker {
+		display: none;
+	}
+	summary.top-nav-item::after {
+		content: '';
+		width: 0.4rem;
+		height: 0.4rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: translateY(-2px) rotate(45deg);
+	}
+	.top-nav-group[open] > summary.top-nav-item::after {
+		transform: translateY(1px) rotate(225deg);
+	}
+
+	.top-nav-menu {
+		position: absolute;
+		top: calc(100% + 0.35rem);
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		width: max-content;
+		max-width: min(22rem, calc(100vw - 2rem));
+		margin: 0;
+		padding: 0.4rem;
+		list-style: none;
+		background: var(--sl-color-bg-nav);
+		border: 1px solid var(--sl-color-hairline-shade);
+		border-radius: 0.5rem;
+		box-shadow: var(--sl-shadow-md);
+	}
+
+	.top-nav-menu a {
+		display: block;
+		padding: 0.45rem 0.75rem;
+		border-radius: 0.35rem;
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-sm);
+		text-decoration: none;
+	}
+
+	.top-nav-menu a:hover,
+	.top-nav-menu a:focus-visible {
+		color: var(--sl-color-white);
+		background: var(--sl-color-gray-6);
+	}
+</style>

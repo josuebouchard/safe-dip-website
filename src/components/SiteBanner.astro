@@ -1,0 +1,11 @@
+---
+// Starlight Banner override: on pages without the docs sidebar (the landing
+// page), put the site navigation at the very top, above the page title.
+import Default from '@astrojs/starlight/components/Banner.astro';
+import TopNav from './TopNav.astro';
+
+const { hasSidebar } = Astro.locals.starlightRoute;
+---
+
+{!hasSidebar && <TopNav />}
+<Default />
