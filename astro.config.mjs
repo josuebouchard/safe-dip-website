@@ -64,7 +64,7 @@ export default defineConfig({
 				{
 					icon: 'seti:git',
 					label: 'Repository',
-					href: 'https://github.com/',
+					href: 'https://github.com/josuebouchard/safe-dip-website',
 				},
 			],
 			sidebar: [
