@@ -57,6 +57,7 @@ export default defineConfig({
 			],
 			customCss: ['./src/styles/custom.css', 'katex/dist/katex.min.css'],
 			components: {
+				Banner: './src/components/SiteBanner.astro',
 				Footer: './src/components/SiteFooter.astro',
 			},
 			social: [
