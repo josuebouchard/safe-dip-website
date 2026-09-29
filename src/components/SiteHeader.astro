@@ -1,0 +1,75 @@
+---
+// Starlight Header override. Pages with the docs sidebar keep the stock
+// header; pages without it (the landing page) get the site sections in the
+// header row, between the search box and the icons.
+import Default from '@astrojs/starlight/components/Header.astro';
+import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
+import SocialIcons from '@astrojs/starlight/components/SocialIcons.astro';
+import ThemeSelect from '@astrojs/starlight/components/ThemeSelect.astro';
+import TopNav from './TopNav.astro';
+
+const { hasSidebar } = Astro.locals.starlightRoute;
+---
+
+{
+	hasSidebar ? (
+		<Default />
+	) : (
+		<div class="nav-header">
+			<div class="title-wrapper sl-flex">
+				<SiteTitle />
+			</div>
+			<div class="search-wrapper sl-flex print:hidden">
+				<Search />
+			</div>
+			<div class="print:hidden">
+				<TopNav />
+			</div>
+			<div class="sl-hidden md:sl-flex print:hidden right-group">
+				<div class="sl-flex social-icons">
+					<SocialIcons />
+				</div>
+				<ThemeSelect />
+				<LanguageSelect />
+			</div>
+		</div>
+	)
+}
+
+<style>
+	.nav-header {
+		display: flex;
+		gap: var(--sl-nav-gap);
+		justify-content: space-between;
+		align-items: center;
+		height: 100%;
+	}
+
+	.title-wrapper {
+		overflow: clip;
+		padding: 0.25rem;
+		margin: -0.25rem;
+		min-width: 0;
+	}
+
+	.right-group,
+	.social-icons {
+		gap: 1rem;
+		align-items: center;
+	}
+	.social-icons::after {
+		content: '';
+		height: 2rem;
+		border-inline-end: 1px solid var(--sl-color-gray-5);
+	}
+
+	@media (min-width: 50rem) {
+		.nav-header {
+			display: grid;
+			/* title | search | sections (take the free space) | icons */
+			grid-template-columns: auto minmax(0, 18rem) 1fr auto;
+		}
+	}
+</style>
