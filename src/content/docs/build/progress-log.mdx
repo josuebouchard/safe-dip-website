@@ -4,8 +4,60 @@ description: A weekly journal of what was built, tested, and debugged during the
 ---
 
 import Accordion from '../../../components/Accordion.astro';
+import { Image } from 'astro:assets';
+import stepperBench from '../../../assets/build/progress/week-5/stepper-bench-setup.png';
+import frameModel from '../../../assets/build/progress/week-5/frame-model.png';
+import plateDrawing from '../../../assets/build/progress/week-5/mounting-plate-drawing.png';
+import plateModel from '../../../assets/build/progress/week-5/mounting-plate-model.png';
+import plateDetail from '../../../assets/build/progress/week-5/mounting-plate-detail.png';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 5 — 09/21/2026–09/27/2026" subtitle="Full firmware cycle wired up; open-loop stepper test; frame modeled; electromagnet tested">
+
+**Josué** — Brought the firmware from single test moves to the complete production cycle. All 13 operations of the Home → Pick → Dip → Deposit → Release sequence now run in order, with a start button that restarts the cycle from the beginning and an emergency stop that halts both axes while keeping the electromagnet engaged. Along the way, fixed the emergency-stop and start buttons being read with inverted logic, and did a cleanup pass on the stepper driver and motion planner that removed unused code and made invalid states impossible to represent. The wiring and pinout documentation was also brought up to date. Toward the end of the week, began the next round of firmware work (Modbus parameter mapping, fault reporting, and homing on the limit switches) and started updating the software section of the Senior Design report, including its flowcharts, to match the current design.
+
+Also tested the movement of one stepper motor with open-loop positioning (no position feedback), and the result was really promising.
+
+<figure>
+	<Image src={stepperBench} alt="Bench setup: DM542TE stepper driver, NEMA 23 stepper motor with a paper flag on its shaft, STM32 Nucleo board with the W5500 Ethernet module, and the 24 V power supply" />
+	<figcaption>Bench setup for the open-loop test: 24 V supply, DM542TE driver, NEMA 23 motor with a paper flag to show its position, and the Nucleo board with the W5500 Ethernet module.</figcaption>
+</figure>
+
+<figure>
+	<video controls preload="metadata" playsinline src="/progress/week-5-stepper-test.mp4" class="progress-video"></video>
+	<figcaption>Open-loop positioning test of a single stepper motor.</figcaption>
+</figure>
+
+**Adriano** — Turned the X- and Y-axis movement concept discussed with Josué into a full-scale 3D design, built from real dimensions and the actual frame components. Added two supported linear rails and four sliding bearing blocks to the frame model, then began designing the plate that connects the bearing blocks to the rest of the moving assembly, including measured screw locations and countersunk mounting holes. Checking how the frame, rails, blocks, and plate fit together in 3D showed where the next work is: detailing the connections between the moving components so the mechanism can be assembled and tested for real.
+
+<div class="media-grid">
+
+<figure>
+	<Image src={frameModel} alt="3D model of the aluminum extrusion frame with two linear rails and four bearing blocks" />
+	<figcaption>Full-scale frame model with the two supported linear rails and four bearing blocks.</figcaption>
+</figure>
+
+<figure>
+	<Image src={plateDrawing} alt="Dimensioned drawing of the mounting plate showing 7 mm holes spaced 75 mm apart and countersunk corner holes" />
+	<figcaption>Mounting plate sketch with the measured screw locations (dimensions in mm).</figcaption>
+</figure>
+
+<figure>
+	<Image src={plateModel} alt="3D model of the mounting plate with countersunk holes and two tabs" />
+	<figcaption>Mounting plate model with countersunk holes and the tabs for the next part of the assembly.</figcaption>
+</figure>
+
+<figure>
+	<Image src={plateDetail} alt="Sketch detail of a 24 by 24 mm square with a 14 mm diameter hole" />
+	<figcaption>Sketch detail from the plate design (dimensions in mm).</figcaption>
+</figure>
+
+</div>
+
+**Group** — Got together to test the electromagnet and finish measuring its electrical properties. Measured its resistance experimentally and, from that, estimated its current draw at 1.2 A; 1.5 A will be budgeted to leave some headroom. Also tested its strength qualitatively with a hammer. A hammer isn't representative of the parts we'll be handling, since it covers little of the magnet's face, but the magnet still held it with impressive strength.
+
+</Accordion>
 
 <Accordion title="Week 4 — 09/14/2026–09/20/2026" subtitle="First MCU-to-stepper test passes; movement systems modeled">
 
