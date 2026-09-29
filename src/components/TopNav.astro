@@ -1,10 +1,13 @@
 ---
-// Horizontal site navigation for pages without the docs sidebar (the landing
+// Site sections for the header of pages without the docs sidebar (the landing
 // page). Built from Starlight's own sidebar data, so pages added to the
 // sidebar in astro.config.mjs show up here automatically.
+//
+// Wide screens get one entry per section, with dropdowns for the groups;
+// narrower ones get a single "Menu" dropdown holding everything.
 const { sidebar } = Astro.locals.starlightRoute;
 
-// The sidebar labels are long; the top bar needs short ones.
+// The sidebar labels are long; the header needs short ones.
 const SHORT_LABELS: Record<string, string> = {
 	'About / Meet the Team': 'About',
 	'Senior Design Proposal': 'Proposal',
@@ -15,8 +18,8 @@ const SHORT_LABELS: Record<string, string> = {
 const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 ---
 
-<nav class="top-nav not-content" aria-label="Site sections">
-	<ul>
+<nav class="top-nav" aria-label="Site sections">
+	<ul class="top-nav-wide">
 		{
 			sidebar.map((entry) =>
 				entry.type === 'link' ? (
@@ -45,6 +48,26 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 			)
 		}
 	</ul>
+
+	<details class="top-nav-group top-nav-compact">
+		<summary class="top-nav-item">Menu</summary>
+		<div class="top-nav-menu">
+			{
+				sidebar.map((entry) =>
+					entry.type === 'link' ? (
+						<a href={entry.href}>{entry.label}</a>
+					) : (
+						<>
+							<p class="top-nav-heading">{entry.label}</p>
+							{entry.entries.map(
+								(child) => child.type === 'link' && <a href={child.href}>{child.label}</a>
+							)}
+						</>
+					)
+				)
+			}
+		</div>
+	</details>
 </nav>
 
 <script>
@@ -78,21 +101,28 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 
 <style>
 	.top-nav {
-		border-bottom: 1px solid var(--sl-color-hairline);
+		display: flex;
+		justify-content: center;
 	}
 
-	.top-nav > ul {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.25rem 0.5rem;
+	.top-nav ul {
 		margin: 0;
-		padding: 0.5rem 1rem;
+		padding: 0;
 		list-style: none;
 	}
 
-	.top-nav li {
-		margin: 0;
+	/* Five entries only fit beside the title, search and icons on wide screens */
+	.top-nav-wide {
+		display: none;
+		gap: 0.25rem;
+	}
+	@media (min-width: 72rem) {
+		.top-nav-wide {
+			display: flex;
+		}
+		.top-nav-compact {
+			display: none;
+		}
 	}
 
 	.top-nav-item {
@@ -104,6 +134,7 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 		color: var(--sl-color-gray-2);
 		font-size: var(--sl-text-sm);
 		font-weight: 600;
+		white-space: nowrap;
 		text-decoration: none;
 		cursor: pointer;
 	}
@@ -138,7 +169,7 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 
 	.top-nav-menu {
 		position: absolute;
-		top: calc(100% + 0.35rem);
+		top: calc(100% + 0.5rem);
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 10;
@@ -151,6 +182,15 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 		border: 1px solid var(--sl-color-hairline-shade);
 		border-radius: 0.5rem;
 		box-shadow: var(--sl-shadow-md);
+	}
+
+	/* The compact menu opens from the right edge and scrolls if it is tall */
+	.top-nav-compact .top-nav-menu {
+		left: auto;
+		right: 0;
+		transform: none;
+		max-height: calc(100vh - var(--sl-nav-height) - 1rem);
+		overflow-y: auto;
 	}
 
 	.top-nav-menu a {
@@ -166,5 +206,17 @@ const shortLabel = (label: string) => SHORT_LABELS[label] ?? label;
 	.top-nav-menu a:focus-visible {
 		color: var(--sl-color-white);
 		background: var(--sl-color-gray-6);
+	}
+
+	.top-nav-heading {
+		margin: 0.6rem 0.75rem 0.2rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+	.top-nav-heading:first-child {
+		margin-top: 0.2rem;
 	}
 </style>
