@@ -10,8 +10,88 @@ import frameModel from '../../../assets/build/progress/week-5/frame-model.png';
 import plateDrawing from '../../../assets/build/progress/week-5/mounting-plate-drawing.png';
 import plateModel from '../../../assets/build/progress/week-5/mounting-plate-model.png';
 import plateDetail from '../../../assets/build/progress/week-5/mounting-plate-detail.png';
+import DownloadCard from '../../../components/DownloadCard.astro';
+import schematic from '../../../assets/build/progress/week-6/kicad-schematic.svg';
+import cadSide from '../../../assets/build/progress/week-6/vertical-assembly-side-view.png';
+import cadIso from '../../../assets/build/progress/week-6/vertical-assembly-isometric.png';
+import cadFront from '../../../assets/build/progress/week-6/vertical-assembly-front-view.png';
+import slicer from '../../../assets/build/progress/week-6/slicer-preview.png';
+import printEarly from '../../../assets/build/progress/week-6/print-early-attempt.jpg';
+import printTabs from '../../../assets/build/progress/week-6/print-corrected-tabs-side.jpg';
+import printBoss from '../../../assets/build/progress/week-6/print-corrected-boss-side.jpg';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 6 — 09/28/2026–10/04/2026" subtitle="KiCad schematic, part-detection options, stepper simulation, vertical assembly printing">
+
+**Josué** — Drew the project's schematic in KiCad: the power supplies (24 V for the motors; 12 V, with a converter down to 5 V, for the electromagnet and the controller), the Nucleo controller, both stepper drivers and motors, the W5500 Ethernet module, the e-stop and start buttons with their status LEDs, the limit switches, and the electromagnet driver. The part-detection sensor is not on it yet. Began comparing part-detection options (a time-of-flight sensor, an ultrasonic sensor, and an IR presence sensor) to choose the best one. Also built a small bench simulation that moves both steppers, with an LED standing in for the electromagnet signal.
+
+<figure>
+	<Image src={schematic} alt="KiCad schematic of Safe Dip showing the power supplies, Nucleo controller, two stepper drivers and motors, W5500 Ethernet module, e-stop and start buttons, limit switches, and the electromagnet driver" />
+	<figcaption>KiCad schematic, revision 1 (dated 10/01/2026). Click to zoom.</figcaption>
+</figure>
+
+<DownloadCard
+	fileType="PDF"
+	title="KiCad Schematic (Revision 1)"
+	description="The project schematic exported from KiCad, with the power, controller, motion, communications, operator controls, effector, and sensor sections."
+	meta="1 page · 112 KB · PDF"
+	href="/progress/week-6-kicad-schematic.pdf"
+/>
+
+<figure>
+	<video controls preload="metadata" playsinline class="progress-video" src="/progress/week-6-stepper-simulation.mp4"></video>
+	<figcaption>Bench simulation: the center stepper is the X axis, the left stepper is the Y axis, and the LED shows the electromagnet signal.</figcaption>
+</figure>
+
+**Adriano** — Worked on the vertical assembly, in both the 3D CAD model and the 3D printing. Printing was difficult at first because of the printer configuration, the material, and a lack of print supports. After these were corrected, the printed parts came out much better.
+
+<div class="media-grid">
+
+<figure>
+	<Image src={cadSide} alt="Side view of the vertical assembly part in CAD: a flat plate with mounting tabs on one side and a rounded boss with a short shaft on the other" />
+	<figcaption>Vertical assembly part in CAD, side view.</figcaption>
+</figure>
+
+<figure>
+	<Image src={cadIso} alt="Isometric CAD view of the vertical assembly plate with two tabs on its top edge" />
+	<figcaption>Isometric view of the plate.</figcaption>
+</figure>
+
+<figure>
+	<Image src={cadFront} alt="Front CAD view of the vertical assembly plate with two tabs on top and slots and pegs along the bottom edge" />
+	<figcaption>Front view of the plate.</figcaption>
+</figure>
+
+</div>
+
+<div class="media-grid">
+
+<figure>
+	<Image src={slicer} alt="Slicer preview of a vertical assembly part printed in PLA, with the tree supports shown in green" />
+	<figcaption>Slicer preview with tree supports (green); estimated print time 6 h 39 min.</figcaption>
+</figure>
+
+<figure>
+	<Image src={printEarly} alt="An early 3D print of the plate with a rough surface and uneven layers" />
+	<figcaption>An early print attempt.</figcaption>
+</figure>
+
+<figure>
+	<Image src={printTabs} alt="A corrected 3D print of the plate with a smooth surface, corner holes, and tabs along the top edge" />
+	<figcaption>After the corrections: the plate's tab side.</figcaption>
+</figure>
+
+<figure>
+	<Image src={printBoss} alt="A corrected 3D print showing the plate's other face with a raised square boss and a cylindrical shaft" />
+	<figcaption>After the corrections: the side with the boss and shaft.</figcaption>
+</figure>
+
+</div>
+
+**Group** — Held a check-in on progress and began the initial planning of the Weekly Task Plan.
+
+</Accordion>
 
 <Accordion title="Week 5 — 09/21/2026–09/27/2026" subtitle="Full firmware cycle wired up; open-loop stepper test; frame modeled; electromagnet tested">
 
