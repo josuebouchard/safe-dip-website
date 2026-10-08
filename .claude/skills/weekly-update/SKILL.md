@@ -1,14 +1,15 @@
 ---
 name: weekly-update
-description: Find which weeks are missing from the Safe Dip website's Progress Log, Time & Effort Tracking, Weekly Meetings and Weekly Task Plan, then walk the user through writing them and publish through a Vercel preview. Use when the user says "weekly update", "what's missing", "update the site", or shares what the team worked on, a partner's weekly report, hours, photos or videos, or notes from the advisor meeting.
+description: Find which weeks are missing from the Safe Dip website's Progress Log, Time & Effort Tracking, Weekly Meetings and Weekly Task Plan, then walk the user through writing them and publish through a Vercel preview. Use when the user says "weekly update", "what's missing", "update the site", or shares what the team worked on, a team member's weekly report, hours, photos or videos, or notes from the advisor meeting.
 ---
 
 # Weekly website update
 
 Each week the team records its work on three Build-section pages, plus the
-Weekly Task Plan. Read `AGENTS.md` first for the site's general conventions;
-this skill covers only the weekly procedure: **detect, interview, write,
-publish**.
+Weekly Task Plan. Read `AGENTS.md` first: it owns the site's conventions
+(media folders and classes, name forms, the release flow), and this skill points
+to it instead of repeating them. This skill covers the weekly procedure:
+**detect, interview, write, publish**.
 
 ## Step 0 — Detect what is missing
 
@@ -28,10 +29,25 @@ Weeks run Monday to Sunday; Week 1 began on 08/24/2026, so week N starts on
   Some weeks have no meeting (holidays), so ask; never assume one happened.
 - Whether a **Weekly Task Plan** page exists yet.
 - The **firmware commits** of each missing week (author date, all branches),
-  as memory joggers for Josué's section.
+  as memory joggers for whoever worked on the firmware. The script looks for the firmware
+  clone at `~/Documents/senior-project-code`; set `FIRMWARE_REPO` to point
+  elsewhere. The semester calendar (Week 1's date, the last week) is at the top
+  of `missing.py`.
 
 Tell the user the result in a sentence or two, then ask which weeks to do.
 Default: every missing week, oldest first, one week at a time.
+
+### When several weeks are missing (catching up)
+
+The team is sometimes a few weeks behind, so expect more than one week.
+
+- Work oldest first, and keep each entry dated to **its own week** (and each
+  meeting to its own date), never to today.
+- Do the interview and drafts week by week, but put them on **one branch with
+  one commit per week**, so the user reviews a single preview.
+- Memory fades: if the user can't recall a week's details, don't guess. Skip
+  that week for now; `missing.py` will keep listing it.
+- In Time & Effort, only the **newest** week keeps `open`.
 
 ## Step 1 — Interview, one week at a time
 
@@ -40,15 +56,24 @@ have ready. Gather the items in this order. **Never invent hours,
 measurements, test results or meeting details**: if an item is missing, ask,
 or leave it out and say so.
 
+**Keep the wording neutral.** Either team member, or someone else on their
+behalf, may be the one answering, so never assume who it is and never say "you"
+or "your work". Ask about each person by name ("What did Josué work on this
+week?", "How many hours did Adriano work?"), ask about every person the same
+way, and write the entries in the third person.
+
 | # | Item | Where it comes from | Rule |
 |---|---|---|---|
-| 1 | Josué's work | The commit list from step 0, plus the user's own words | Summarize the results in plain language; confirm with the user |
-| 2 | Adriano's work | Adriano's own report, relayed by the user | Never infer his work from anything else. No report means ask, not guess |
-| 3 | Group sessions | The user | Joint testing, planning, shopping; leave out if there were none |
-| 4 | Hours | The user, for Josué, Adriano and the group | If asked to *estimate* Josué's, derive it from commit times, state the method, and let the user adjust |
-| 5 | Photos and videos | Files the user points to | Ask what each shows |
-| 6 | Measured values | The user | Copy exactly as given, with units |
-| 7 | Advisor meeting | The user | Did it happen; date, location and time; led by; the notes |
+| 1 | Each member's work (Josué, then Adriano) | That member's own account: their report, or whoever is answering relaying it | Ask about each by name. Never infer anyone's work from anything else. No account means ask, not guess. Summarize the results in plain language and confirm |
+| 2 | Group sessions | Whoever is answering | Joint testing, planning, shopping; leave out if there were none |
+| 3 | Hours | Whoever is answering, asked for each person and for the group | Ask for each separately. If asked to *estimate*, say that commit times only show firmware work, so they are never the only basis for anyone's total; state the method and let the user adjust |
+| 4 | Photos and videos | Files the user points to | Ask what each shows, and whose work it belongs to |
+| 5 | Measured values | Whoever is answering | Copy exactly as given, with units |
+| 6 | Advisor meeting | Whoever is answering | Did it happen; date, location and time; led by; the notes |
+
+The commit list from step 0 can jog memory for firmware work, but it is not an
+account of anyone's week: it leaves out reports, CAD, printing, planning and
+everything else that leaves no commit.
 
 Use `AskUserQuestion` for short answers such as hours or "was there a meeting".
 
@@ -79,13 +104,10 @@ Add a new `<Accordion>` at the **top** of the list (most recent first):
 
 - Keep each person's paragraph concise: what was done and why it matters, not
   a commit-by-commit list.
-- Photos and CAD shots: copy them into `src/assets/build/progress/week-N/`
-  with descriptive file names, import them at the top of the file, and place
-  each in a `<figure>` with `<Image>` and a `<figcaption>`. Group related
-  images in `<div class="media-grid">`. Write specific `alt` text.
-- Videos: copy them into `public/progress/week-N-<topic>.mp4` and embed them
-  with `<video controls preload="metadata" playsinline class="progress-video"
-  src="/progress/...">` inside a `<figure>`.
+- Photos, CAD shots and videos follow the media conventions in `AGENTS.md`
+  (Images): files go in `src/assets/build/progress/week-N/` or
+  `public/progress/`, each inside a `<figure>` with a `<figcaption>`, related
+  images in a `media-grid`. Write specific `alt` text.
 - Describe only what the source material says. Don't add details about how a
   test was run, or what a CAD feature is for, unless the user said so.
 
@@ -109,7 +131,9 @@ previous week (only the newest week is expanded):
 
 The total in the subtitle is computed automatically. Each `text` is a
 one-to-three-sentence summary of that person's Progress Log paragraph, and it
-should justify the hours logged.
+should justify the hours logged. Use the names exactly as above (this page's
+established form). Old entries predate the Monday-to-Sunday convention (Week 1
+here reads 08/23 – 08/30); leave them unless asked.
 
 ### Weekly Meetings — `src/content/docs/build/weekly-meetings.mdx`
 
@@ -147,20 +171,19 @@ slipped tasks to a later week with a note. The original plan is never deleted.
 
 - If step 0 reports **no Task Plan page**, tell the user and offer to create it
   from their spreadsheet (`EET4950_Weekly_Task_Plan_Safe_Dip.xlsx`, one row per
-  task) as `src/content/docs/build/weekly-task-plan.mdx`, registered in the
-  sidebar in `astro.config.mjs`.
+  task). The course template says to post it "under the Project Timeline",
+  which on this site is Build → Final Timeline: ask whether they prefer a
+  section of `final-timeline.mdx` or a page of its own right after it in the
+  sidebar (`build/weekly-task-plan`, registered in `astro.config.mjs`).
 - If it exists, ask the user for each task's outcome for the week; do not
   guess a status. Also ask for any pivots, and for the blockers that Dr. Socarras
   asks about at the Monday check-in.
 
 ## Step 4 — Check and publish
 
-1. Work on a branch, for example `week-N-update`.
-2. Run `npm run build`; it must finish without errors.
-3. Check the new entries in a browser (`npx astro preview`): expand the new
+Follow the release flow in `AGENTS.md` (Deploying) on a branch such as
+`week-N-update`, plus these weekly checks before pushing:
+
+1. Check the new entries in a browser (`npx astro preview`): expand the new
    week, confirm every image loads, and confirm videos fit on screen.
-4. Run `missing.py` again: the weeks just written must no longer be listed.
-5. Push the branch so Vercel builds a preview, and give the user the branch
-   name to review.
-6. Only after the user approves: fast-forward `main` to the branch, push, and
-   delete the branch locally and on GitHub.
+2. Run `missing.py` again: the weeks just written must no longer be listed.
