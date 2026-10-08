@@ -1,34 +1,67 @@
 ---
 name: weekly-update
-description: Add a week's entries to the Safe Dip website's Progress Log, Time & Effort Tracking, and Weekly Meetings pages, and publish them through a Vercel preview. Use when the user shares what the team worked on this week, a partner's weekly report, hours worked, photos or videos of progress, or notes from the weekly advisor meeting.
+description: Find which weeks are missing from the Safe Dip website's Progress Log, Time & Effort Tracking, Weekly Meetings and Weekly Task Plan, then walk the user through writing them and publish through a Vercel preview. Use when the user says "weekly update", "what's missing", "update the site", or shares what the team worked on, a partner's weekly report, hours, photos or videos, or notes from the advisor meeting.
 ---
 
 # Weekly website update
 
-Each week the team records its work on three Build-section pages. Read
-`AGENTS.md` first for the site's general conventions; this skill covers only
-the weekly procedure.
+Each week the team records its work on three Build-section pages, plus the
+Weekly Task Plan. Read `AGENTS.md` first for the site's general conventions;
+this skill covers only the weekly procedure: **detect, interview, write,
+publish**.
 
-## Weeks
+## Step 0 — Detect what is missing
 
-- Weeks run Monday to Sunday. Week 1 began on 08/24/2026, so week N starts on
-  08/24/2026 + 7 × (N − 1) days.
-- Work belongs to the week it happened in. If the user's summary spans two
-  weeks, check the previous week's entry before repeating anything.
+Always start here, even if the user names a specific week. From the repo root:
 
-## What to ask for — never invent
+```bash
+python3 .claude/skills/weekly-update/missing.py            # today
+python3 .claude/skills/weekly-update/missing.py --today 2026-10-20   # any date
+```
 
-Before writing, make sure you have the following. If something is missing, ask
-for it. Never fill in hours, measurements, test results, or meeting details on
-your own.
+Weeks run Monday to Sunday; Week 1 began on 08/24/2026, so week N starts on
+08/24/2026 + 7 × (N − 1) days. The script reads the three pages and reports:
 
-- Hours for each person and for group work. If the user asks you to *estimate*
-  their hours, base the estimate on the week's commit times in the firmware
-  repository, say how you estimated it, and let them adjust it.
-- Any measured values (currents, resistances, dimensions) exactly as given.
-- For a meeting: the date, location and time, who led it, and the notes.
+- **Progress Log** and **Time & Effort**: weeks that have ended and have no
+  entry. The current week is optional until its Sunday.
+- **Weekly Meetings**: weeks whose Monday has passed and have no minutes.
+  Some weeks have no meeting (holidays), so ask; never assume one happened.
+- Whether a **Weekly Task Plan** page exists yet.
+- The **firmware commits** of each missing week (author date, all branches),
+  as memory joggers for Josué's section.
 
-## 1. Progress Log — `src/content/docs/build/progress-log.mdx`
+Tell the user the result in a sentence or two, then ask which weeks to do.
+Default: every missing week, oldest first, one week at a time.
+
+## Step 1 — Interview, one week at a time
+
+Open each week by saying what you will ask for, so the user knows what to
+have ready. Gather the items in this order. **Never invent hours,
+measurements, test results or meeting details**: if an item is missing, ask,
+or leave it out and say so.
+
+| # | Item | Where it comes from | Rule |
+|---|---|---|---|
+| 1 | Josué's work | The commit list from step 0, plus the user's own words | Summarize the results in plain language; confirm with the user |
+| 2 | Adriano's work | Adriano's own report, relayed by the user | Never infer his work from anything else. No report means ask, not guess |
+| 3 | Group sessions | The user | Joint testing, planning, shopping; leave out if there were none |
+| 4 | Hours | The user, for Josué, Adriano and the group | If asked to *estimate* Josué's, derive it from commit times, state the method, and let the user adjust |
+| 5 | Photos and videos | Files the user points to | Ask what each shows |
+| 6 | Measured values | The user | Copy exactly as given, with units |
+| 7 | Advisor meeting | The user | Did it happen; date, location and time; led by; the notes |
+
+Use `AskUserQuestion` for short answers such as hours or "was there a meeting".
+
+The site is public and the firmware repository is private. Describe firmware
+work by what it achieved ("added homing on the limit switches"). Never paste
+code, commit hashes, credentials, or private URLs.
+
+Then **show the user the drafts** (the Progress Log paragraphs, the Time &
+Effort lines, the minutes) and wait for their OK before writing any file.
+
+## Step 2 — Write the entries
+
+### Progress Log — `src/content/docs/build/progress-log.mdx`
 
 Add a new `<Accordion>` at the **top** of the list (most recent first):
 
@@ -56,7 +89,7 @@ Add a new `<Accordion>` at the **top** of the list (most recent first):
 - Describe only what the source material says. Don't add details about how a
   test was run, or what a CAD feature is for, unless the user said so.
 
-## 2. Time & Effort Tracking — `src/content/docs/build/time-and-effort.mdx`
+### Time & Effort Tracking — `src/content/docs/build/time-and-effort.mdx`
 
 Add a new `<EffortWeek>` at the top, and **move `open` to it** from the
 previous week (only the newest week is expanded):
@@ -78,7 +111,7 @@ The total in the subtitle is computed automatically. Each `text` is a
 one-to-three-sentence summary of that person's Progress Log paragraph, and it
 should justify the hours logged.
 
-## 3. Weekly Meetings — `src/content/docs/build/weekly-meetings.mdx`
+### Weekly Meetings — `src/content/docs/build/weekly-meetings.mdx`
 
 This page holds the minutes of the weekly **advisor** meetings with
 Dr. Mayra Socarras, not team work sessions (those go in the Progress Log under
@@ -105,13 +138,29 @@ Dr. Mayra Socarras, not team work sessions (those go in the Progress Log under
   outcomes (for example, "Resolution: …") when an item has already been dealt
   with.
 
-## 4. Check and publish
+## Step 3 — Weekly Task Plan
+
+Dr. Socarras requires the plan (Weeks 6 to 15, with owners) to be posted on the
+site under the Project Timeline, and updated **every Sunday**: mark each task of
+the past week Done, Partial or Slipped, record the actual work, and move
+slipped tasks to a later week with a note. The original plan is never deleted.
+
+- If step 0 reports **no Task Plan page**, tell the user and offer to create it
+  from their spreadsheet (`EET4950_Weekly_Task_Plan_Safe_Dip.xlsx`, one row per
+  task) as `src/content/docs/build/weekly-task-plan.mdx`, registered in the
+  sidebar in `astro.config.mjs`.
+- If it exists, ask the user for each task's outcome for the week; do not
+  guess a status. Also ask for any pivots, and for the blockers that Dr. Socarras
+  asks about at the Monday check-in.
+
+## Step 4 — Check and publish
 
 1. Work on a branch, for example `week-N-update`.
 2. Run `npm run build`; it must finish without errors.
 3. Check the new entries in a browser (`npx astro preview`): expand the new
    week, confirm every image loads, and confirm videos fit on screen.
-4. Push the branch so Vercel builds a preview, and give the user the branch
+4. Run `missing.py` again: the weeks just written must no longer be listed.
+5. Push the branch so Vercel builds a preview, and give the user the branch
    name to review.
-5. Only after the user approves: fast-forward `main` to the branch, push, and
+6. Only after the user approves: fast-forward `main` to the branch, push, and
    delete the branch locally and on GitHub.

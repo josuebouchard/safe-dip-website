@@ -211,7 +211,9 @@ Pages with a sidebar render Starlight's stock header unchanged.
 
 Updating the Progress Log, Time & Effort Tracking, and Weekly Meetings pages
 each week follows a fixed procedure — see the `weekly-update` skill in
-`.claude/skills/weekly-update/SKILL.md`.
+`.claude/skills/weekly-update/SKILL.md`. Start it by asking for a "weekly
+update" (or `/weekly-update`): it first detects which weeks are missing, then
+interviews the user for what to write.
 
 ## Theming
 
