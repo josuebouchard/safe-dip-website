@@ -107,7 +107,9 @@ Add a new `<Accordion>` at the **top** of the list (most recent first):
 - Photos, CAD shots and videos follow the media conventions in `AGENTS.md`
   (Images): files go in `src/assets/build/progress/week-N/` or
   `public/progress/`, each inside a `<figure>` with a `<figcaption>`, related
-  images in a `media-grid`. Write specific `alt` text.
+  images in a `media-grid`. Write specific `alt` text. **Strip the metadata of
+  every photo and video first** (the command is in `AGENTS.md`): phone files
+  carry GPS location, device and time, and the repository is public.
 - Describe only what the source material says. Don't add details about how a
   test was run, or what a CAD feature is for, unless the user said so.
 

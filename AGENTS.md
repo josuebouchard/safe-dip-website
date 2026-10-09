@@ -193,6 +193,23 @@ kept deliberately clean of that. If you need an illustrative image, prefer
 a real photo/diagram from the team or `senior-proposal-typst/images/`; ask
 before adding anything sourced from the web.
 
+**Strip metadata from every photo before committing it.** Phone photos carry
+the GPS location, device and time they were taken, and this repository is
+public. The build strips the images it serves, but the originals in the repo
+(and its history) are downloadable. Use:
+
+```bash
+magick in.jpg -auto-orient -resize 1800x1800 -strip -quality 82 out.jpg
+```
+
+(`-auto-orient` first, so removing the rotation tag doesn't turn the photo
+sideways.) For video, add `-map_metadata -1` to the `ffmpeg` command. Check the
+whole repo for leftovers with this (it prints nothing when clean):
+
+```bash
+git ls-files | grep -iE '\.(jpe?g|png|heic|webp)$' | while read -r f; do if magick identify -format '%[EXIF:GPSLatitude]' "$f" 2>/dev/null | grep -q .; then echo "GPS: $f"; fi; done
+```
+
 Media conventions for the progress log:
 
 - Photos and CAD shots go in `src/assets/build/progress/week-N/`, imported in
