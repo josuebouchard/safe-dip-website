@@ -11,7 +11,8 @@ Documentation website for **Safe Dip**, an ECET senior design capstone project a
 ├── public/                     static assets served as-is: favicons, the proposal PDF/PPTX
 ├── src/
 │   ├── assets/                 images referenced from content (Astro-optimized)
-│   ├── components/              Accordion, DownloadCard, Lightbox, SiteFooter, TeamMember
+│   ├── components/              Accordion, DownloadCard, EffortWeek, Lightbox, SiteFooter,
+│   │                           SiteHeader, TeamMember, TopNav
 │   ├── content/
 │   │   └── docs/               all documentation pages (Markdown/MDX)
 │   │       ├── about.mdx
@@ -24,7 +25,8 @@ Documentation website for **Safe Dip**, an ECET senior design capstone project a
 │   │   └── index.astro         custom landing page (NOT part of the docs collection)
 │   └── styles/
 │       └── custom.css          blue theme, light + dark mode
-├── senior-proposal-typst/      Typst source for the written proposal (see AGENTS.md)
+├── senior-proposal-typst/      Typst source for the proposal report, as submitted (see AGENTS.md)
+├── .claude/skills/             weekly-update skill: finds missing weeks, guides the entries
 └── astro.config.mjs            site config, sidebar structure, integrations
 ```
 
@@ -41,7 +43,7 @@ Sidebar navigation is configured in `astro.config.mjs` — add a new page by cre
 
 ## Deploying
 
-The site is a fully static build (`npm run build` → `dist/`), so it can be hosted for free on either GitHub Pages or Vercel.
+The site is a fully static build (`npm run build` → `dist/`), so it can be hosted for free on either GitHub Pages or Vercel. **It is currently hosted on Vercel** (production at `https://safe-dip.vercel.app`, built from `main`; every other branch gets a preview URL). Option A is kept only as an alternative.
 
 ### Option A — GitHub Pages
 
@@ -96,5 +98,5 @@ The site is a fully static build (`npm run build` → `dist/`), so it can be hos
 
 ## Content notes
 
-- Most pages are populated from the team's actual senior design proposal and project website; a handful of pages not yet reached (Time & Effort tracking, the final report/presentation) still carry `TODO` placeholders — see `AGENTS.md` for what's real vs. placeholder and where content is sourced from.
-- The `senior-proposal-typst/` folder (Typst source for the written proposal) is kept in the repo as reference material and to regenerate diagrams/charts; it is not part of the built site itself.
+- The Proposal pages come from the team's senior design proposal. The Build pages start as carried-forward copies; the weekly pages (Progress Log, Time & Effort, Weekly Meetings) are written each week from the team's own notes, using the `weekly-update` skill. Pages still carrying `TODO` placeholders include Final Testing & Results (the result cells) and the "Weeks" column of the Final Timeline. See `AGENTS.md` for what is real vs. placeholder and where content is sourced from.
+- The `senior-proposal-typst/` folder (Typst source for the proposal report, as submitted) is kept in the repo as reference material and to regenerate diagrams/charts; it is not part of the built site itself. The live report is edited in the Typst web app and is ahead of that snapshot.
