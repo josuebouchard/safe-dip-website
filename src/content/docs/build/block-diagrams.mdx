@@ -5,7 +5,7 @@ description: As-built system block diagrams and software flow charts, carried fo
 
 import { Image } from 'astro:assets';
 import systemDiagram from '../../../assets/proposal/diagrams/system-block-diagram.svg';
-import hardwareDiagram from '../../../assets/proposal/diagrams/hardware-architecture.svg';
+import hardwareDiagram from '../../../assets/build/diagrams/hardware-architecture.svg';
 import mainStructure from '../../../assets/build/diagrams/software-main-structure.svg';
 import normalCycle from '../../../assets/build/diagrams/software-normal-cycle.svg';
 import sequencer from '../../../assets/build/diagrams/software-sequencer.svg';
@@ -25,7 +25,7 @@ The power distribution module converts wall power into the voltages the other mo
 
 <Image src={hardwareDiagram} alt="Hardware architecture diagram of Safe Dip" />
 
-This diagram expands the functional modules above into the proposed electrical implementation, identifying power-distribution paths, control signals, sensor connections, communication interfaces, and actuator drivers — and distinguishing the high-power circuitry used by motion/end-effector from the low-voltage circuitry used by processing/sensing/communications.
+This diagram expands the functional modules above into the electrical implementation, identifying power-distribution paths, control signals, sensor connections, communication interfaces, and actuator drivers — and distinguishing the high-power circuitry used by motion/end-effector from the low-voltage circuitry used by processing/sensing/communications.
 
 ## Software Flow
 
