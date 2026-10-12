@@ -1,6 +1,6 @@
 ---
-title: Power Budget (Actual)
-description: Current draw of each load and available supply capacity, with the stepper motors on the 24 V rail.
+title: Power budget of the project
+description: Voltage, current, and power of each load, and the load on each power rail compared with its supply rating.
 ---
 
 The Safe Dip prototype uses two independent AC-DC power adapters. The 24 V supply provides a maximum of 14.6 A (~350.4 W) and powers the movement subsystem. The 12 V adapter provides a maximum of 5 A (60 W) and powers the electromagnet and low-voltage circuitry. Together, the two adapters provide a total rated output capacity of approximately 410.4 W.
@@ -27,3 +27,12 @@ The Safe Dip prototype uses two independent AC-DC power adapters. The 24 V suppl
 | | | | **Total available power** | **410.4 W** |
 
 Total operational power draw (177.7 W) stays within the 410.4 W available from the two supplies, leaving margin for inrush current and future additions.
+
+## Load per Power Rail
+
+| Power Rail | Loads | Load (W) | Adapter Rating (W) | Share of Rating |
+|---|---|---|---|---|
+| 24 V | Two stepper motors and two stepper motor drivers | 158.4 | 350.4 | 45% |
+| 12 V | Electromagnet, and, through the 12 V to 5 V buck converter, the electromagnet driver, time-of-flight sensor, Ethernet module, and STM32 (conversion losses neglected) | 19.3 | 60 | 32% |
+| | **Total** | **177.7** | **410.4** | **43%** |
+

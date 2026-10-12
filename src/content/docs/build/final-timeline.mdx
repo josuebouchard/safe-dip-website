@@ -1,21 +1,25 @@
 ---
-title: Final Timeline
-description: Sixteen-week implementation schedule for the build semester.
+title: Proposed and actual project timelines
+description: The proposed sixteen-week schedule, the modified schedule for Aug 24 – Dec 4, 2026, and the Weekly Task Plan.
 ---
 
 import { Image } from 'astro:assets';
 import gantt from '../../../assets/proposal/diagrams/gantt-timeline.svg';
+import ganttModified from '../../../assets/build/diagrams/gantt-modified.svg';
 
-The proposed implementation schedule spans sixteen weeks. Mechanical construction and firmware development proceed in parallel so each subsystem can be tested soon after installation. The schedule reserves the final weeks for integrated testing, debugging, refinement, and presentation preparation.
+The project is planned in two stages. The proposed schedule was drawn up for the proposal and spans sixteen weeks. The modified schedule covers August 24 to December 4, 2026 (Weeks 1–15) and reflects the work done so far; it is followed by the Weekly Task Plan, which assigns an owner to every task of Weeks 6 to 15.
 
-## Gantt Chart
+## Proposed timeline
+
+Mechanical construction and firmware development proceed in parallel so each subsystem can be tested soon after installation. The schedule reserves the final weeks for integrated testing, debugging, refinement, and the presentation.
 
 <figure>
 	<Image src={gantt} alt="Sixteen-week Safe Dip implementation schedule as a Gantt chart, grouped into preparation, sensors and conveyor integration, horizontal axis, vertical axis, integration and validation, and project closeout" />
-	<figcaption>Sixteen-week implementation schedule. Yellow bars are owned by Adriano, red by Josué, and blue by both.</figcaption>
+	<figcaption>Proposed sixteen-week implementation schedule. Yellow bars are owned by Adriano, red by Josué, and blue by both.</figcaption>
 </figure>
 
-## Schedule by Task
+### Proposed schedule by task
+
 
 | Phase | Task | Weeks | Owner |
 |---|---|---|---|
@@ -37,5 +41,132 @@ The proposed implementation schedule spans sixteen weeks. Mechanical constructio
 | Project Closeout | Prepare the presentation | 15–16 | Both |
 | Project Closeout | Present the project | 16–17 | Both |
 
-{/* TODO: Once the semester's real dates are locked in, replace the "Weeks"
-    column and the chart with calendar dates. */}
+## Modified timeline
+
+The modified schedule is dated, runs from August 24 to December 4, 2026, and marks the five key dates: October 11 (Checkpoint 1), October 25 (Checkpoint 2), November 13 (report draft), November 20 (final report), and December 4 (presentation). The external conveyor interfaces were removed from the project scope, and the software, electrical, mechanical-design, and documentation work that runs alongside the construction is shown as its own group. The first letter of each label is the person leading the task, and the second, if any, is the person helping.
+
+<figure>
+	<Image src={ganttModified} alt="Modified Safe Dip implementation schedule from August 24 to December 4, 2026, Weeks 1 to 15, as a Gantt chart with milestones on October 11, October 25, November 13, November 20, and December 4" />
+	<figcaption>Modified implementation schedule, August 24 – December 4, 2026, as of October 12, 2026. Yellow bars are owned by Adriano, red by Josué, and blue by both.</figcaption>
+</figure>
+
+## Weekly Task Plan
+
+Each task has an owner, who leads it, and, where applicable, a second person who helps. The plan is updated every Sunday: each task of the past week is marked Done, Partial, or Slipped, the actual work is recorded, and slipped tasks are moved to a later week with a note. The original rows are never deleted. A dash in the Status column means the week's outcome has not been recorded yet.
+
+### Week 6 — week of 09/28/2026
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Rewrite report software section + 4 flowcharts | Josué | — | Done | Section and flowcharts match the firmware |
+| Modbus map of cycle status and parameters | Josué | — | Partial | On a branch; not yet tested on the board |
+| Fault reporting: latched e-stop, op. state | Josué | — | Partial | On a branch; bench test moved to Week 7 |
+| Limit-switch inputs and homing operation | Josué | — | Partial | On a branch; switches not yet mounted |
+| Document power rails and open-drain wiring | Josué | — | Partial | In the wiring notes; E5V supply |
+| Website: flowcharts, nav fix, Week 5 log | Josué | — | Done | Posted on the team website |
+| CAD: bearing block to plate connections | Adriano | — | — | (Adriano to complete) |
+
+### Week 6 — week of 10/12/2026
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Fabricate mounting plate and 3D-printed carriage parts; mount bearing blocks on rails | Adriano | — | — | — |
+
+### Week 7 — week of 10/05/2026
+
+**Checkpoint 1 – Design Freeze due Sun Oct 11**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Freeze the X-carriage and Y-axis leadscrew CAD; release part drawings and cut list | Adriano | — | — | — |
+| Update block diagrams: 24 V supply, open-drain outputs (no buffer), limit switches, E5V | Josué | — | — | — |
+| Draw KiCad schematic sheets for power, processing, movement, effector, e-stop and sensing | Josué | — | Partial | — |
+| Test Modbus registers on the board with madbus-cli | Josué | — | — | — |
+| Bench-test electromagnet driver: IRLZ44N at 3.3 V gate, flyback diode, coil current | Josué | Adriano | — | — |
+| Write and submit Checkpoint 1 (Design Freeze) report | Josué | Adriano | — | — |
+| Add the Weekly Task Plan to the website under the Project Timeline | Josué | — | — | — |
+
+### Week 8 — week of 10/12/2026
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Install X-axis motor mount and GT2 belt drive on the frame | Adriano | — | — | — |
+| Mount X-axis limit switch; wire X driver, motor and switch to the Nucleo | Josué | — | — | — |
+| Calibrate X-axis steps/mm; test homing and ±1 cm positioning (R-02) | Adriano | Josué | — | — |
+| Decide the workpiece-detection sensor (time-of-flight, ultrasonic, or IR presence) and where it mounts at the input station | Josué | Adriano | — | — |
+| Integrate the chosen sensor and a wait-for-part operation (enable I2C if time-of-flight) | Josué | — | — | — |
+
+### Week 9 — week of 10/19/2026
+
+**Checkpoint 2 – Mid-Build and Viability due Sun Oct 25**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Install Y-axis leadscrew assembly, coupler and magnet holder | Adriano | — | — | — |
+| Mount Y-axis limit switch; wire Y driver, motor and switch | Josué | — | — | — |
+| Wire electromagnet driver to the Nucleo; test engage/release from firmware | Josué | — | — | — |
+| Calibrate Y-axis steps/mm; test immersion depth ±1 cm (R-04) | Adriano | Josué | — | — |
+| Run first two-axis cycle without a part: home, pick, dip, deposit, release | Josué | Adriano | — | — |
+| Record viability video; write and submit Checkpoint 2 report | Josué | Adriano | — | — |
+
+### Week 10 — week of 10/26/2026
+
+**W deadline Fri Oct 30**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Wire NC e-stop into the 24 V driver supply and to the e-stop input | Adriano | — | — | — |
+| Verify e-stop cuts driver power and restart needs a start press (R-07, R-08) | Adriano | Josué | — | — |
+| Add limit-switch boundary fault: stop and latch if a switch trips away from 0 | Josué | — | — | — |
+| Run cycles with a part: retention and dwell time ±1 s (R-03, R-05) | Adriano | Josué | — | — |
+| Install fuse holder; tidy and label wiring | Adriano | — | — | — |
+
+### Week 11 — week of 11/02/2026
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Run full unattended cycle with part detection (R-01, R-06) | Josué | Adriano | — | — |
+| Verify state and faults are reported over Modbus during a cycle (R-09) | Josué | — | — | — |
+| Tune speed and acceleration for cycle time | Josué | — | — | — |
+| Start report draft: as-built hardware and software chapters | Josué | Adriano | — | — |
+
+### Week 12 — week of 11/09/2026
+
+**Report draft due Fri Nov 13**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Run 10 consecutive cycles; record cycle time, depth and dwell (R-10) | Josué | Adriano | — | — |
+| Run full cycle with a 1 lb payload (R-11) | Adriano | Josué | — | — |
+| Write test results chapter; publish Final Testing & Results page | Josué | — | — | — |
+| Complete and submit report draft (Fri Nov 13) | Josué | Adriano | — | — |
+
+### Week 13 — week of 11/16/2026
+
+**Final report due Fri Nov 20**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Fix issues found in testing; retest any failed requirement | Josué | Adriano | — | — |
+| Update budget and power budget with as-built parts and measured currents | Adriano | — | — | — |
+| Address draft feedback; submit final report (Fri Nov 20) | Josué | Adriano | — | — |
+
+### Week 14 — week of 11/23/2026
+
+**Thanksgiving week**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Draft presentation slides | Adriano | Josué | — | — |
+| Record final demo video | Josué | Adriano | — | — |
+| Website: final timeline, final report and test results pages | Josué | — | — | — |
+
+### Week 15 — week of 11/30/2026
+
+**Presentation Fri Dec 4**
+
+| Task | Owner | With | Status | Actual work and notes |
+|---|---|---|---|---|
+| Rehearse presentation; prepare demo setup and transport checklist | Adriano | Josué | — | — |
+| Present the project (Fri Dec 4) | Both | — | — | — |
+| Upload final presentation and report to the website | Josué | — | — | — |

@@ -1,6 +1,6 @@
 ---
-title: Engineering Specifications (Final)
-description: Final subsystem specifications, carried forward from the senior design proposal.
+title: Engineering Specifications
+description: Specifications for each module and its components, with the link to the CAD drawings and dimensions.
 ---
 
 Where [Engineering Requirements](/build/engineering-requirements/) state *what* the system must do, specifications pin down the quantified target value for each subsystem module.
@@ -17,7 +17,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
-| Normally-closed emergency stop button | Must be able to handle peak power coming from the AC-DC power supply (motors). Requires manual reset before power is restored. | Verified by actuating the E-stop during operation and confirming output power is cut. |
+| Emergency stop button | Must offer a normally closed channel for cutting the power to the motors. Must be able to handle peak power coming from the AC-DC power supply (motors). Requires manual reset before power is restored. | Verified by actuating the E-stop during operation and confirming output power is cut. |
 
 ### Processing
 
@@ -51,3 +51,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
 | Ethernet module | Operating voltage compatible with the processing module. SPI interface compatible with the microcontroller. Reports system state, axis positions, and fault events. Supports Ethernet and TCP socket communication. | Verify communication between the STM32 and the Ethernet module over SPI. Establish a TCP connection from an external computer and confirm data can be transmitted and received. |
+
+## CAD Drawings and Dimensions
+
+The CAD model of the current design, with the principal dimensions of the prototype, is on the [CAD Drawings & Renderings](/build/cad/) page.

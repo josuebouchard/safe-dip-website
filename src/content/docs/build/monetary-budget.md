@@ -1,5 +1,5 @@
 ---
-title: Monetary Budget (Actual)
+title: Project Expenses
 description: Itemized parts list and cost, carried forward from the senior design proposal.
 ---
 

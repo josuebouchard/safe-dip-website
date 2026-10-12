@@ -1,5 +1,5 @@
 ---
-title: References
+title: References/Citations
 description: Sources cited throughout the Safe Dip proposal, copied from the senior design proposal's bibliography.
 ---
 

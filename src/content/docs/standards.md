@@ -1,5 +1,5 @@
 ---
-title: Engineering Standards & Compliance Codes
+title: Engineering Standards and Compliance Codes
 description: Industry standards shaping Safe Dip's design, plus the prototype's hazard analysis, copied from the senior design proposal.
 ---
 
