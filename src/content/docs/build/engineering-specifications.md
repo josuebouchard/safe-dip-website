@@ -9,7 +9,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
-| AC-DC power supply (motors) | Input: 110 VAC, 60 Hz. Output: 24–48 VDC (preferentially 48 VDC). Must supply sufficient current for two stepper motors at peak load. | Verified by measuring output voltage under full load with a multimeter. |
+| AC-DC power supply (motors) | Input: 110 VAC, 60 Hz. Output: 24 VDC. Must supply sufficient current for two stepper motors at peak load. | Verified by measuring output voltage under full load with a multimeter. |
 | AC-DC power supply (12 V) | Input: 110 VAC, 60 Hz. Output: 12 VDC. Ripple and noise within acceptable limits for logic, sensors, and effector. | Verified by measuring output voltage and ripple with an oscilloscope under full load. |
 | DC-DC buck converter (12 V → 5 V) | Input: 12 VDC. Output: 5 VDC. Ripple and noise within acceptable limits for logic and sensors. | Verified by measuring output voltage and ripple with an oscilloscope under full load. |
 
@@ -24,7 +24,6 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
 | Microcontroller | Operates at 3.3 VDC. Sufficient GPIO for stepper control, sensor inputs, and effector output. Supports USB UART for baseline serial communications. Capable of driving a Pulse Train Output (PTO) at the frequency set by the stepper and stepper controller. | Verified using an oscilloscope to check GPIO voltage and PTO frequency. |
-| Line buffer | Input voltage: 3.3 VDC. Output voltage: 5 VDC. | Verified using a multimeter to measure the voltage on High and Low signals. |
 
 ### Sensing
 
@@ -38,7 +37,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
 | Stepper motors (×2) | NEMA 23 frame. Holding torque sufficient to lift rated payload on the vertical axis and drive the belt under load on the horizontal axis. Positional accuracy: ±1 cm. | Verified by commanding each axis to a known target and measuring offset with a ruler. |
-| Stepper motor drivers (×2) | Compatible with 24–48 VDC supply. Microstepping support. Current output set to motor rating. | Verified by confirming smooth motion on both axes across the full travel range. |
+| Stepper motor drivers (×2) | Compatible with a 24 VDC supply. Microstepping support. Current output set to motor rating. | Verified by confirming smooth motion on both axes across the full travel range. |
 
 ### End Effector
 
