@@ -1,50 +1,17 @@
 ---
 title: Proposed and actual project timelines
-description: The proposed sixteen-week schedule, the modified schedule for Aug 24 – Dec 4, 2026, and the Weekly Task Plan.
+description: The dated implementation schedule for Aug 24 – Dec 4, 2026, and the Weekly Task Plan.
 ---
 
 import { Image } from 'astro:assets';
-import gantt from '../../../assets/proposal/diagrams/gantt-timeline.svg';
 import ganttModified from '../../../assets/build/diagrams/gantt-modified.svg';
 import DownloadCard from '../../../components/DownloadCard.astro';
 
-The project is planned in two stages. The proposed schedule was drawn up for the proposal and spans sixteen weeks. The modified schedule covers August 24 to December 4, 2026 (Weeks 1–15) and reflects the work done so far; it is followed by the Weekly Task Plan, which assigns an owner to every task of Weeks 6 to 15.
+The implementation schedule covers August 24 to December 4, 2026 (Weeks 1–15) and reflects the work done so far. It is followed by the Weekly Task Plan, which assigns an owner to every task of Weeks 6 to 15.
 
-## Proposed timeline
+## Timeline
 
-Mechanical construction and firmware development proceed in parallel so each subsystem can be tested soon after installation. The schedule reserves the final weeks for integrated testing, debugging, refinement, and the presentation.
-
-<figure>
-	<Image src={gantt} alt="Sixteen-week Safe Dip implementation schedule as a Gantt chart, grouped into preparation, sensors and conveyor integration, horizontal axis, vertical axis, integration and validation, and project closeout" />
-	<figcaption>Proposed sixteen-week implementation schedule. Yellow bars are owned by Adriano, red by Josué, and blue by both.</figcaption>
-</figure>
-
-### Proposed schedule by task
-
-
-| Phase | Task | Weeks | Owner |
-|---|---|---|---|
-| Preparation | Gather materials and components | 1–2 | Both |
-| Preparation | Assemble the metal frame | 2–3 | Adriano |
-| Sensors & Conveyor Integration | Install motion sensors | 2–3 | Both |
-| Sensors & Conveyor Integration | Program and test sensors | 2–4 | Josué / Both |
-| Sensors & Conveyor Integration | Integrate external conveyors | 3–5 | Adriano / Both |
-| Sensors & Conveyor Integration | Program and test conveyor interface | 3–5 | Josué / Both |
-| Horizontal Axis | Install horizontal-axis mechanism | 5–8 | Adriano / Both |
-| Horizontal Axis | Program and test horizontal-axis motion | 5–8 | Josué / Both |
-| Vertical Axis | Install vertical-axis mechanism | 8–12 | Adriano / Both |
-| Vertical Axis | Program and test vertical-axis motion | 8–12 | Josué / Both |
-| Integration & Validation | Debug axes and sensors | 11–13 | Both |
-| Integration & Validation | Test the complete system | 12–13 | Both |
-| Integration & Validation | Debug the complete system | 13–15 | Josué / Both |
-| Integration & Validation | Test rated load under laboratory conditions | 13–15 | Adriano / Both |
-| Project Closeout | Complete final refinements | 15–16 | Both |
-| Project Closeout | Prepare the presentation | 15–16 | Both |
-| Project Closeout | Present the project | 16–17 | Both |
-
-## Modified timeline
-
-The modified schedule is dated, runs from August 24 to December 4, 2026, and marks the five key dates: October 11 (Checkpoint 1), October 25 (Checkpoint 2), November 13 (report draft), November 20 (final report), and December 4 (presentation). The external conveyor interfaces were removed from the project scope, and the software, electrical, mechanical-design, and documentation work that runs alongside the construction is shown as its own group. The first letter of each label is the person leading the task, and the second, if any, is the person helping.
+The schedule is dated, runs from August 24 to December 4, 2026, and marks the five key dates: October 11 (Checkpoint 1), October 25 (Checkpoint 2), November 13 (report draft), November 20 (final report), and December 4 (presentation). The external conveyor interfaces were removed from the project scope, and the software, electrical, mechanical-design, and documentation work that runs alongside the construction is shown as its own group. The first letter of each label is the person leading the task, and the second, if any, is the person helping.
 
 <figure>
 	<Image src={ganttModified} alt="Modified Safe Dip implementation schedule from August 24 to December 4, 2026, Weeks 1 to 15, as a Gantt chart with milestones on October 11, October 25, November 13, November 20, and December 4" />
