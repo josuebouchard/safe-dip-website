@@ -89,7 +89,8 @@ Pages that exist on **only one** side, on purpose:
   results yet) and the three weekly pages — `progress-log`, `time-and-effort`
   and `weekly-meetings`. A real week or meeting is added to the **Build** page
   only; there is intentionally no Proposal-side Progress Log.
-- Build only, planned: `weekly-task-plan` (see "Weekly updates").
+- Build only, inside another page: the Weekly Task Plan is a section of
+  `final-timeline.mdx` (see "How the artifacts relate").
 
 Build pages that mirror a Proposal page start as carried-forward copies. At the
 09/28 advisor meeting the documentation requirements were deferred by about two
@@ -116,9 +117,12 @@ this is how the Build page's software flowcharts were updated.
    standalone top-level page. The sidebar order is manual and intentional
    (not alphabetical) — match it to the existing Proposal/Build ordering
    when adding a page to one of those groups.
-4. The sidebar `label` is independent from the page's frontmatter `title` —
-   Build pages often say "(Final)" or "(Actual)" in the page title but not
-   in the shorter sidebar label. Keep that pattern.
+4. The sidebar `label` is independent from the page's frontmatter `title`.
+   Build pages use the **exact page names of the course's website rubric**
+   (for example "Distribution of tasks", "Power budget of the project",
+   "Proposed and actual project timelines", "Project Documents") as both
+   title and label, because the grader looks for those names. Keep them when
+   editing; the slugs (URLs) did not change.
 5. `npm run build` after any structural change — content-collection or
    config errors only show up there, not always in the dev server.
 
@@ -148,8 +152,7 @@ writing new copy or citing a number:
 1. **The Senior Design report (Typst).** Two copies exist:
    - **`senior-proposal-typst/`** is a snapshot of the report as submitted for
      the proposal (also built to `public/safe-dip-senior-design-proposal.pdf`,
-     linked from `proposal/report-and-presentation.mdx` and, for now, from the
-     Build report page as "the current draft"). It is the source of truth for
+     linked from `proposal/report-and-presentation.mdx`). It is the source of truth for
      the proposal's requirements, specifications, budgets, timeline,
      comparable-products survey, and CAD/leadscrew calculations. Typst is
      installed (`typst compile ...`); regenerate a diagram or chart from it
@@ -181,6 +184,74 @@ writing new copy or citing a number:
    log. **It is private: never link to it from the site**, since visitors
    would only get a GitHub 404. The header's GitHub button points to this
    website's own (public) repository instead.
+
+## How the artifacts relate
+
+The site is one of several project artifacts, and the course requires that
+"every value must match" between the report and the site (requirements, parts,
+prices, power, dimensions, dates). Most Build content is a **copy** of
+something maintained elsewhere, so change the source first and then every copy,
+on one branch. Paths under `~/` are on the maintainer's computer, not in this
+repo.
+
+| Artifact | Source of truth | Copies on this site |
+|---|---|---|
+| Weekly Task Plan | `~/Downloads/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (the team edits it in LibreOffice or Excel Online) | `public/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (download card) and the per-week tables in `build/final-timeline.mdx` |
+| Design Report (Typst) | The latest local iteration, currently `~/Downloads/senior-design-v3/` (from the team's zip export of the Typst web app; ask which is newest if unsure) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
+| Modified Gantt chart | Report `sections/04-b-timeline.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
+| Block diagrams | Lucidchart exports (`Block diagram - Page N.svg`) | Report `images/block-diagram/` and `src/assets/build/diagrams/hardware-architecture.svg` |
+| Electrical schematic | KiCad export `~/Documents/kicad_schematic.pdf` | Report `images/hardware/schematic.svg` (via `pdftocairo -svg`), `src/assets/build/diagrams/electrical-schematic.svg`, and `public/progress/week-6-kicad-schematic.pdf` (linked) |
+| Firmware | The private firmware repository | Software flowcharts (`src/assets/build/diagrams/software-*.svg`), firmware facts in the Progress Log; never linked |
+| Weekly records | The team's own accounts, gathered by the `weekly-update` skill | `progress-log.mdx`, `time-and-effort.mdx`, `weekly-meetings.mdx` |
+
+Build pages and the report sections they must match:
+
+| Build page | Report section | Report source file |
+|---|---|---|
+| Project Requirements, Success/Testing Criteria, and Limitations | 1.4, 1.5 | `sections/02-d-system-requirements.typ`, `sections/01-introduction.typ` |
+| Engineering Specifications | 1.7 | `sections/02-a-system-specification.typ` |
+| Block diagrams and flowcharts | 1.6, 2.2 (schematic), 3.1 | `sections/01-introduction.typ`, `sections/02-proposed-work.typ`, `sections/03-project-contribution.typ` |
+| CAD Drawings & Renderings | 2.2 | `sections/02-c-cad-datum.typ` |
+| Power budget of the project | 2.4 | `sections/02-b-power-budget.typ` |
+| Distribution of tasks | 4.3 | `sections/04-non-technical-issues.typ` |
+| Proposed and actual project timelines | 4.1 (Fig. 4.2) | `sections/04-b-timeline.typ` |
+| Project Expenses | 4.2 | `sections/04-a-budget.typ` |
+| Final Testing & Results | 3.4, 3.5 | `sections/03-project-contribution.typ` |
+| Engineering Standards and Compliance Codes | Appendix B | `sections/99-appendix.typ` |
+| References/Citations | References | `citations.yaml`, `datasheet-citations.yaml` |
+
+Rules that keep them consistent:
+
+- **Requirement IDs are `R-01` to `R-11`** in the report, on the site and in
+  the Task Plan. The Proposal pages keep their original `SR-` IDs.
+- **The Gantt and the Task Plan must agree.** When tasks move between weeks,
+  update the bars in `04-b-timeline.typ`, the "as of" date in its caption and
+  in the page's `<figcaption>`, rebuild the report PDF, and regenerate the SVG.
+- **Regenerating the Gantt SVG:** copy `04-b-timeline.typ`, replace
+  `#page(flipped: true, margin: 0.45in)[` with
+  `#page(width: 780pt, height: 590pt, margin: 8pt)[`, set both captions to
+  `caption: none`, run `typst compile copy.typ 'g-{p}.svg' --format svg`, and use
+  page 2 (page 1 is the proposed chart). Raise the height if the chart spills
+  onto a third page. `width: auto` / `height: auto` breaks the timeline package.
+- **Regenerating the Task Plan tables:** read the `.ods` (columns Week, Week
+  starting, Milestone, Task, Owner, With, Status, Actual work and notes), group
+  by **week number only**, and compute each heading's date as 08/24/2026 + 7 ×
+  (week − 1). Grouping by the spreadsheet's date once produced a duplicate
+  "Week 6" heading from a mistyped row. Write a dash for empty cells, never
+  invent a status, and reword anything that names a private-repo file. Owner
+  is the person leading the task, With the person helping, and Both a joint
+  event. Copy the `.ods` to `public/` in the same change.
+- **One spreadsheet.** Edit the `.ods` in place; don't leave parallel `.xlsx`
+  or `(before …)` copies around, since the team once edited a stale copy.
+  Check that it isn't open in LibreOffice (a `.~lock.…#` file next to it)
+  before overwriting it, and tell the user to use File → Reload.
+- **Before publishing the report PDF,** strip the metadata of every photo in
+  the report's `images/` (the same `magick … -strip` command as in "Images")
+  and confirm the PDF has none: `strings -n 6 report.pdf | grep -ciE
+  'iPhone|GPSLat'` must print 0. A team headshot in the report once carried GPS
+  coordinates.
+- **The Proposal side is frozen.** Never "fix" a Proposal page to match the
+  build; only Build pages follow the report.
 
 ## Images
 
@@ -244,9 +315,9 @@ Pages with a sidebar render Starlight's stock header unchanged.
 Each week the team records its work on three Build pages — Progress Log, Time &
 Effort Tracking, and Weekly Meetings (the advisor's weekly minutes). The advisor
 also requires a **Weekly Task Plan**: specific tasks with owners for weeks 6–15,
-whose status, actual work and blockers are updated every Sunday. It is posted
-with the Final Timeline, as `build/weekly-task-plan` or a section of
-`final-timeline.mdx`; check that the page exists before relying on it.
+whose status, actual work and blockers are updated every Sunday. It is the
+"Weekly Task Plan" section of `build/final-timeline.mdx`; how it is generated
+from the team's spreadsheet is in "How the artifacts relate".
 
 The procedure is the `weekly-update` skill in
 `.claude/skills/weekly-update/SKILL.md`. Start it by asking for a "weekly

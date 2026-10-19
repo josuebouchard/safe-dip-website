@@ -69,8 +69,8 @@ for label, have, due, span in pages:
 
 if 1 <= now <= LAST:
     print(f"\nWeek {now} is still in progress: its Progress Log and Time & Effort entries are optional until it ends.")
-if not list(BUILD.glob("*task-plan*")):
-    print("Weekly Task Plan: no page on the site yet.")
+if "## Weekly Task Plan" not in (BUILD / "final-timeline.mdx").read_text(encoding="utf-8"):
+    print("Weekly Task Plan: no section on the timelines page yet.")
 
 commits = firmware_commits()
 for n in sorted(wanted):

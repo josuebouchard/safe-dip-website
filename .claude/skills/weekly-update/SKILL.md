@@ -27,7 +27,7 @@ Weeks run Monday to Sunday; Week 1 began on 08/24/2026, so week N starts on
   entry. The current week is optional until its Sunday.
 - **Weekly Meetings**: weeks whose Monday has passed and have no minutes.
   Some weeks have no meeting (holidays), so ask; never assume one happened.
-- Whether a **Weekly Task Plan** page exists yet.
+- Whether the **Weekly Task Plan** section exists on the timelines page.
 - The **firmware commits** of each missing week (author date, all branches),
   as memory joggers for whoever worked on the firmware. The script looks for the firmware
   clone at `~/Documents/senior-project-code`; set `FIRMWARE_REPO` to point
@@ -171,13 +171,11 @@ site under the Project Timeline, and updated **every Sunday**: mark each task of
 the past week Done, Partial or Slipped, record the actual work, and move
 slipped tasks to a later week with a note. The original plan is never deleted.
 
-- If step 0 reports **no Task Plan page**, tell the user and offer to create it
-  from their spreadsheet (`EET4950_Weekly_Task_Plan_Safe_Dip.xlsx`, one row per
-  task). The course template says to post it "under the Project Timeline",
-  which on this site is Build → Final Timeline: ask whether they prefer a
-  section of `final-timeline.mdx` or a page of its own right after it in the
-  sidebar (`build/weekly-task-plan`, registered in `astro.config.mjs`).
-- If it exists, ask the user for each task's outcome for the week; do not
+- The plan is the "Weekly Task Plan" section of `build/final-timeline.mdx`,
+  generated from the team's `.ods` spreadsheet. `AGENTS.md` ("How the artifacts
+  relate") gives the source file, how to regenerate the tables, and the Gantt
+  chart that must stay in step with it.
+- Ask the user for each task's outcome for the week; do not
   guess a status. Also ask for any pivots, and for the blockers that Dr. Socarras
   asks about at the Monday check-in.
 
