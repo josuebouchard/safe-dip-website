@@ -24,8 +24,41 @@ import plateSlots from '../../../assets/build/progress/week-7/plate-slots-center
 import bearingAdapter from '../../../assets/build/progress/week-7/bearing-gear-adapter.png';
 import bearingHolder from '../../../assets/build/progress/week-7/bearing-holder-piece.png';
 import retainingCap from '../../../assets/build/progress/week-7/retaining-cap.png';
+import xHolder from '../../../assets/build/progress/week-8/x-axis-holder-motor-mount.png';
+import motorAdapter from '../../../assets/build/progress/week-8/motor-belt-adapter.png';
+import yHolder from '../../../assets/build/progress/week-8/y-axis-magnet-holder.png';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 8 — 10/12/2026–10/18/2026" subtitle="X-axis motor and belt drive, printed holders, Modbus monitor demo, safety research, first full group test">
+
+**Josué** — Worked on the X-axis motor: he wired it and calibrated it until the movement looked good. He worked out the geometry of the belt path, comparing an oblong layout with an elongated rounded triangle, and evaluated the pros and cons of different types of proximity sensors. He built a small demo interface, with Claude Code, to visualize the Modbus TCP output; it is still a demo, and its quality has yet to be assessed. Following Dr. Socarras's recommendations at the weekly meeting, he also researched safety issues related to the project. In addition, he updated the website and fixed several inconsistencies between the project's artifacts.
+
+**Adriano** — Worked on 3D printing and assembling the prototype that the team tested on Friday. The motor and belt supports were added, along with braces so that the frame no longer wobbles, and the version 4 prototype of the X-axis holder was assembled. He modified and created the adapters for the motor and the belt transmission. He took the feedback from Friday's test and made the corresponding changes, and over the weekend he worked on finishing the Y-axis magnet holder. Version 5 of the X-axis holder is being reprinted with the feedback applied, and this time as a 90% solid part. That makes it much stronger, but it takes significantly longer to print. The stops for the limit switches are ready and will be installed at the start of the following week, and he expects to finish printing the new parts and to test them early that week.
+
+<div class="media-grid">
+	<figure>
+		<Image src={xHolder} alt="CAD model of the X-axis holder, a flat plate with a stepper motor mounted on one side and a pocket with four pins for the belt transmission on the other" />
+		<figcaption>X-axis holder with the motor mount (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={motorAdapter} alt="CAD model of a cylindrical adapter with a D-shaped bore at one end and a narrower shaft at the other" />
+		<figcaption>Adapter for the motor and the belt transmission (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={yHolder} alt="CAD model of the Y-axis magnet holder, a cylindrical cage with open windows and a mounting block with screw holes at the top" />
+		<figcaption>Y-axis magnet holder (CAD).</figcaption>
+	</figure>
+</div>
+
+**Group** — The team held a four-hour session that included the first fully functioning test of the system. The movement of both axes was tested successfully. The X axis could almost be considered complete, apart from the limit switches. Only a few steps were skipped, which was largely attributable to the way the belt was temporarily tensioned. The monitor interface built with Claude Code served as a kind of digital twin, which allowed the team to verify quickly that the movements were correct. The vertical movement was then tested without the magnet, by holding the ring (nut) on the leadscrew so that it could not rotate, to see the vertical movement. The team also discussed how to place all the electrical components and considered housing them in a box.
+
+<figure>
+	<video controls preload="metadata" playsinline class="progress-video" src="/progress/week-8-first-full-test.mp4"></video>
+	<figcaption>The frame moving during the group test, with the monitor interface visible on the laptop.</figcaption>
+</figure>
+
+</Accordion>
 
 <Accordion title="Week 7 — 10/05/2026–10/11/2026" subtitle="Schematic and report restructure, Modbus register test, X-axis belt-drive parts, first look at the full frame, electromagnet test">
 

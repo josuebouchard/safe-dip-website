@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="10/12 – 10/18, 2026"
+	weekNumber={8}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 8,
+			text: 'Printed and assembled the X-axis prototype tested on Friday, adding the motor and belt supports and braces against the wobble, and modified the motor and belt-transmission adapters. Applied the Friday feedback, finished the Y-axis magnet holder, and began reprinting version 5 of the X-axis holder as a 90% solid part.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 4,
+			text: 'Wired and calibrated the X-axis motor, worked out the belt geometry (oblong versus elongated rounded triangle), compared proximity-sensor types, and built a Modbus TCP monitor demo. Researched safety issues recommended by Dr. Socarras, updated the website, and fixed inconsistencies between the project artifacts.',
+		},
+		{
+			name: 'Group',
+			hours: 4,
+			text: 'Held the first fully functioning test: both axes moved successfully, the X axis is nearly complete apart from the limit switches, and the vertical axis was tried without the magnet. Also discussed how to place the electrical components, including a box to house them.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="10/05 – 10/11, 2026"
 	weekNumber={7}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',
