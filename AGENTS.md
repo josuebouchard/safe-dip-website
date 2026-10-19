@@ -220,6 +220,34 @@ Build pages and the report sections they must match:
 | Engineering Standards and Compliance Codes | Appendix B | `sections/99-appendix.typ` |
 | References/Citations | References | `citations.yaml`, `datasheet-citations.yaml` |
 
+How a change ripples between artifacts (check the downstream ones whenever
+the upstream one changes, and when reporting the project's status):
+
+- **CAD** (Onshape, Adriano) → the dimensions table (report 2.2,
+  `02-c-cad-datum.typ`; CAD page) and the CAD renders (report `images/CAD-model*.png`;
+  `src/assets/proposal/cad/`, still the proposal's preliminary renders on the Build
+  page) → the firmware's cycle positions and travel (`App/Src/entrypoint.cpp`:
+  X input/dip/output and Y up/down in steps, plus the Modbus travel limits) → the
+  positioning tests (R-02, R-04) and the calibration rows of the Task Plan.
+- **Mechanics and driver settings** (24 V, 2.8 A, 1600 microsteps/rev; Y
+  leadscrew lead 2 mm, so 800 steps/mm) → report 2.1 equations and 2.4 power
+  budget, the specifications, and the firmware speed profiles.
+- **Firmware** (private repo) → report 3.1 and the site's flowcharts; its pin map
+  (CubeMX `nucleo-project.ioc` → `Core/Inc/main.h` → `docs/wiring.md`) must agree
+  with the KiCad schematic's net labels and the block-diagram signals; its Modbus
+  map (`entrypoint.cpp` enums ↔ `docs/modbus-map.md`) is what R-09 tests; unmerged
+  feature branches and bench-test settings correspond to open Task Plan rows.
+- **A component change** (for example relay → MOSFET, buffer removed, 48 V → 24 V)
+  touches the schematic, block diagrams, specifications, power budget, Project
+  Expenses, report 2.2 text and references — on both the report and the site.
+- **Task Plan** → the Gantt bars (report Fig. 4.2 and the site) and the
+  Distribution of tasks; each week's statuses should agree with that week's
+  Progress Log and Time & Effort entries, and advisor-meeting decisions usually
+  add or move plan rows.
+- **Course instructions** (report outline, website rubric, checkpoint dates
+  Oct 11, Oct 25, Nov 13, Nov 20, Dec 4) → the Gantt milestones, the plan's
+  milestone column, and the Build page names.
+
 Rules that keep them consistent:
 
 - **Requirement IDs are `R-01` to `R-11`** in the report, on the site and in
