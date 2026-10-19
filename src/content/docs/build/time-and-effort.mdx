@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="10/05 – 10/11, 2026"
+	weekNumber={7}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 6,
+			text: 'Continued the 3D CAD of the X-axis belt-drive parts: modified the base, enlarged the transmission piece and the holes, made and tested an adapter for the ball bearing and the gear, joined them with super glue, and created a cap that keeps the assembly in place. Began working on the Y-axis magnet holder.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 6,
+			text: 'Continued the KiCad schematic, tested the Modbus registers with madbus-cli, and restructured the report to the new Design document structure, refreshing the datasheets, software, and power supply sections. Also patched the Wiznet library and cleaned up the documentation.',
+		},
+		{
+			name: 'Group',
+			hours: 2,
+			text: 'Saw the full frame together for the first time, noted its slight wobble, discussed how to connect the belt and where to place the steppers and limit switches, and tested the electromagnet directly on the 12 V supply (about 1.5 A).',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="09/28 – 10/04, 2026"
 	weekNumber={6}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',

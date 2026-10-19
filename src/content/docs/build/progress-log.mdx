@@ -19,8 +19,51 @@ import slicer from '../../../assets/build/progress/week-6/slicer-preview.png';
 import printEarly from '../../../assets/build/progress/week-6/print-early-attempt.jpg';
 import printTabs from '../../../assets/build/progress/week-6/print-corrected-tabs-side.jpg';
 import printBoss from '../../../assets/build/progress/week-6/print-corrected-boss-side.jpg';
+import basePlate from '../../../assets/build/progress/week-7/base-plate-motor-mount.png';
+import plateSlots from '../../../assets/build/progress/week-7/plate-slots-center-hole.png';
+import bearingAdapter from '../../../assets/build/progress/week-7/bearing-gear-adapter.png';
+import bearingHolder from '../../../assets/build/progress/week-7/bearing-holder-piece.png';
+import retainingCap from '../../../assets/build/progress/week-7/retaining-cap.png';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 7 — 10/05/2026–10/11/2026" subtitle="Schematic and report restructure, Modbus register test, X-axis belt-drive parts, first look at the full frame, electromagnet test">
+
+**Josué** — Worked mostly on documentation this week. He continued the KiCad schematic, which gives a clearer picture of how the systems connect; the presence (time-of-flight) sensor is not drawn yet. He tested the Modbus registers with `madbus-cli` while the system was not running, and the test confirmed that the code works correctly. He updated the report to the new structure provided in Canvas for the Design document. Chapter 3, the CAD designs, the hardware choices, and the budget were not changed, while the datasheets, software, components no longer used, and power supply sections were refreshed. The proximity sensor, the E-stop, and the fuses are still incomplete or not fully defined. He also made two small code changes: a patch to the Wiznet library and a cleanup of the documentation.
+
+**Adriano** — Continued the 3D CAD work on the X-axis belt-drive parts. He modified the base as agreed, enlarged the transmission piece so that it lines up with the end line of the frame and sits at 180° to the belt, and sketched larger holes so that the frame supports are not rigid or at an angle; in his test, adding 1 mm to the holes gave a perfect fit. He also enlarged the hole that locks a part and prevents it from rotating, from 2 mm to 6 mm, both in the part and in the base. He made an adapter for the ball bearing and the gear, tested it, found that it fits well, and joined the pieces with super glue. This assembly goes into another piece that holds it on the frame, and to keep it from coming out when the belt pulls, he created a cap that fits into the groove of that piece. He is also working on the idea for the Y-axis magnet holder, based on a discussion with Josué and a sketch from last semester.
+
+<div class="media-grid">
+	<figure>
+		<Image src={basePlate} alt="CAD model of the base plate with the stepper motor mount and the pocket for the transmission" />
+		<figcaption>Base plate with the motor mount (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={plateSlots} alt="CAD model of a plate with enlarged rectangular slots and a large center hole with a key slot" />
+		<figcaption>Plate with enlarged slots and the center hole (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={bearingAdapter} alt="CAD model of a cylindrical adapter with a shaft, made to join the ball bearing and the gear" />
+		<figcaption>Adapter for the ball bearing and the gear (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={bearingHolder} alt="CAD model of a square plate with a circular bearing seat, the piece that holds the assembly on the frame" />
+		<figcaption>Piece that holds the assembly on the frame, with the bearing seat (CAD).</figcaption>
+	</figure>
+	<figure>
+		<Image src={retainingCap} alt="CAD model of a ring-shaped cap that fits into the groove of the holder piece" />
+		<figcaption>Cap that keeps the assembly from coming out when the belt pulls (CAD).</figcaption>
+	</figure>
+</div>
+
+<figure>
+	<video controls preload="metadata" playsinline class="progress-video" src="/progress/week-7-bearing-gear-fit.mp4"></video>
+	<figcaption>Fitting the ball bearing, the adapter, and the gear together before joining them with super glue.</figcaption>
+</figure>
+
+**Group** — The team saw the full frame together for the first time and noticed that it wobbles slightly; this will be fixed in a following week. They also discussed how to connect the belt and where to place the different steppers and limit switches. They tested the electromagnet by connecting it directly to the 12 V supply with the flyback diode, and it drew about 1.5 A at 12 V DC. The MOSFET driver circuit has not been tested yet.
+
+</Accordion>
 
 <Accordion title="Week 6 — 09/28/2026–10/04/2026" subtitle="KiCad schematic, part-detection options, stepper simulation, vertical assembly printing">
 
