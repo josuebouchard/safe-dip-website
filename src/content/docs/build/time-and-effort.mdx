@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="10/19 – 10/25, 2026"
+	weekNumber={9}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 8,
+			text: 'Finalized the CAD and completed the mechanical assembly, integrating the X-axis base and the Y-axis holder. Printed and tested the third version of the Y-axis holder, reinforced the damaged lead screw holder with L-brackets, tested the mechanism by hand and with a drill driving the Y-axis, and adjusted the belt and motor mount for full X-axis travel.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 8,
+			text: 'Began mounting the electronics in a container and checked the whole setup with a multimeter: stepper drivers, relay and both power supplies. Chose the ultrasonic part-detection sensor and wrote the relay and homing firmware. Updated the report and the website with the budget, task plan and current design decisions.',
+		},
+		{
+			name: 'Group',
+			hours: 0.5,
+			text: 'Remote sync-ups by messages and a phone call, since the team could not meet in person this week.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="10/12 – 10/18, 2026"
 	weekNumber={8}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',
@@ -64,7 +86,7 @@ Hours logged per team member each week during the build semester, so effort stay
 		{
 			name: 'Josué Bouchard',
 			hours: 6,
-			text: 'Drew the project schematic in KiCad, began comparing part-detection options (time-of-flight, ultrasonic, and IR presence sensors), and built a small bench simulation that moves both steppers with an LED standing in for the electromagnet signal.',
+			text: 'Drew the project schematic in KiCad, began comparing part-detection sensor options, and built a small bench simulation that moves both steppers with an LED standing in for the electromagnet signal.',
 		},
 		{
 			name: 'Group',
