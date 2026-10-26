@@ -16,7 +16,7 @@ The task assignments identify a primary owner for each activity, but they don't 
 ## Changes since the proposal
 
 - The external conveyor interfaces were removed from the project scope, so the conveyor activities of the proposed timeline no longer apply.
-- The choice of workpiece-detection sensor is still being decided, with the time-of-flight sensor as one of the options.
+- An HC-SR04 ultrasonic sensor was chosen for workpiece detection because of its affordability and availability, and it is assumed to be sufficient for the prototype.
 - Electrical design and project documentation became part of Josué's responsibilities.
 - Mechanical design in CAD and the procurement of the mechanical components became part of Adriano's responsibilities.
 - Report preparation, previously shared, is now split: Josué writes most of the report, and Adriano contributes the mechanical parts.
@@ -27,6 +27,6 @@ Two factors drove these changes. The first is the dependencies between tasks: th
 
 | Team Member | Primary Responsibilities |
 |---|---|
-| Josué Bouchard | Embedded firmware; time-of-flight and limit-switch interfacing; horizontal- and vertical-axis motion control; supervisory state machine; Modbus TCP integration; system debugging; and software-oriented verification. |
+| Josué Bouchard | Embedded firmware; ultrasonic-sensor and limit-switch interfacing; horizontal- and vertical-axis motion control; supervisory state machine; Modbus TCP integration; system debugging; and software-oriented verification. |
 | Adriano Duque Mena | Mechanical frame assembly; installation of rails, transmissions, motors, sensors, and external conveyor interfaces; mechanical troubleshooting; fabrication support; and preparation of rated-load testing. |
 | Both | Component procurement; electrical and mechanical integration; emergency-stop validation; complete-system testing; final refinement; report preparation; and presentation. |

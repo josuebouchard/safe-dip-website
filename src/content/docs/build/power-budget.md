@@ -13,7 +13,7 @@ The Safe Dip prototype uses two independent AC-DC power adapters. The 24 V suppl
 | Movement | Stepper motor driver | 24 | 0.5 | 12 | 2 | 24 |
 | End Effector | Electromagnet | 12 | 1.5 | 18 | 1 | 18 |
 | End Effector | Electromagnet driver | 5 | ≈0.07–0.10 | ≈0.5 | 1 | ≈0.5 |
-| Sensing | Time-of-flight sensor | 2.8–3.3 | 0.019 | ≈0.063 | 1 | ≈0.063 |
+| Sensing | Ultrasonic sensor (HC-SR04) | 5 | 0.015 | ≈0.075 | 1 | ≈0.075 |
 | Communications | Ethernet module | 3.3 | 0.132 | ≈0.436 | 1 | ≈0.436 |
 | Processing | STM32 (at max rate) | 3.3/5 | ≈0.1 | ≈0.33 | 1 | ≈0.33 |
 | | | | | **Total operational power** | | **177.7 W** |
@@ -33,6 +33,6 @@ Total operational power draw (177.7 W) stays within the 410.4 W available from t
 | Power Rail | Loads | Load (W) | Adapter Rating (W) | Share of Rating |
 |---|---|---|---|---|
 | 24 V | Two stepper motors and two stepper motor drivers | 158.4 | 350.4 | 45% |
-| 12 V | Electromagnet, and, through the 12 V to 5 V buck converter, the electromagnet driver, time-of-flight sensor, Ethernet module, and STM32 (conversion losses neglected) | 19.3 | 60 | 32% |
+| 12 V | Electromagnet, and, through the 12 V to 5 V buck converter, the electromagnet driver, ultrasonic sensor, Ethernet module, and STM32 (conversion losses neglected) | 19.3 | 60 | 32% |
 | | **Total** | **177.7** | **410.4** | **43%** |
 

@@ -12,7 +12,7 @@ import normalCycle from '../../../assets/build/diagrams/software-normal-cycle.sv
 import sequencer from '../../../assets/build/diagrams/software-sequencer.svg';
 import motionPlanner from '../../../assets/build/diagrams/software-motion-planner.svg';
 
-Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, time-of-flight sensing, and limit switches. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
+Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, ultrasonic sensing, and limit switches. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
 
 ## System Block Diagram
 
@@ -20,7 +20,7 @@ The system divides into seven modules: power distribution, E-stop, processing, s
 
 <Image src={systemDiagram} alt="System-wide block diagram of Safe Dip" />
 
-The power distribution module converts wall power into the voltages the other modules need. The E-stop module performs a Category-0 emergency stop, cutting power to the movement module and alerting the processing module so it can handle the stop gracefully. The processing module is the system's core — the microcontroller that turns inputs into actuator responses, and which also feeds 3.3 V to the other modules through its own power converter. The sensing module covers the time-of-flight sensors, limit switches, and other sensors. The movement module covers the stepper motors and controllers for the horizontal and vertical axes. The effector module grabs the workpiece via an electromagnet, kept modular so the effector type can be swapped later. The communications module adds Ethernet TCP-Modbus support on top of the processing module.
+The power distribution module converts wall power into the voltages the other modules need. The E-stop module performs a Category-0 emergency stop, cutting power to the movement module and alerting the processing module so it can handle the stop gracefully. The processing module is the system's core — the microcontroller that turns inputs into actuator responses, and which also feeds 3.3 V to the other modules through its own power converter. The sensing module covers the ultrasonic sensor, limit switches, and other sensors. The movement module covers the stepper motors and controllers for the horizontal and vertical axes. The effector module grabs the workpiece via an electromagnet, kept modular so the effector type can be swapped later. The communications module adds Ethernet TCP-Modbus support on top of the processing module.
 
 ## Hardware Architecture
 
@@ -55,7 +55,7 @@ The cycle is an ordered list of nonblocking operations grouped into five stages:
 
 Every operation implements the same two functions. `start()` begins the operation and returns immediately; `poll()` reports whether it is still running or has finished. The sequencer only ever calls these two, so it never needs to know how a move, the electromagnet, or a dwell actually works. Each operation copies the settings it depends on when it starts, so a value changed over Modbus takes effect the next time that operation runs and never alters one already in progress.
 
-Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the time-of-flight sensor to detect a part before the pick stage.
+Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the ultrasonic sensor to detect a part before the pick stage.
 
 ### Cooperative Cycle Sequencer
 

@@ -29,7 +29,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
-| Time of Flight (TOF) sensor | Operating voltage: 3.3 VDC. Detection range sufficient to cover the input station. Blind zone under 3 cm. Communication protocol compatible with the microcontroller. | Verified by placing and removing a part at the input station and confirming correct detection in both cases. |
+| Ultrasonic sensor (HC-SR04) | Operating voltage: 5 VDC. Detection range sufficient to cover the input station. Blind zone under 3 cm. Trigger and echo interface compatible with the microcontroller, with the 5 V echo output on a 5 V-tolerant input. | Chosen for its affordability and availability, and assumed sufficient for the prototype. Verified by placing and removing a part at the input station and confirming correct detection in both cases. |
 | Limit switches | Normally-closed configuration. One per axis end, used for homing. Rated for the operating environment. | Verified by commanding each axis to its respective home and confirming motion stops upon switch actuation. |
 
 ### Movement
@@ -44,7 +44,7 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
 | Electromagnet | Holding force sufficient to retain rated payload throughout the dip cycle. Controlled by a single digital output from the microcontroller. | Verified by attaching a part at rated payload and confirming no drop occurs throughout one full pick-dip-place cycle. |
-| MOSFET driver | Logic-level gate compatible with the microcontroller's 3.3 V or 5 V output. Drain-source voltage rating greater than the 12 V electromagnet supply with adequate transient margin. Continuous drain-current rating greater than the maximum electromagnet current. Low on-state resistance at the gate voltage used. | Command the electromagnet on and off while monitoring gate, drain, and electromagnet voltage with an oscilloscope. Passes if the MOSFET switches the full electromagnet current reliably, stays within an acceptable temperature range, and no damaging voltage transient is observed when de-energized. |
+| Effector driver | Active-low control input that the microcontroller can drive from a single open-drain output. Isolates the microcontroller from the 12 V electromagnet circuit. Normally-closed contact that keeps the electromagnet energized whenever the relay coil is off. Contact voltage rating greater than the 12 V electromagnet supply. Contact current rating greater than the maximum electromagnet current. | Command the electromagnet on and off from the firmware while monitoring the control input and the electromagnet voltage. Passes if the driver switches the full electromagnet current reliably, the electromagnet stays engaged when the control input is released or the module loses its 5 V supply, it stays within an acceptable temperature range, and no damaging voltage transient is observed when de-energized. |
 
 ### Communications
 
