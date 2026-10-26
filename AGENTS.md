@@ -161,6 +161,11 @@ writing new copy or citing a number:
      this repo, and the team shares it as a zip export. It is ahead of the
      snapshot and is not synced automatically. Do not overwrite the snapshot
      without being asked; the proposal pages are meant to match it.
+   - **The `josuebouchard/safe-dip-report` repository** now holds the live
+     report under version control and is its source of truth: the Typst
+     source, plus the built PDF and the shared project files (Task Plan
+     `.ods`, Gantt SVG, KiCad schematic, budget) in `artifacts/`. The copies
+     on this site must be identical to those files.
    - The Gantt chart at `src/assets/proposal/diagrams/gantt-timeline.svg` was
      generated with:
      `typst compile --format svg senior-proposal-typst/sections/03-b-timeline.typ out.svg`
@@ -197,7 +202,7 @@ repo.
 | Artifact | Source of truth | Copies on this site |
 |---|---|---|
 | Weekly Task Plan | `~/Downloads/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (the team edits it in LibreOffice or Excel Online) | `public/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (download card) and the per-week tables in `build/final-timeline.mdx` |
-| Design Report (Typst) | The latest local iteration, currently `~/Downloads/senior-design-v3/` (from the team's zip export of the Typst web app; ask which is newest if unsure) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
+| Design Report (Typst) | The `josuebouchard/safe-dip-report` repository (built PDF in `artifacts/`) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
 | Modified Gantt chart | Report `sections/04-b-timeline.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
 | Block diagrams | Lucid document "Block diagram" (one page: frame 1 is the system overview, frame 2 the detailed hardware), downloaded per frame as SVG from Lucid (`Block diagram - Page 1 (N).svg`); Lucid's MCP tools can only export PNG | Report `images/block-diagram/00-system.svg` and `01-hardware-architecture.svg`; `src/assets/build/diagrams/system-block-diagram.svg` and `hardware-architecture.svg` |
 | Electrical schematic | KiCad export `~/Documents/kicad_schematic.pdf` | Report `images/hardware/schematic.svg` (via `pdftocairo -svg`), `src/assets/build/diagrams/electrical-schematic.svg`, and `public/progress/week-6-kicad-schematic.pdf` (linked) |
