@@ -163,9 +163,10 @@ writing new copy or citing a number:
      without being asked; the proposal pages are meant to match it.
    - **The `josuebouchard/safe-dip-report` repository** now holds the live
      report under version control and is its source of truth: the Typst
-     source, plus the built PDF and the shared project files (Task Plan
-     `.ods`, Gantt SVG, KiCad schematic, budget) in `artifacts/`. The copies
-     on this site must be identical to those files.
+     source, the KiCad schematic source (`kicad_schematic/`), plus the built
+     PDF and the shared project files (Task Plan `.ods`, Gantt SVG, KiCad
+     schematic, budget) in `artifacts/`. The copies on this site must be
+     identical to those files.
    - The Gantt chart at `src/assets/proposal/diagrams/gantt-timeline.svg` was
      generated with:
      `typst compile --format svg senior-proposal-typst/sections/03-b-timeline.typ out.svg`
@@ -205,7 +206,7 @@ repo.
 | Design Report (Typst) | The `josuebouchard/safe-dip-report` repository (built PDF in `artifacts/`) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
 | Modified Gantt chart | Report `sections/04-b-timeline.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
 | Block diagrams | Lucid document "Block diagram" (one page: frame 1 is the system overview, frame 2 the detailed hardware), downloaded per frame as SVG from Lucid (`Block diagram - Page 1 (N).svg`); Lucid's MCP tools can only export PNG | Report `images/block-diagram/00-system.svg` and `01-hardware-architecture.svg`; `src/assets/build/diagrams/system-block-diagram.svg` and `hardware-architecture.svg` |
-| Electrical schematic | KiCad export `~/Documents/kicad_schematic.pdf` | Report `images/hardware/schematic.svg` (via `pdftocairo -svg`), `src/assets/build/diagrams/electrical-schematic.svg`, and `public/progress/week-6-kicad-schematic.pdf` (linked) |
+| Electrical schematic | The report repository's KiCad project `kicad_schematic/`; the report keeps its own exports, `artifacts/kicad_schematic.pdf` and `images/hardware/schematic.svg` (via `pdftocairo -svg`) | `src/assets/build/diagrams/electrical-schematic.svg` and `public/progress/week-6-kicad-schematic.pdf` (linked). The site keeps its own copies: whenever the report's schematic changes, update both here in the same change |
 | Firmware | The private firmware repository | Software flowcharts (`src/assets/build/diagrams/software-*.svg`), firmware facts in the Progress Log; never linked |
 | Weekly records | The team's own accounts, gathered by the `weekly-update` skill | `progress-log.mdx`, `time-and-effort.mdx`, `weekly-meetings.mdx` |
 
