@@ -20,7 +20,7 @@ The results table below records each requirement's measured value and status. A 
 | ID | Test Procedure | Pass Criteria | Measured Result | Pass? |
 |---|---|---|---|---|
 | R-01 | Place a workpiece at the input station and command a cycle; then remove it and command another. | Pick sequence initiates with a workpiece present; no motion initiates with it absent. | _TODO_ | _TODO_ |
-| R-02 | Command the system to the programmed pickup position and measure end-effector position relative to target. | Measured error within ±1 cm along both axes. | _TODO_ | _TODO_ |
+| R-02 | Command the system to the programmed pickup position and measure end-effector position relative to target. | Measured error within ±1 cm along both axes. | Measured with a ruler. X: drift under 0.5 cm. Y: harder to measure because the platform moves; judged within 1 cm, not measured precisely. | Met |
 | R-03 | Execute one complete pick-dip-place cycle at the approved payload. | Workpiece does not visibly slip or detach at any point. | _TODO_ | _TODO_ |
 | R-04 | Execute one dip sequence and measure actual immersion depth against the programmed value. | Measured depth within ±1 cm of programmed depth. | _TODO_ | _TODO_ |
 | R-05 | Execute one dip sequence and measure the dwell period with a stopwatch. | Measured dwell within ±1 s of programmed value. | _TODO_ | _TODO_ |
