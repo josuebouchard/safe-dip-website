@@ -7,6 +7,16 @@ This page is the acceptance-test record for the completed prototype. The test pr
 
 All acceptance testing is performed with an unheated, laboratory-safe medium at room temperature, using the approved prototype payload (1 lb). The prototype does not validate operation at the intended industrial temperature or with a production coating medium.
 
+## Viability video
+
+Checkpoint 2 video of the integrated prototype and its requirement tests (3 min 57 s, posted October 27, 2026). It shows the electronics enclosure, position measurements against a ruler, the vertical axis, the Modbus monitor on a laptop, and the "Screw not slipping test" of the magnet holder.
+
+<video controls preload="metadata" playsinline class="progress-video" src="/progress/viability-video.mp4"></video>
+
+The results table below records each requirement's measured value and status. A result marked _TODO_ has not been measured yet.
+
+## Requirements and results
+
 | ID | Test Procedure | Pass Criteria | Measured Result | Pass? |
 |---|---|---|---|---|
 | R-01 | Place a workpiece at the input station and command a cycle; then remove it and command another. | Pick sequence initiates with a workpiece present; no motion initiates with it absent. | _TODO_ | _TODO_ |
