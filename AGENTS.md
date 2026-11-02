@@ -163,10 +163,13 @@ writing new copy or citing a number:
      without being asked; the proposal pages are meant to match it.
    - **The `josuebouchard/safe-dip-report` repository** now holds the live
      report under version control and is its source of truth: the Typst
-     source, the KiCad schematic source (`kicad_schematic/`), plus the built
-     PDF and the shared project files (Task Plan `.ods`, Gantt SVG, KiCad
-     schematic, budget) in `artifacts/`. The copies on this site must be
-     identical to those files.
+     source, the KiCad schematic source (`kicad_schematic/`), and the shared
+     files the team edits by hand (Task Plan `.ods`, budget) in `artifacts/`.
+     The generated files (report PDF, Gantt SVG, schematic PDF) are not in
+     the repository: its GitHub Actions workflows ("Build report assets" and
+     "Build schematic") build them and offer each as a download on the run's
+     page for 7 days. The copies on this site must be identical to those
+     files.
    - The Gantt chart at `src/assets/proposal/diagrams/gantt-timeline.svg` was
      generated with:
      `typst compile --format svg senior-proposal-typst/sections/03-b-timeline.typ out.svg`
@@ -203,10 +206,10 @@ repo.
 | Artifact | Source of truth | Copies on this site |
 |---|---|---|
 | Weekly Task Plan | `~/Downloads/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (the team edits it in LibreOffice or Excel Online) | `public/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (download card) and the per-week tables in `build/final-timeline.mdx` |
-| Design Report (Typst) | The `josuebouchard/safe-dip-report` repository (built PDF in `artifacts/`) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
+| Design Report (Typst) | The `josuebouchard/safe-dip-report` repository; the PDF is the `safe-dip-senior-design-report.pdf` download of its "Build report assets" workflow | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
 | Modified Gantt chart | Report `sections/04-c-timeline-modified.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
 | Block diagrams | Lucid document "Block diagram" (one page: frame 1 is the system overview, frame 2 the detailed hardware), downloaded per frame as SVG from Lucid (`Block diagram - Page 1 (N).svg`); Lucid's MCP tools can only export PNG | Report `images/block-diagram/00-system.svg` and `01-hardware-architecture.svg`; `src/assets/build/diagrams/system-block-diagram.svg` and `hardware-architecture.svg` |
-| Electrical schematic | The report repository's KiCad project `kicad_schematic/`; the report keeps its own exports, `artifacts/kicad_schematic.pdf` and `images/hardware/schematic.svg` (via `pdftocairo -svg`) | `src/assets/build/diagrams/electrical-schematic.svg` and `public/kicad-schematic.pdf` (linked from Block diagrams). The site keeps its own copies: whenever the report's schematic changes, update both here in the same change. `public/progress/week-6-kicad-schematic.pdf` is the Week 6 Progress Log's record of revision 1; leave it as it is |
+| Electrical schematic | The report repository's KiCad project `kicad_schematic/`; the PDF is the `kicad_schematic.pdf` download of its "Build schematic" workflow, and the report keeps `images/hardware/schematic.svg` (via `pdftocairo -svg`) | `src/assets/build/diagrams/electrical-schematic.svg` and `public/kicad-schematic.pdf` (linked from Block diagrams). The site keeps its own copies: whenever the report's schematic changes, update both here in the same change. `public/progress/week-6-kicad-schematic.pdf` is the Week 6 Progress Log's record of revision 1; leave it as it is |
 | Firmware | The private firmware repository | Software flowcharts (`src/assets/build/diagrams/software-*.svg`), firmware facts in the Progress Log; never linked |
 | Weekly records | The team's own accounts, gathered by the `weekly-update` skill | `progress-log.mdx`, `time-and-effort.mdx`, `weekly-meetings.mdx` |
 
@@ -262,14 +265,13 @@ Rules that keep them consistent:
   update the bars in `04-c-timeline-modified.typ`, rebuild the report PDF, and
   regenerate the SVG. The chart's caption and the page's `<figcaption>` are
   deliberately short and carry no dates, so they don't need updating.
-- **Regenerating the Gantt SVG:** in the report repository run
-  `typst compile gantt-modified.typ gantt-modified.svg`, or download it from
-  the report's "Build report assets" GitHub Actions run (the `report`
-  artifact). `gantt-modified.typ` compiles `sections/04-c-timeline-modified.typ`
+- **Regenerating the Gantt SVG:** download `gantt-modified.svg` from the
+  report's "Build report assets" GitHub Actions run, or run
+  `typst compile gantt-modified.typ gantt-modified.svg` in the report
+  repository. `gantt-modified.typ` compiles `sections/04-c-timeline-modified.typ`
   on its own, without the report's figure and caption, at 720 pt wide (close
   to the chart's 10.1 in width in the report, so the layout matches) with the
-  height ending where the chart ends. Copy the result to the report's
-  `artifacts/gantt-modified.svg` and to this site.
+  height ending where the chart ends. Copy the result to this site.
 - **Regenerating the Task Plan tables:** read the `.ods` (columns Week, Week
   starting, Milestone, Task, Owner, With, Status, Actual work and notes), group
   by **week number only**, and compute each heading's date as 08/24/2026 + 7 ×
