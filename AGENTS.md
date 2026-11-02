@@ -264,12 +264,12 @@ Rules that keep them consistent:
   deliberately short and carry no dates, so they don't need updating.
 - **Regenerating the Gantt SVG:** in the report repository run
   `typst compile gantt-modified.typ gantt-modified.svg`, or download it from
-  the report's "Build report assets" GitHub Actions run. That file compiles
-  `sections/04-c-timeline-modified.typ` on its own, without the report's
-  figure and caption, at the chart's width in the report (10.1 in) with the
-  height ending where the chart ends, so the SVG keeps the report's
-  proportions. Copy the result to the report's `artifacts/gantt-modified.svg`
-  and to this site.
+  the report's "Build report assets" GitHub Actions run (the `report`
+  artifact). `gantt-modified.typ` compiles `sections/04-c-timeline-modified.typ`
+  on its own, without the report's figure and caption, at 720 pt wide (close
+  to the chart's 10.1 in width in the report, so the layout matches) with the
+  height ending where the chart ends. Copy the result to the report's
+  `artifacts/gantt-modified.svg` and to this site.
 - **Regenerating the Task Plan tables:** read the `.ods` (columns Week, Week
   starting, Milestone, Task, Owner, With, Status, Actual work and notes), group
   by **week number only**, and compute each heading's date as 08/24/2026 + 7 ×
