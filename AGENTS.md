@@ -204,7 +204,7 @@ repo.
 |---|---|---|
 | Weekly Task Plan | `~/Downloads/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (the team edits it in LibreOffice or Excel Online) | `public/EET4950_Weekly_Task_Plan_Safe_Dip.ods` (download card) and the per-week tables in `build/final-timeline.mdx` |
 | Design Report (Typst) | The `josuebouchard/safe-dip-report` repository (built PDF in `artifacts/`) | `public/safe-dip-senior-design-report.pdf`, linked from `build/report-and-presentation.mdx` ("Project Documents"); it must be the same PDF uploaded to the course checkpoint |
-| Modified Gantt chart | Report `sections/04-b-timeline.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
+| Modified Gantt chart | Report `sections/04-c-timeline-modified.typ`, figure `<figure:gantt-modified>` | `src/assets/build/diagrams/gantt-modified.svg` on `build/final-timeline.mdx` |
 | Block diagrams | Lucid document "Block diagram" (one page: frame 1 is the system overview, frame 2 the detailed hardware), downloaded per frame as SVG from Lucid (`Block diagram - Page 1 (N).svg`); Lucid's MCP tools can only export PNG | Report `images/block-diagram/00-system.svg` and `01-hardware-architecture.svg`; `src/assets/build/diagrams/system-block-diagram.svg` and `hardware-architecture.svg` |
 | Electrical schematic | The report repository's KiCad project `kicad_schematic/`; the report keeps its own exports, `artifacts/kicad_schematic.pdf` and `images/hardware/schematic.svg` (via `pdftocairo -svg`) | `src/assets/build/diagrams/electrical-schematic.svg` and `public/kicad-schematic.pdf` (linked from Block diagrams). The site keeps its own copies: whenever the report's schematic changes, update both here in the same change. `public/progress/week-6-kicad-schematic.pdf` is the Week 6 Progress Log's record of revision 1; leave it as it is |
 | Firmware | The private firmware repository | Software flowcharts (`src/assets/build/diagrams/software-*.svg`), firmware facts in the Progress Log; never linked |
@@ -220,7 +220,7 @@ Build pages and the report sections they must match:
 | CAD Drawings & Renderings | 2.2 | `sections/02-c-cad-datum.typ` |
 | Power budget of the project | 2.4 | `sections/02-b-power-budget.typ` |
 | Distribution of tasks | 4.3 | `sections/04-non-technical-issues.typ` |
-| Proposed and actual project timelines | 4.1 (Fig. 4.2) | `sections/04-b-timeline.typ` |
+| Proposed and actual project timelines | 4.1 (Fig. 4.2) | `sections/04-c-timeline-modified.typ` (the proposed chart is `04-b-timeline-proposal.typ`) |
 | Project Expenses | 4.2 | `sections/04-a-budget.typ` |
 | Final Testing & Results | 3.4, 3.5 | `sections/03-project-contribution.typ` |
 | Engineering Standards and Compliance Codes | Appendix B | `sections/99-appendix.typ` |
@@ -259,15 +259,16 @@ Rules that keep them consistent:
 - **Requirement IDs are `R-01` to `R-11`** in the report, on the site and in
   the Task Plan. The Proposal pages keep their original `SR-` IDs.
 - **The Gantt and the Task Plan must agree.** When tasks move between weeks,
-  update the bars in `04-b-timeline.typ`, rebuild the report PDF, and
+  update the bars in `04-c-timeline-modified.typ`, rebuild the report PDF, and
   regenerate the SVG. The chart's caption and the page's `<figcaption>` are
   deliberately short and carry no dates, so they don't need updating.
-- **Regenerating the Gantt SVG:** copy `04-b-timeline.typ`, replace
-  `#page(flipped: true, margin: 0.45in)[` with
-  `#page(width: 780pt, height: 590pt, margin: 8pt)[`, set both captions to
-  `caption: none`, run `typst compile copy.typ 'g-{p}.svg' --format svg`, and use
-  page 2 (page 1 is the proposed chart). Raise the height if the chart spills
-  onto a third page. `width: auto` / `height: auto` breaks the timeline package.
+- **Regenerating the Gantt SVG:** copy `04-c-timeline-modified.typ` into the
+  report's `sections/` folder, add `#set page(width: 780pt, height: 590pt,
+  margin: 8pt)` as its first line, set its caption to `caption: none`, and run
+  `typst compile --root . copy.typ out.svg`. The output is one page. Raise the
+  height if the chart spills onto a second page. `width: auto` /
+  `height: auto` breaks the timeline package. Run against the Nov 2 report,
+  this reproduces the current SVG byte for byte.
 - **Regenerating the Task Plan tables:** read the `.ods` (columns Week, Week
   starting, Milestone, Task, Owner, With, Status, Actual work and notes), group
   by **week number only**, and compute each heading's date as 08/24/2026 + 7 ×
