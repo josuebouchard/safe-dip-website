@@ -259,8 +259,9 @@ Rules that keep them consistent:
 - **Requirement IDs are `R-01` to `R-11`** in the report, on the site and in
   the Task Plan. The Proposal pages keep their original `SR-` IDs.
 - **The Gantt and the Task Plan must agree.** When tasks move between weeks,
-  update the bars in `04-b-timeline.typ`, the "as of" date in its caption and
-  in the page's `<figcaption>`, rebuild the report PDF, and regenerate the SVG.
+  update the bars in `04-b-timeline.typ`, rebuild the report PDF, and
+  regenerate the SVG. The chart's caption and the page's `<figcaption>` are
+  deliberately short and carry no dates, so they don't need updating.
 - **Regenerating the Gantt SVG:** copy `04-b-timeline.typ`, replace
   `#page(flipped: true, margin: 0.45in)[` with
   `#page(width: 780pt, height: 590pt, margin: 8pt)[`, set both captions to
