@@ -26,7 +26,7 @@ The owner leads each task, and the With column names the person who helps, if an
 	fileType="ODS"
 	title="Weekly Task Plan"
 	description="The Weekly Task Plan spreadsheet, with the owner, helper, status, and notes of every task of Weeks 6 to 15. The tables below show the same plan."
-	meta="OpenDocument spreadsheet · as of October 25, 2026"
+	meta="OpenDocument spreadsheet · as of November 2, 2026"
 	href="/EET4950_Weekly_Task_Plan_Safe_Dip.ods"
 />
 
@@ -80,7 +80,7 @@ The owner leads each task, and the With column names the person who helps, if an
 | Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | Slipped | We were unable to meet this week, so this will be displaced to next week. |
 | Replace the X-axis belt clips with a permanent belt clamp | Adriano | — | Partial | Waiting for another steeper |
 | Decide and order the workpiece-detection sensor (time-of-flight, ultrasonic, or IR presence) | Josué | Adriano | Done | Based on the recommendations from the professor, an ultrasonic sensor was chosen because of affordability, abundance, simplicity and power, and, majorly, disponibility |
-| Run first two-axis cycle without a part from the manual start position: pick, dip, deposit, release | Josué | Adriano | Partial | The mechanical assembly and the electrical side were tested separately; the full cycle moves to Week 10. |
+| Run first two-axis cycle without a part from the manual start position: pick, dip, deposit, release | Josué | Adriano | Slipped | The mechanical assembly and the electrical side were tested separately; the full cycle moves to Week 10. |
 | Record viability video; write and post the Checkpoint 2 report, including the Checkpoint 1 leftovers (budget, CAD, hardware) | Josué | Adriano | Done | The viability video is posted on the Final Testing and Results page, which also lists the requirements still to be tested. An extension to Wed Oct 28, 11:59 PM was granted for the video. The Checkpoint 2 report is posted on the website. |
 | Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | Done | — |
 
@@ -90,24 +90,28 @@ The owner leads each task, and the With column names the person who helps, if an
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
-| Wire NC e-stop into the 24 V driver supply and to the e-stop input (before any test with a part) | Adriano | — | — | — |
-| Restore the e-stop input in firmware (replaces the reset-button stop) | Josué | — | — | — |
-| Mount the X and Y limit switches on the frame (moved from Weeks 8 and 9) | Adriano | — | — | — |
-| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 and 9) | Josué | — | — | — |
-| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | — | Moved from Week 9. |
-| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | — | Moved from Week 9. |
-| Run cycles with a part: retention and dwell time ±1 s (R-03, R-05) | Adriano | Josué | — | — |
+| Wire NC e-stop into the 24 V driver supply and to the e-stop input (before any test with a part) | Adriano | — | Done | E-stop succesfully interrupts motor power and advises MCU |
+| Restore the e-stop input in firmware (replaces the reset-button stop) | Josué | — | Done | Software successfully listens for the E-stop advise, halts the sequencer, and resets it on E-stop reset |
+| Mount the X and Y limit switches on the frame (moved from Weeks 8 and 9) | Adriano | — | Slipped | Moved to Week 11. |
+| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 and 9) | Josué | — | Slipped | Moved to Week 11. |
+| Verify e-stop cuts driver power and restart needs a start press (R-07, R-08) | Adriano | Josué | Done | Was tested, but not documented formally. Will be done next week after the limit switches installation |
+| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | Slipped | Moved from Week 9; moved to Week 11. |
+| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | Slipped | Moved from Week 9; moved to Week 11. |
+| Run cycles with a part: retention and dwell time ±1 s (R-03, R-05) | Adriano | Josué | Done | Was tested, but not documented formally. Will be done next week after. |
+| Run first two-axis cycle without a part from the manual start position: pick, dip, deposit, release | Josué | Adriano | Done | Moved from Week 9. We were finally able to test the full cycle. |
 | Record and edit the formal viability video with the requirement verifications (due Wed Oct 28, 11:59 PM, extension granted) | Adriano | Josué | Done | The final viability video is posted on the Final Testing and Results page, which lists the requirements still to be tested. |
-| Project Expenses: proposed budget, total expenses to date, and cost of the final design (three tables, report and website) | Adriano | — | — | — |
-| Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | — | — |
+| Project Expenses: proposed budget, total expenses to date, and cost of the final design (three tables, report and website) | Adriano | — | Done | — |
+| Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | Done | — |
 
 ### Week 11 — week of 11/02/2026
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
-| Verify e-stop cuts driver power and restart needs a start press (R-07, R-08) | Adriano | Josué | — | Moved from Week 10: the emergency stop is installed in Week 10. |
-| Install the workpiece sensor (depends on delivery); add it to the KiCad schematic and add the wait-for-part operation | Josué | — | — | — |
-| Run full unattended cycle with part detection (R-01, R-06) | Josué | Adriano | — | — |
+| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 10) | Adriano | — | — | — |
+| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 10) | Josué | — | — | — |
+| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | — | Moved from Weeks 9 and 10. |
+| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | — | Moved from Weeks 9 and 10. |
+| Run full unattended cycle started by the part-ready trigger (R-01, R-06) | Josué | Adriano | — | — |
 | Add limit-switch boundary fault: stop and latch if a switch trips away from 0 | Josué | — | — | — |
 | Investigate the Modbus disconnections seen during operation | Josué | — | — | — |
 | Verify state and faults are reported over Modbus during a cycle (R-09) | Josué | — | — | — |
