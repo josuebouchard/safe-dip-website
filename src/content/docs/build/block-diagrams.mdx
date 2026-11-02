@@ -12,7 +12,7 @@ import normalCycle from '../../../assets/build/diagrams/software-normal-cycle.sv
 import sequencer from '../../../assets/build/diagrams/software-sequencer.svg';
 import motionPlanner from '../../../assets/build/diagrams/software-motion-planner.svg';
 
-Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, ultrasonic sensing, and limit switches. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
+Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, limit switches, and a part-ready trigger input. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
 
 ## System Block Diagram
 
@@ -20,7 +20,7 @@ The system divides into seven modules: power distribution, E-stop, processing, s
 
 <Image src={systemDiagram} alt="System-wide block diagram of Safe Dip" />
 
-The power distribution module converts wall power into the voltages the other modules need. The E-stop module performs a Category-0 emergency stop, cutting power to the movement module and alerting the processing module so it can handle the stop gracefully. The processing module is the system's core — the microcontroller that turns inputs into actuator responses, and which also feeds 3.3 V to the other modules through its own power converter. The sensing module covers the ultrasonic sensor, limit switches, and other sensors. The movement module covers the stepper motors and controllers for the horizontal and vertical axes. The effector module grabs the workpiece via an electromagnet, kept modular so the effector type can be swapped later. The communications module adds Ethernet TCP-Modbus support on top of the processing module.
+The power distribution module converts wall power into the voltages the other modules need. The E-stop module performs a Category-0 emergency stop, cutting power to the movement module and alerting the processing module so it can handle the stop gracefully. The processing module is the system's core — the microcontroller that turns inputs into actuator responses, and which also feeds 3.3 V to the other modules through its own power converter. The sensing module covers the limit switches used to home each axis; because the conveyor is outside the project scope, the system that supplies the workpieces signals when one is ready through a part-ready trigger input, driven by a push button for the demonstration. The movement module covers the stepper motors and controllers for the horizontal and vertical axes. The effector module grabs the workpiece via an electromagnet, kept modular so the effector type can be swapped later. The communications module adds Ethernet TCP-Modbus support on top of the processing module.
 
 ## Hardware Architecture
 
@@ -30,7 +30,7 @@ This diagram expands the functional modules above into the electrical implementa
 
 ## Electrical Schematic
 
-The electrical schematic, drawn in KiCad, shows the wiring of the power supplies, the emergency-stop circuit, the stepper drivers, the electromagnet driver, the sensors, and the Nucleo board. It is the reference for the wiring of the prototype. The [schematic as a PDF](/progress/week-6-kicad-schematic.pdf) can be zoomed in for the details.
+The electrical schematic, drawn in KiCad, shows the wiring of the power supplies, the emergency-stop circuit, the stepper drivers, the electromagnet driver, the sensors, and the Nucleo board. It is the reference for the wiring of the prototype. The [schematic as a PDF](/kicad-schematic.pdf) can be zoomed in for the details.
 
 <figure>
 	<Image src={schematic} alt="KiCad electrical schematic of Safe Dip with power, controller, motion, communications, operator controls, effector, and sensor sections" />

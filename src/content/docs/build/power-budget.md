@@ -11,12 +11,12 @@ The Safe Dip prototype uses two independent AC-DC power adapters. The 24 V suppl
 |---|---|---|---|---|---|---|
 | Movement | Stepper motor (max usage per phase) | 24 | 2.8 | 67.2 | 2 | 134.4 |
 | Movement | Stepper motor driver | 24 | 0.5 | 12 | 2 | 24 |
+| E-Stop | E-stop relay | 5 | ≈0.07–0.10 | ≈0.5 | 2 | ≈1 |
 | End Effector | Electromagnet | 12 | 1.5 | 18 | 1 | 18 |
 | End Effector | Electromagnet driver | 5 | ≈0.07–0.10 | ≈0.5 | 1 | ≈0.5 |
-| Sensing | Ultrasonic sensor (HC-SR04) | 5 | 0.015 | ≈0.075 | 1 | ≈0.075 |
 | Communications | Ethernet module | 3.3 | 0.132 | ≈0.436 | 1 | ≈0.436 |
 | Processing | STM32 (at max rate) | 3.3/5 | ≈0.1 | ≈0.33 | 1 | ≈0.33 |
-| | | | | **Total operational power** | | **177.7 W** |
+| | | | | **Total operational power** | | **178.7 W** |
 
 ## Available Supply Capacity
 
@@ -26,13 +26,13 @@ The Safe Dip prototype uses two independent AC-DC power adapters. The 24 V suppl
 | 12 V | 12 V AC-DC power adapter | 12 | 5 | 60 |
 | | | | **Total available power** | **410.4 W** |
 
-Total operational power draw (177.7 W) stays within the 410.4 W available from the two supplies, leaving margin for inrush current and future additions.
+Total operational power draw (178.7 W) stays within the 410.4 W available from the two supplies, leaving margin for inrush current and future additions.
 
 ## Load per Power Rail
 
 | Power Rail | Loads | Load (W) | Adapter Rating (W) | Share of Rating |
 |---|---|---|---|---|
 | 24 V | Two stepper motors and two stepper motor drivers | 158.4 | 350.4 | 45% |
-| 12 V | Electromagnet, and, through the 12 V to 5 V buck converter, the electromagnet driver, ultrasonic sensor, Ethernet module, and STM32 (conversion losses neglected) | 19.3 | 60 | 32% |
-| | **Total** | **177.7** | **410.4** | **43%** |
+| 12 V | Electromagnet, and, through the 12 V to 5 V buck converter, the e-stop relays, electromagnet driver, Ethernet module, and STM32 (conversion losses neglected) | 20.3 | 60 | 34% |
+| | **Total** | **178.7** | **410.4** | **44%** |
 
