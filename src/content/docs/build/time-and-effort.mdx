@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="10/26 – 11/01, 2026"
+	weekNumber={10}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 3.5,
+			text: 'Reviewed the monetary budget against the parts actually used, adding links and the new and dropped parts, and wrote a report on the roadblocks of the CAD design and 3D printing. Tried to solder the limit switches and, when the solder would not hold, worked out a way to mount them without soldering.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 10,
+			text: 'Restored the emergency-stop input in the firmware and verified that the stop cuts the drivers\' power, made the electromagnet start disengaged, and removed the Modbus keep-alive that broke communication. Replaced the wire nuts with Wago connectors and tidied the wiring in the electronics container. Revised the electrical schematic to revision 2 with the e-stop and effector relays, and replaced the part-detection sensor with a part-ready trigger input across the requirements, budgets, block diagrams and report.',
+		},
+		{
+			name: 'Group',
+			hours: 3,
+			text: 'Completed the first full installation of the electronic and mechanical sides, redid much of the wiring, and tested the system together, running the first full two-axis cycle and cycles with a part. Recorded the formal viability video, posted on the Final Testing & Results page.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="10/19 – 10/25, 2026"
 	weekNumber={9}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',

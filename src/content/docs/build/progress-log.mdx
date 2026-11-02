@@ -32,8 +32,24 @@ import yAxisOnRails from '../../../assets/build/progress/week-9/y-axis-on-rails.
 import magnetHolder from '../../../assets/build/progress/week-9/magnet-holder.jpg';
 import electronicsBox1 from '../../../assets/build/progress/week-9/electronics-box-1.jpg';
 import electronicsBox2 from '../../../assets/build/progress/week-9/electronics-box-2.jpg';
+import estopElectronics from '../../../assets/build/progress/week-10/estop-electronics.jpg';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 10 — 10/26/2026–11/01/2026" subtitle="First full installation of the electronics and mechanics, emergency stop restored, schematic revision 2, part-ready trigger">
+
+**Josué** — Restored the emergency-stop input in the firmware: with a pull-down, a broken wire now reads as a pressed button, and the controller halts the sequencer when the button is pressed and resets it once the button is released. He verified that the emergency stop cuts power to the stepper drivers and that the system only restarts after a deliberate start press (R-07, R-08), although this has not been documented formally yet. The electromagnet now starts disengaged when the controller powers up, since keeping it energized while idle made it overheat. He removed the Modbus TCP keep-alive added earlier, which had broken the Modbus communication, and on a separate branch added the electromagnet's state to the Modbus map and to the team's Modbus monitor dashboard. In the electronics container, he replaced the wire nuts with Wago connectors and made the connections cleaner. He revised the electrical schematic to revision 2: relay modules now cut the motor supply on an emergency stop and signal the controller, a third relay switches the electromagnet, and the limit switches moved to the pins the firmware uses. Following the advisor's recommendation, the part-detection sensor was replaced by a part-ready trigger input, and the requirements, specifications, power budget, budget, block diagrams and report were updated to match.
+
+<figure>
+	<Image src={estopElectronics} alt="Hand holding a yellow emergency-stop box with a red mushroom button in front of an open plastic container holding three relay modules, two stepper drivers, a 24 V power supply and the Nucleo board, wired together with Wago connectors" />
+	<figcaption>The emergency-stop button with the electronics: the relay modules, the two stepper drivers, the 24 V power supply and the Nucleo board, joined with Wago connectors.</figcaption>
+</figure>
+
+**Adriano** — Reviewed the monetary budget against the parts actually used, adding purchase links and listing the new parts (M3 and M5 screws, 5/16-inch hardware, L-brackets for the frame, four spools of PLA and four more aluminum beams) and the ones no longer used (among them the nut block, the T-nuts, the buzzer, the LEDs and the MOSFET). He also wrote a report on the roadblocks of the CAD design and 3D printing: learning Onshape and the slicer, holes and supports missed by a few millimeters through unaccounted offsets, and parts that had to be redesigned, such as an anti-rotation section for the belt-transmission holder, a new top holder for the stepper, and denser printing for the parts of the X-axis holder under stress. He tried to solder the limit switches, but the solder would not hold, so he worked out a way to mount them without soldering.
+
+**Group** — This was the first full installation of the project's electronic and mechanical sides together. The team redid much of the wiring and tested the system as a whole: they ran the first full two-axis cycle, from pick to release, and cycles with a part to check its retention and the dwell time, which have not been documented formally yet. They recorded the formal viability video, which is posted with the first requirement results on the [Final Testing & Results](/build/final-testing-and-results/) page, and set up automatic builds that produce the report PDF, the Gantt chart and the schematic on every change.
+
+</Accordion>
 
 <Accordion title="Week 9 — 10/19/2026–10/25/2026" subtitle="Electronics in a container, X and Y axes completed and assembled, relay effector driver, ultrasonic sensor chosen, homing firmware">
 
