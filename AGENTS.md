@@ -263,12 +263,13 @@ Rules that keep them consistent:
   regenerate the SVG. The chart's caption and the page's `<figcaption>` are
   deliberately short and carry no dates, so they don't need updating.
 - **Regenerating the Gantt SVG:** copy `04-c-timeline-modified.typ` into the
-  report's `sections/` folder, add `#set page(width: 780pt, height: 590pt,
+  report's `sections/` folder, add `#set page(width: 10.1in, height: auto,
   margin: 8pt)` as its first line, set its caption to `caption: none`, and run
-  `typst compile --root . copy.typ out.svg`. The output is one page. Raise the
-  height if the chart spills onto a second page. `width: auto` /
-  `height: auto` breaks the timeline package. Run against the Nov 2 report,
-  this reproduces the current SVG byte for byte.
+  `typst compile --root . copy.typ out.svg`. 10.1 in is the chart's width in
+  the report (letter landscape minus 0.45 in margins), and `height: auto` ends
+  the page where the chart ends, so the SVG keeps the report's proportions.
+  `width: auto` does not work: the chart fills the width it is given. Copy the
+  result to the report's `artifacts/gantt-modified.svg` and to this site.
 - **Regenerating the Task Plan tables:** read the `.ods` (columns Week, Week
   starting, Milestone, Task, Owner, With, Status, Actual work and notes), group
   by **week number only**, and compute each heading's date as 08/24/2026 + 7 ×
