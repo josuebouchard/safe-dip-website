@@ -55,7 +55,7 @@ The cycle is an ordered list of nonblocking operations grouped into five stages:
 
 Every operation implements the same two functions. `start()` begins the operation and returns immediately; `poll()` reports whether it is still running or has finished. The sequencer only ever calls these two, so it never needs to know how a move, the electromagnet, or a dwell actually works. Each operation copies the settings it depends on when it starts, so a value changed over Modbus takes effect the next time that operation runs and never alters one already in progress.
 
-Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the ultrasonic sensor to detect a part before the pick stage.
+Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the part-ready trigger before the pick stage.
 
 ### Cooperative Cycle Sequencer
 
