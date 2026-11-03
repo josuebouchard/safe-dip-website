@@ -2,6 +2,8 @@
 
 Documentation website for **Safe Dip**, an ECET senior design capstone project at Valencia College (Orlando, FL) by Josué Bouchard & Adriano Duque Mena. Built with [Astro](https://astro.build) and the [Starlight](https://starlight.astro.build) documentation framework.
 
+**Live site:** <https://safe-dip.vercel.app>
+
 **Maintaining this site with an AI assistant (Claude, ChatGPT/Codex, Cursor, etc.)?** Read [`AGENTS.md`](./AGENTS.md) first — it covers the project's conventions, content sourcing, and known gotchas in more detail than this README.
 
 ## Project structure
