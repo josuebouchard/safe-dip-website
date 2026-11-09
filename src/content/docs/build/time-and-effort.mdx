@@ -8,9 +8,21 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="11/02 – 11/08, 2026"
+	weekNumber={11}
+	open
+	entries={[
+		{
+			name: 'Josué Bouchard',
+			hours: 7,
+			text: 'Added fault handling to the firmware (homing timeouts, stuck-switch and lost-step detection, latched faults) and reported it over Modbus. Moved the firmware to millimeter units, connected the X limit switch and found a bug that triggered a fault constantly, and restructured the firmware around a machine layer. Ran a full unattended cycle and updated the software part of the report draft.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="10/26 – 11/01, 2026"
 	weekNumber={10}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',

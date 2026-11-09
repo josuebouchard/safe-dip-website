@@ -33,8 +33,20 @@ import magnetHolder from '../../../assets/build/progress/week-9/magnet-holder.jp
 import electronicsBox1 from '../../../assets/build/progress/week-9/electronics-box-1.jpg';
 import electronicsBox2 from '../../../assets/build/progress/week-9/electronics-box-2.jpg';
 import estopElectronics from '../../../assets/build/progress/week-10/estop-electronics.jpg';
+import firmwareLoop from '../../../assets/build/progress/week-11/firmware-main-loop.svg';
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
+
+<Accordion title="Week 11 — 11/02/2026–11/08/2026" subtitle="Fault handling, millimeter units, and a firmware restructuring">
+
+**Josué** — Ran a full unattended cycle, started with the controller's Start button. The dedicated part-ready trigger input is still to be added. Fault handling was added to the firmware. Homing now times out, a stuck home switch or lost steps are detected, and a limit-switch press during a move stops the machine. Faults stay latched until a Start press clears them. The Modbus map now reports which faults are active and which came first, and state and faults were checked informally over Modbus during a cycle, with video proof planned for next week. Recipe positions, speeds and homing distances are now set in millimeters, through a conversion for each axis, and this was tested. Y-axis calibration is still pending. Connecting the X limit switch exposed a bug that made it trigger a fault constantly. A fix is written but not yet tested on the machine. The bug led to a rethink of the firmware's structure, which was reorganized into layers around a machine layer that owns the state and lets operations raise their own faults. This version is on a development branch and not yet merged. He also configured static analysis for the firmware and updated the software part of the report draft. The hardware part is waiting for the final models.
+
+<figure>
+	<Image src={firmwareLoop} alt="Flowchart of one pass of the firmware's main loop: read the inputs, debounce the Start button, stop any axis moving into its limit switch, check the emergency stop, handle a Start press by clearing faults or restarting the cycle, step the sequencer, then enter the safe state if any fault is latched or run the stepper controllers, and finally serve Modbus." style="max-width: 36rem; margin-inline: auto;" />
+	<figcaption>One pass of the restructured firmware's main loop. A fault acts on the pass in which it is raised, and the emergency stop and the limit-switch backstop run before the sequencer.</figcaption>
+</figure>
+
+</Accordion>
 
 <Accordion title="Week 10 — 10/26/2026–11/01/2026" subtitle="First full installation of the electronics and mechanics, emergency stop restored, schematic revision 2, part-ready trigger">
 
