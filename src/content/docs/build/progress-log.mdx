@@ -46,6 +46,10 @@ A weekly journal of what was designed, built, tested, or debugged during the bui
 	<figcaption>One pass of the restructured firmware's main loop. A fault acts on the pass in which it is raised, and the emergency stop and the limit-switch backstop run before the sequencer.</figcaption>
 </figure>
 
+**Adriano** — Worked on bearings for the upper part of the X axis to stop its pieces from oscillating. He is printing and testing the prototype, and will take the project home to finish and implement the rest. He also designed the piece that holds the limit switches.
+
+**Group** — Tested the limit-switch concept: the X switch was wired and held by hand, facing the X-axis carriage. The system stops the motors fast enough that the carriage doesn't crash into the switch. The test also revealed the bug that made the switch trigger a fault constantly, which led to the firmware review. A fix is written but has not been tested yet. The team also began discussing, asynchronously, how to test all the requirements and how to write chapter 3 of the report.
+
 </Accordion>
 
 <Accordion title="Week 10 — 10/26/2026–11/01/2026" subtitle="First full installation of the electronics and mechanics, emergency stop restored, schematic revision 2, part-ready trigger">
