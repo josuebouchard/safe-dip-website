@@ -26,7 +26,7 @@ The owner leads each task, and the With column names the person who helps, if an
 	fileType="ODS"
 	title="Weekly Task Plan"
 	description="The Weekly Task Plan spreadsheet, with the owner, helper, status, and notes of every task of Weeks 6 to 15. The tables below show the same plan."
-	meta="OpenDocument spreadsheet · as of November 2, 2026"
+	meta="OpenDocument spreadsheet · as of November 9, 2026"
 	href="/EET4950_Weekly_Task_Plan_Safe_Dip.ods"
 />
 
@@ -101,25 +101,25 @@ The owner leads each task, and the With column names the person who helps, if an
 | Run first two-axis cycle without a part from the manual start position: pick, dip, deposit, release | Josué | Adriano | Done | Moved from Week 9. We were finally able to test the full cycle. |
 | Record and edit the formal viability video with the requirement verifications (due Wed Oct 28, 11:59 PM, extension granted) | Adriano | Josué | Done | The final viability video is posted on the Final Testing and Results page, which lists the requirements still to be tested. |
 | Project Expenses: proposed budget, total expenses to date, and cost of the final design (three tables, report and website) | Adriano | — | Done | — |
+| Investigate the Modbus disconnections seen during operation (moved from Week 11) | Josué | — | Done | The cause was the TCP keep-alive on the Modbus socket. It was removed on 10/27. |
 | Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | Done | — |
 
 ### Week 11 — week of 11/02/2026
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
-| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 10) | Adriano | — | — | — |
-| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 10) | Josué | — | — | — |
-| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | — | Moved from Weeks 9 and 10. |
-| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | — | Moved from Weeks 9 and 10. |
-| Run full unattended cycle started by the part-ready trigger (R-01, R-06) | Josué | Adriano | — | — |
-| Add limit-switch boundary fault: stop and latch if a switch trips away from 0 | Josué | — | — | — |
-| Investigate the Modbus disconnections seen during operation | Josué | — | — | — |
-| Verify state and faults are reported over Modbus during a cycle (R-09) | Josué | — | — | — |
-| Set the Modbus travel limits to the reduced travel used in the cycle | Josué | — | — | — |
-| Tune speed and acceleration for cycle time | Josué | — | — | — |
-| Start report draft: as-built hardware and software chapters | Josué | Adriano | — | — |
-| Install fuse holder; tidy and label wiring | Adriano | — | — | — |
-| Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | — | — |
+| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 10) | Adriano | — | Slipped | Moved to Week 12. |
+| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 10) | Josué | — | Partial | The X switch was wired, but a bug made it always trigger a fault. A fix was written but has not been tested. The Y switch is not wired yet. Moved to Week 12. |
+| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | Slipped | Calibration is to be done before the tests, and needed the mm-to-steps conversion. The conversion was added and tested, but there was no time left for calibration. Moved to Week 12. |
+| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | Slipped | Moved to Week 12. |
+| Run full unattended cycle started by the part-ready trigger (R-01, R-06) | Josué | Adriano | Done | It was triggered using the restart button, but switching it to a special trigger is trivial |
+| Add limit-switch boundary fault: stop and latch if a switch trips away from 0 | Josué | — | Done | Fault added: a limit-switch press during a move, in either direction, stops the machine and latches the fault. X only for now, since the Y switch is not wired. Not yet merged into the main firmware branch. |
+| Verify state and faults are reported over Modbus during a cycle (R-09) | Josué | — | Done | Performed informally, video proof will be done next week |
+| Set the Modbus travel limits to the reduced travel used in the cycle | Josué | — | Slipped | Prior conversion from mm to steps was required for this. It was added (not yet merged into the main firmware branch), but there was no time left for proof |
+| Tune speed and acceleration for cycle time | Josué | — | Slipped | It was left for next week with all the formal testing |
+| Start report draft: as-built hardware and software chapters | Josué | Adriano | Partial | Software part has been updated. Hardware part is waiting for final models. |
+| Install fuse holder; tidy and label wiring | Adriano | — | Slipped | — |
+| Website: progress log, time and effort, and advisor-meeting minutes for the week | Josué | — | Done | — |
 
 ### Week 12 — week of 11/09/2026
 
@@ -127,6 +127,13 @@ The owner leads each task, and the With column names the person who helps, if an
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
+| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 11) | Adriano | — | — | Moved from Week 11. |
+| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 11) | Josué | — | — | Moved from Week 11. Remaining: test the fix for the X switch fault, wire the Y switch, test homing. |
+| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | — | Moved from Weeks 9 to 11. |
+| Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | — | Moved from Weeks 9 to 11. |
+| Set the Modbus travel limits to the reduced travel used in the cycle (moved from Week 11) | Josué | — | — | Moved from Week 11. |
+| Tune speed and acceleration for cycle time (moved from Week 11) | Josué | — | — | Moved from Week 11. |
+| Install fuse holder; tidy and label wiring (moved from Week 11) | Adriano | — | — | Moved from Week 11. |
 | Run 10 consecutive cycles; record cycle time, depth and dwell (R-10) | Josué | Adriano | — | — |
 | Run full cycle with a 1 lb payload (R-11) | Adriano | Josué | — | — |
 | Write test results chapter; publish Final Testing & Results page | Josué | — | — | — |
