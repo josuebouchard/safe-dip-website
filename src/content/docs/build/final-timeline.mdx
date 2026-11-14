@@ -26,7 +26,7 @@ The owner leads each task, and the With column names the person who helps, if an
 	fileType="ODS"
 	title="Weekly Task Plan"
 	description="The Weekly Task Plan spreadsheet, with the owner, helper, status, and notes of every task of Weeks 6 to 15. The tables below show the same plan."
-	meta="OpenDocument spreadsheet · as of November 9, 2026"
+	meta="OpenDocument spreadsheet · as of November 14, 2026"
 	href="/EET4950_Weekly_Task_Plan_Safe_Dip.ods"
 />
 
@@ -94,7 +94,7 @@ The owner leads each task, and the With column names the person who helps, if an
 | Restore the e-stop input in firmware (replaces the reset-button stop) | Josué | — | Done | Software successfully listens for the E-stop advise, halts the sequencer, and resets it on E-stop reset |
 | Mount the X and Y limit switches on the frame (moved from Weeks 8 and 9) | Adriano | — | Slipped | Moved to Week 11. |
 | Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 and 9) | Josué | — | Slipped | Moved to Week 11. |
-| Verify e-stop cuts driver power and restart needs a start press (R-07, R-08) | Adriano | Josué | Done | Was tested, but not documented formally. Will be done next week after the limit switches installation |
+| Verify e-stop cuts driver power and restart needs a start press (R-07, R-08) | Adriano | Josué | Done | Was tested, but not documented formally. Will be done next week after the limit switches installation. The motor-supply relay has since failed with its contact closed. It will be replaced in Week 13 and the test repeated then. |
 | Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | Slipped | Moved from Week 9; moved to Week 11. |
 | Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | Slipped | Moved from Week 9; moved to Week 11. |
 | Run cycles with a part: retention and dwell time ±1 s (R-03, R-05) | Adriano | Josué | Done | Was tested, but not documented formally. Will be done next week after. |
@@ -127,9 +127,9 @@ The owner leads each task, and the With column names the person who helps, if an
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
-| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 11) | Adriano | — | — | Moved from Week 11. |
-| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 11) | Josué | — | — | Moved from Week 11. Remaining: test the fix for the X switch fault, wire the Y switch, test homing. |
-| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | — | Moved from Weeks 9 to 11. |
+| Mount the X and Y limit switches on the frame (moved from Weeks 8 to 11) | Adriano | — | Done | The switches are mounted: glued in place, and the X switch is also taped. |
+| Wire the X and Y limit switches to the Nucleo; test homing (moved from Weeks 8 to 11) | Josué | — | Done | Both switches are wired. They were very noisy at first and caused false faults; a 3 ms software debounce and braided wires fixed it. Both axes home. |
+| Calibrate Y-axis steps/mm (2 mm lead: 800 steps/mm); test immersion depth ±1 cm (R-04) | Adriano | Josué | Partial | Both axes are calibrated (X 40 steps/mm, Y 800 steps/mm). The immersion depth is still to be measured. |
 | Repeat the Y-axis down/up move 10 times; measure the drift at the top position | Adriano | Josué | — | Moved from Weeks 9 to 11. |
 | Set the Modbus travel limits to the reduced travel used in the cycle (moved from Week 11) | Josué | — | — | Moved from Week 11. |
 | Tune speed and acceleration for cycle time (moved from Week 11) | Josué | — | — | Moved from Week 11. |
@@ -146,6 +146,10 @@ The owner leads each task, and the With column names the person who helps, if an
 
 | Task | Owner | With | Status | Actual work and notes |
 |---|---|---|---|---|
+| Build the part-ready trigger input and test R-01 (trigger closed, open, and disconnected) | Josué | Adriano | — | — |
+| Record the quick tests: R-02 drift, R-04 immersion depth, R-05 dwell and R-10 ten consecutive cycles | Josué | Adriano | — | — |
+| Replace the failed motor-supply relay; test and record R-07 and R-08 | Adriano | Josué | — | The relay failed with its contact closed. |
+| Dimensioned CAD drawings of the as-built assembly | Adriano | — | — | — |
 | Fix issues found in testing; retest any failed requirement | Josué | Adriano | — | — |
 | Update budget and power budget with as-built parts and measured currents | Adriano | — | — | — |
 | Address draft feedback; submit final report (Fri Nov 20) | Josué | Adriano | — | — |

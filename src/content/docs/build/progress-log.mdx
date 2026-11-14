@@ -37,6 +37,20 @@ import firmwareLoop from '../../../assets/build/progress/week-11/firmware-main-l
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
 
+<Accordion title="Week 12 — 11/09/2026–11/15/2026" subtitle="Limit switches and homing, calibration, belt-transmission repairs, failed emergency-stop relay">
+
+**Group** — Both limit switches were connected for the first time and were very noisy. It showed as the axis moving only a little during homing, as if it had already hit its switch, and then limit-switch faults appeared. The fix was a 3 ms software debounce plus braiding the ground and the pulled-up signal wire of each switch together. Each switch is glued in place, and the X switch is also taped for extra strength and to hide its wires. Both axes now home at the start of each cycle.
+
+Both axes were calibrated: rough values with a long ruler, then fine tuning through the Modbus interface. The first measurements were taken from the center of the carriage, which was wrong. The right reference is the carriage surface closest to the limit switch: the left side of the horizontal carriage and the top of the vertical one.
+
+Some parts of the belt transmission broke. The belt needs side tension, and the stepper motor adapter and a ball-bearing housing were cantilevered, held only from the bottom on a small surface, so they broke or twisted. The adapter now has a hold at the top and the bottom, and the belt is no longer overtightened, because its ridges transfer the motion. Lost steps do not matter, because the axes home at the start of each cycle.
+
+The motor-supply relay is fused closed. The emergency stop still stops the machine through the second relay, which signals the controller. The relay will be replaced next week, probably by switching the AC side of the power supply.
+
+The Modbus monitor now shows the loop time (about 0.29 ms per pass), the faults, and the stage of the cycle. It runs on a computer connected to the Ethernet port, and only one client can be connected at a time. The part-ready trigger is designed (two Dupont pins, closed means part ready, as the first operation of the cycle) but not built yet.
+
+</Accordion>
+
 <Accordion title="Week 11 — 11/02/2026–11/08/2026" subtitle="Fault handling, millimeter units, and a firmware restructuring">
 
 **Josué** — Ran a full unattended cycle, started with the controller's Start button. The dedicated part-ready trigger input is still to be added. Fault handling was added to the firmware. Homing now times out, a stuck home switch or lost steps are detected, and a limit-switch press during a move stops the machine. Faults stay latched until a Start press clears them. The Modbus map now reports which faults are active and which came first, and state and faults were checked informally over Modbus during a cycle, with video proof planned for next week. Recipe positions, speeds and homing distances are now set in millimeters, through a conversion for each axis, and this was tested. Y-axis calibration is still pending. Connecting the X limit switch exposed a bug that made it trigger a fault constantly. A fix is written but not yet tested on the machine. The bug led to a rethink of the firmware's structure, which was reorganized into layers around a machine layer that owns the state and lets operations raise their own faults. This version is on a development branch and not yet merged. He also configured static analysis for the firmware and updated the software part of the report draft. The hardware part is waiting for the final models.

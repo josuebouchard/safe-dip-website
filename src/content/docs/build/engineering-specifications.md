@@ -35,8 +35,8 @@ Where [Engineering Requirements](/build/engineering-requirements/) state *what* 
 
 | Specific Component | Engineering Specifications | Justification & Verification |
 |---|---|---|
-| Stepper motors (×2) | NEMA 23 frame. Holding torque sufficient to lift rated payload on the vertical axis and drive the belt under load on the horizontal axis. Positional accuracy: ±1 cm. | Verified by commanding each axis to a known target and measuring offset with a ruler. |
-| Stepper motor drivers (×2) | Compatible with a 24 VDC supply. Microstepping support. Current output set to motor rating. | Verified by confirming smooth motion on both axes across the full travel range. |
+| Stepper motors (×2) | NEMA 23 frame. Holding torque sufficient to lift rated payload on the vertical axis and drive the belt under load on the horizontal axis. Positional accuracy: ±1 cm. Horizontal axis: GT2 belt (2 mm pitch) on a 20-tooth pulley, 40 mm per revolution. Vertical axis: Tr8x2 leadscrew, 2 mm lead. | Verified by commanding each axis to a known target and measuring offset with a ruler. |
+| Stepper motor drivers (×2) | Compatible with a 24 VDC supply. Microstepping support. Current output set to motor rating. Both drivers set to 1600 pulses per revolution (200 full steps × 8 microsteps), so the scales are 40 steps/mm on X and 800 steps/mm on Y. | Verified by confirming smooth motion on both axes across the full travel range. |
 
 ### End Effector
 
