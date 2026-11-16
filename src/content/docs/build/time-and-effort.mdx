@@ -8,9 +8,31 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="11/09 – 11/15, 2026"
+	weekNumber={12}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 6,
+			text: 'Took the project home and worked on the physical side: connected the limit switches, hid some of the wires, and drilled holes in the control box for the wires. Designed a new part for the belt transmission, whose parts were not firm enough.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 4,
+			text: 'Led the update of the report to the Near-Finished Report. Researched why the motor-supply relay welded closed, tracing it to the inrush current of the stepper drivers, a capacitive load the relay is not rated for.',
+		},
+		{
+			name: 'Group',
+			hours: 2,
+			text: 'Connected the limit switches for the first time and fixed their noise with a 3 ms debounce and braided wires, so both axes now home at the start of each cycle. Calibrated both axes.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="11/02 – 11/08, 2026"
 	weekNumber={11}
-	open
 	entries={[
 		{
 			name: 'Adriano Duque Mena',
