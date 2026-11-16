@@ -149,7 +149,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 ### R-09: State and Fault Reporting
 
-**Requirement.** The system shall transmit its current operating state and any active faults through the selected communications interface during operation. Success criterion: each state transition and the active fault are transmitted with correct labels.
+**Requirement.** The system shall transmit its current operating state and any active faults through its Modbus TCP interface during operation. Success criterion: each state transition and the active fault are transmitted with correct labels.
 
 **Test setup.** A laptop running the Modbus monitor, connected to the controller over Ethernet.
 

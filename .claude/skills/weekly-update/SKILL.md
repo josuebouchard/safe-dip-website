@@ -146,7 +146,7 @@ Dr. Mayra Socarras, not team work sessions (those go in the Progress Log under
 ```mdx
 <Accordion title="Week N — MM/DD/YYYY" subtitle="Main topics, comma-separated">
 
-**Location:** Zoom, 5:00 PM
+**Location:** Zoom, 5:00–5:15 PM
 **Led by:** Dr. Mayra Socarras
 **Purpose:** One sentence covering the meeting's aims.
 
@@ -157,8 +157,9 @@ Dr. Mayra Socarras, not team work sessions (those go in the Progress Log under
 </Accordion>
 ```
 
-- Meetings are usually on Zoom at 5:00 PM on Mondays, but confirm the location
-  and time with the user rather than assuming.
+- Meetings are usually on Zoom at 5:00 PM on Mondays and last about 15 minutes,
+  but confirm the location and time with the user rather than assuming. The
+  course rubric requires the start and end time of every meeting.
 - Write the minutes in a formal, professional register: full sentences,
   attribute requests and decisions to Dr. Socarras or the team, and record
   outcomes (for example, "Resolution: …") when an item has already been dealt
