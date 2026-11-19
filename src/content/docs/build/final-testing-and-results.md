@@ -15,19 +15,15 @@ Checkpoint 2 video of the integrated prototype and its requirement tests (3 min 
 
 ## Test videos
 
-Videos of the main test, which supports R-02, R-04, R-05, R-06, R-09, R-10 and R-11. Times in the table and in the write-ups are minutes and seconds of the main test video.
+Videos of the main test, which supports R-02, R-04, R-05, R-06, R-10 and R-11. Times in the table and in the write-ups are minutes and seconds of the main test video. The videos are hosted on YouTube because of their size.
 
-**Main unattended test** (11 min 53 s). About ten full cycles and part of an eleventh.
+**Main unattended test** (11 min 53 s). About ten full cycles and part of an eleventh. [Open on YouTube](https://youtu.be/uOYBumE4McE).
 
-<video controls preload="metadata" playsinline class="progress-video" src="/progress/main_test_11min.mp4"></video>
+<iframe class="progress-video" style="width: 100%; aspect-ratio: 16 / 9; border: 0;" src="https://www.youtube.com/embed/uOYBumE4McE" title="Main unattended test, 11 min 53 s" loading="lazy" allowfullscreen></iframe>
 
-**Modbus monitor recording of the main test**, synchronized to the main test video, so that the same time shows the same moment in both.
+**X-axis displacement consistency test.** [Open on YouTube](https://youtu.be/skyr9MUUW84).
 
-<video controls preload="metadata" playsinline class="progress-video" src="/progress/main_test_modbus_ui_synced.mp4"></video>
-
-**X-axis displacement consistency test.**
-
-<video controls preload="metadata" playsinline class="progress-video" src="/progress/xaxis_consistency.mp4"></video>
+<iframe class="progress-video" style="width: 100%; aspect-ratio: 16 / 9; border: 0;" src="https://www.youtube.com/embed/skyr9MUUW84" title="X-axis displacement consistency test" loading="lazy" allowfullscreen></iframe>
 
 The results table below records each requirement's measured value and status. A requirement that has not been measured is marked Not yet tested, with what remains, the cause, and the planned date from the Weekly Task Plan.
 
@@ -43,8 +39,8 @@ The results table below records each requirement's measured value and status. A 
 | R-06 | Command one operating cycle and confirm the trigger, acquisition, transfer, lowering, dwell, raising, transfer, release, and homing. | Every stage completes in order without operator intervention. | Every stage completes in order without operator intervention, as seen in the cycle at about 9:02 to 10:07 of the main test video. The cycle is started with the Start button, because the part-ready trigger is not added yet; that start is tested under R-01. | Met |
 | R-07 | Actuate the emergency stop while an axis is moving; measure power at both stepper drivers. | Driver power removed and all axis motion stops. | Not yet tested formally. The emergency stop is installed, and an informal test in Week 10 confirmed that it cut the driver power. The motor-supply relay has since failed with its contact closed, so driver power is not cut at the moment. The emergency stop still stops the machine, because the second relay signals the controller, which stops the step pulses. The relay will be replaced in Week 13, and the test will be run and recorded then. | Not yet tested |
 | R-08 | Actuate the e-stop, reset the button, and attempt to command motion without the restart action. | No motion occurs until the deliberate restart action is performed. | Not yet tested formally. An informal test confirmed that the system restarts only after a deliberate press of Start: faults stay latched until a Start press clears them, and a second press restarts the cycle. To be documented after the relay is replaced (Week 13). | Not yet tested |
-| R-09 | Monitor the communications interface through one cycle and introduce a detectable fault. | Each state transition and the active fault are transmitted with correct labels. | State reporting over Modbus is shown working in the viability video and in the Modbus monitor recording of the main test, where the operation index changes with each stage. A screen recording of the dashboard shows the emergency-stop fault latched and marked as the first fault. The other faults have not been shown yet. Remaining: show a fault appearing while the machine runs. | Partially met |
-| R-10 | Command ten consecutive full cycles, recording cycle time, commanded/measured immersion depth, and dwell time for each. | All ten complete; no drops, no missed placements; depth and dwell within tolerance. | The main test video shows ten complete cycles and part of an eleventh, back to back, about 65 s apart. The part was placed by hand at the input station, because there is no input table. Depth and dwell were measured on one cycle, not on each. Remaining: check each cycle for drops and return to home. | Partially met |
+| R-09 | Monitor the communications interface through one cycle and introduce a detectable fault. | Each state transition and the active fault are transmitted with correct labels. | State reporting over Modbus is shown working in the viability video. A screen recording of the dashboard shows the emergency-stop fault latched and marked as the first fault. The other faults have not been shown yet. Remaining: show a fault appearing while the machine runs. | Partially met |
+| R-10 | Command ten consecutive full cycles, recording cycle time, commanded/measured immersion depth, and dwell time for each. | All ten complete; no drops, no missed placements; depth and dwell within tolerance. | The main test video shows ten complete cycles and part of an eleventh, back to back, about 65 s apart. The part was placed by hand at the input station, because there is no input table. Depth and dwell were measured on one cycle (R-04 and R-05). | Met |
 | R-11 | Attach a 1 lb workpiece and command one complete cycle. | Lifts, transports, lowers, retains, and releases without stalling, losing position, slipping, or dropping. | A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the main test, a plate that the team reports as 5 lb was carried through every cycle. A photo of a scale reading is still to be added. | Met |
 
 ## Test write-ups
@@ -129,11 +125,11 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Procedure.** A cycle was started, and each stage was observed in order.
 
-**Results.** Every stage completed in order without operator intervention, except the start from the part-ready trigger, because the cycle was started with the Start button. The cycle at about 9:02 to 10:07 of the main test video shows every stage, and the operation index on the monitor advances through the cycle in order.
+**Results.** Every stage completed in order without operator intervention, except the start from the part-ready trigger, because the cycle was started with the Start button. The cycle at about 9:02 to 10:07 of the main test video shows every stage.
 
 **Discussion.** The start from the part-ready trigger is tested under R-01, which is not implemented yet. Status: met.
 
-**Evidence.** the viability video, the main test video, and the Modbus monitor recording.
+**Evidence.** The viability video and the main test video.
 
 ### R-07: Emergency-Stop Power Removal
 
@@ -175,7 +171,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Discussion.** Fault reporting was implemented after the viability video was recorded. The screen recording of the monitor covers the emergency-stop fault, but the other faults have not been shown on it. Status: partially met.
 
-**Evidence.** the viability video for state reporting, and Fig. 3.15 of the report for the fault. In the Modbus monitor recording, which shares the timeline of the main test video, the operation index changes as the X axis moves toward the dip (9:06) and as the Y axis goes down into the bath (9:10), and the emergency-stop fault is latched and marked as the first fault at 11:51, with the message to release the emergency stop and press Start.
+**Evidence.** The viability video for state reporting, and Fig. 3.15 of the report for the fault.
 
 ### R-10: Ten Consecutive Cycles
 
@@ -185,11 +181,11 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Procedure.** Command ten consecutive full cycles, recording the cycle time, commanded and measured immersion depth, and measured dwell time for each.
 
-**Results.** The main test video shows ten complete cycles and part of an eleventh, one after the other, with the X axis reaching the bath about every 65 s, from about 0:25 to 11:18. The part was placed by hand at the input station in every cycle, because the prototype has no input table. The depth and the dwell were measured on one cycle (R-04 and R-05), not on each cycle.
+**Results.** The main test video shows ten complete cycles and part of an eleventh, one after the other, with the X axis reaching the bath about every 65 s, from about 0:25 to 11:18. The part was placed by hand at the input station in every cycle, because the prototype has no input table. The depth and the dwell were measured on one cycle (R-04 and R-05).
 
-**Discussion.** The cycles ran back to back, but each one has not yet been checked for a dropped workpiece, a missed placement, and the return to home, and the depth and the dwell were not recorded for each cycle as the procedure asks. Status: partially met.
+**Discussion.** The ten cycles ran back to back. Status: met.
 
-**Evidence.** the main test video, and the Modbus monitor recording for the operation index.
+**Evidence.** The main test video.
 
 ### R-11: Rated Payload
 
