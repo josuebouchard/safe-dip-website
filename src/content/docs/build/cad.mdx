@@ -4,8 +4,8 @@ description: CAD model and principal dimensions of the Safe Dip prototype.
 ---
 
 import { Image } from 'astro:assets';
-import cadPerspective from '../../../assets/proposal/cad/cad-perspective.png';
-import cadFront from '../../../assets/proposal/cad/cad-front.png';
+import cadPerspective from '../../../assets/build/cad/assembly-perspective.png';
+import cadFront from '../../../assets/build/cad/assembly-front.png';
 import verticalShaft from '../../../assets/build/cad/vertical-shaft.png';
 import topHolder from '../../../assets/build/cad/top-holder.png';
 import screwBase1 from '../../../assets/build/cad/vertical-screw-base-1.png';
@@ -19,11 +19,11 @@ import gearHolder from '../../../assets/build/cad/gear-holder.png';
 import gearAdapter from '../../../assets/build/cad/gear-adapter.png';
 import xLock from '../../../assets/build/cad/x-axis-lock.png';
 
-The CAD model below illustrates the proposed mechanical arrangement of the Safe Dip prototype: the relative placement of the horizontal axis, vertical assembly, input station, dipping station, output station, and end effector. The model is preliminary — final dimensions will be established once the selected mechanical components are measured and the required axis travel and clearances are verified.
+The CAD model below shows the mechanical arrangement of the Safe Dip prototype as built: the aluminum frame, the two horizontal rails with the carriage plate that slides along them, and the vertical assembly with its stepper motor, leadscrew, and magnet holder. The timing belt of the horizontal axis is drawn between its two pulleys. The model does not include the limit switches.
 
-<Image src={cadPerspective} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — perspective view" />
+<Image src={cadPerspective} alt="CAD model of the Safe Dip prototype — perspective view" />
 
-<Image src={cadFront} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — front view" />
+<Image src={cadFront} alt="CAD model of the Safe Dip prototype — front view" />
 
 ## Printed Parts
 
@@ -80,13 +80,13 @@ The printed parts of the gantry, as they appear in the CAD model.
 	</figure>
 </div>
 
-## Preliminary Dimensions
+## Principal Dimensions
 
-The values below are preliminary and describe the proposed operating envelope of the prototype rather than final fabrication dimensions.
+The values below describe the operating envelope of the prototype.
 
 The usable travels are the ones set in the firmware. Homing sets the origin of each axis a fixed back-off past its limit switch, 40 mm on the horizontal axis and 20 mm on the vertical axis, and a travel is measured from that origin to the surface of the carriage that is closest to the limit switch: the left side of the horizontal carriage and the top of the vertical carriage.
 
-| Dimension | Preliminary Value | Design Purpose |
+| Dimension | Value | Design Purpose |
 |---|---|---|
 | Overall prototype dimensions | 108 × 60 × 80 cm | Defines the approximate laboratory floor space and vertical clearance required by the prototype. |
 | Usable horizontal travel | 55 cm | Allows movement between the input, dipping, and output stations. |
