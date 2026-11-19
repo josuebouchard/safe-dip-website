@@ -41,7 +41,7 @@ The results table below records each requirement's measured value and status. A 
 | R-08 | Actuate the e-stop, reset the button, and attempt to command motion without the restart action. | No motion occurs until the deliberate restart action is performed. | Not yet tested formally. An informal test confirmed that the system restarts only after a deliberate press of Start: faults stay latched until a Start press clears them, and a second press restarts the cycle. To be documented after the relay is replaced (Week 13). | Not yet tested |
 | R-09 | Monitor the communications interface through one cycle and introduce a detectable fault. | Each state transition and the active fault are transmitted with correct labels. | State reporting over Modbus is shown working in the viability video, and in the ten-cycle test video, where the monitor beside the gantry changes its operation index with each stage. A screen recording of the dashboard shows the emergency-stop fault latched and marked as the first fault. The other faults have not been shown yet. Remaining: show a fault appearing while the machine runs. | Partially met |
 | R-10 | Command ten consecutive full cycles, recording cycle time, commanded/measured immersion depth, and dwell time for each. | All ten complete; no drops, no missed placements; depth and dwell within tolerance. | The ten-cycle test video shows ten complete cycles and part of an eleventh, back to back, about 65 s apart. The part was placed by hand at the input station, because there is no input table. Depth and dwell were measured on one cycle (R-04 and R-05). | Met |
-| R-11 | Attach a 1 lb workpiece and command one complete cycle. | Lifts, transports, lowers, retains, and releases without stalling, losing position, slipping, or dropping. | A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the main test, a plate that the team reports as 5 lb was carried through every cycle. A photo of a scale reading is still to be added. | Met |
+| R-11 | Attach a 1 lb workpiece and command one complete cycle. | Lifts, transports, lowers, retains, and releases without stalling, losing position, slipping, or dropping. | A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the ten-cycle test, a plate that the team reports as 5 lb was carried through every cycle. A photo of a scale reading is still to be added. | Met |
 
 ## Test write-ups
 
@@ -195,7 +195,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Procedure.** A weight was attached and one complete cycle was commanded.
 
-**Results.** A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the main test, a plate that the team reports as 5 lb was carried on the rod through every cycle.
+**Results.** A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the ten-cycle test, a plate that the team reports as 5 lb was carried on the rod through every cycle.
 
 **Discussion.** Both tests exceeded the rated payload. A photo of a scale reading for the plate is still to be added. Status: met.
 
