@@ -6,12 +6,79 @@ description: CAD model and principal dimensions of the Safe Dip prototype.
 import { Image } from 'astro:assets';
 import cadPerspective from '../../../assets/proposal/cad/cad-perspective.png';
 import cadFront from '../../../assets/proposal/cad/cad-front.png';
+import verticalShaft from '../../../assets/build/cad/vertical-shaft.png';
+import topHolder from '../../../assets/build/cad/top-holder.png';
+import screwBase1 from '../../../assets/build/cad/vertical-screw-base-1.png';
+import screwBase2 from '../../../assets/build/cad/vertical-screw-base-2.png';
+import yHolder from '../../../assets/build/cad/y-axis-holder.png';
+import screwCap from '../../../assets/build/cad/screw-holder-cap.png';
+import limitHolder from '../../../assets/build/cad/limit-switch-holder.png';
+import xTransmission from '../../../assets/build/cad/x-axis-transmission-holder.png';
+import stepperAdapter from '../../../assets/build/cad/stepper-adapter-x.png';
+import gearHolder from '../../../assets/build/cad/gear-holder.png';
+import gearAdapter from '../../../assets/build/cad/gear-adapter.png';
+import xLock from '../../../assets/build/cad/x-axis-lock.png';
 
 The CAD model below illustrates the proposed mechanical arrangement of the Safe Dip prototype: the relative placement of the horizontal axis, vertical assembly, input station, dipping station, output station, and end effector. The model is preliminary — final dimensions will be established once the selected mechanical components are measured and the required axis travel and clearances are verified.
 
 <Image src={cadPerspective} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — perspective view" />
 
 <Image src={cadFront} alt="Preliminary CAD model of the Safe Dip mechanical arrangement — front view" />
+
+## Printed Parts
+
+The printed parts of the gantry, as they appear in the CAD model.
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 1.25rem;">
+	<figure>
+		<Image src={verticalShaft} alt="CAD render of the vertical shaft" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Vertical shaft</figcaption>
+	</figure>
+	<figure>
+		<Image src={topHolder} alt="CAD render of the top holder" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Top holder</figcaption>
+	</figure>
+	<figure>
+		<Image src={screwBase1} alt="CAD render of the vertical screw base, part 1" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Vertical screw base, part 1</figcaption>
+	</figure>
+	<figure>
+		<Image src={screwBase2} alt="CAD render of the vertical screw base, part 2" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Vertical screw base, part 2</figcaption>
+	</figure>
+	<figure>
+		<Image src={yHolder} alt="CAD render of the y-axis holder" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Y-axis holder</figcaption>
+	</figure>
+	<figure>
+		<Image src={screwCap} alt="CAD render of the screw-holder cap" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Screw-holder cap</figcaption>
+	</figure>
+	<figure>
+		<Image src={limitHolder} alt="CAD render of the limit-switch holder" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Limit-switch holder</figcaption>
+	</figure>
+	<figure>
+		<Image src={xTransmission} alt="CAD render of the x-axis transmission holder" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>X-axis transmission holder</figcaption>
+	</figure>
+	<figure>
+		<Image src={stepperAdapter} alt="CAD render of the x-axis stepper adapter" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>X-axis stepper adapter</figcaption>
+	</figure>
+	<figure>
+		<Image src={gearHolder} alt="CAD render of the gear holder" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Gear holder</figcaption>
+	</figure>
+	<figure>
+		<Image src={gearAdapter} alt="CAD render of the gear adapter" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>Gear adapter</figcaption>
+	</figure>
+	<figure>
+		<Image src={xLock} alt="CAD render of the x-axis lock" style="height: 6rem; width: auto; max-width: 100%;" />
+		<figcaption>X-axis lock</figcaption>
+	</figure>
+</div>
 
 ## Preliminary Dimensions
 

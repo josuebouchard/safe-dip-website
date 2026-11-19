@@ -28,6 +28,7 @@ the same notes. Edit `AGENTS.md`, never the symlink.
 ├── src/
 │   ├── assets/                    images referenced from content (Astro-optimized)
 │   │   ├── build/diagrams/        as-built software flowcharts (SVG exports)
+│   │   ├── build/cad/             renders of the printed parts (CAD page)
 │   │   ├── build/progress/week-N/ progress-log photos and CAD shots, one folder a week
 │   │   ├── proposal/cad/          CAD renders (from senior-proposal-typst/images/)
 │   │   ├── proposal/diagrams/     block/software diagrams + the Gantt chart (all SVG,
