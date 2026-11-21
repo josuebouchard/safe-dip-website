@@ -30,7 +30,7 @@ Weeks run Monday to Sunday; Week 1 began on 08/24/2026, so week N starts on
 - Whether the **Weekly Task Plan** section exists on the timelines page.
 - The **firmware commits** of each missing week (author date, all branches),
   as memory joggers for whoever worked on the firmware. The script looks for the firmware
-  clone at `~/Documents/senior-project-code`; set `FIRMWARE_REPO` to point
+  clone at `~/Documents/safe-dip-firmware`; set `FIRMWARE_REPO` to point
   elsewhere. The semester calendar (Week 1's date, the last week) is at the top
   of `missing.py`.
 

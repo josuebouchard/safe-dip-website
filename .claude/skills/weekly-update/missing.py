@@ -2,7 +2,7 @@
 """Report which weeks are missing from the weekly pages.
 
 Usage: missing.py [--today YYYY-MM-DD]
-Set FIRMWARE_REPO to the firmware clone (default ~/Documents/senior-project-code).
+Set FIRMWARE_REPO to the firmware clone (default ~/Documents/safe-dip-firmware).
 """
 import os
 import re
@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 BUILD = ROOT / "src/content/docs/build"
-FIRMWARE = Path(os.environ.get("FIRMWARE_REPO", "~/Documents/senior-project-code")).expanduser()
+FIRMWARE = Path(os.environ.get("FIRMWARE_REPO", "~/Documents/safe-dip-firmware")).expanduser()
 WEEK1, LAST = date(2026, 8, 24), 15  # weeks run Monday to Sunday
 
 
