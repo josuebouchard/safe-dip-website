@@ -33,23 +33,23 @@ Videos of the tests. The times in the table and in the write-ups are minutes and
 
 <iframe class="progress-video" style="width: 100%; aspect-ratio: 16 / 9; border: 0;" src="https://www.youtube.com/embed/skyr9MUUW84" title="X-axis displacement consistency test" loading="lazy" allowfullscreen></iframe>
 
-The results table below records each requirement's measured value and status. A requirement that has not been measured is marked Not yet tested, with what remains, the cause, and the planned date from the Weekly Task Plan.
+The results table below records each requirement's measured value and status. Each requirement is marked Pass or Fail. The trials passed out of the trials run are in the write-ups and in Table 3.2 of the report.
 
 ## Requirements and results
 
-| ID | Test Procedure | Pass Criteria | Measured Result | Pass? |
-|---|---|---|---|---|
-| R-01 | Command a cycle with the trigger asserted by a push button; then release it, disconnect it, and command a cycle each time. | A cycle starts with the trigger asserted; no motion starts with it released or disconnected. | Met. After a Start press, the sequencer waits in WAIT_FOR_PIECE and the gantry does not move while the trigger switch and its wire are handled. Motion starts only after the trigger is asserted. The asserted, released and disconnected cases are shown in the part-ready trigger test video. For the other tests the trigger is kept asserted, in most cases forced in software. | Met |
-| R-02 | Command the system to the programmed pickup position and measure end-effector position relative to target. | Measured error within ±1 cm along both axes. | Measured with a ruler. X: drift under 0.5 cm. Y: harder to measure because the platform moves; judged within 1 cm, not measured precisely. A later video of the X axis shows a consistent reading of about 4 cm at home across repeated moves, with the ruler read at the input, dip, and output stops on two passes (0:21 and 1:29, 0:44 and 1:44, 1:09 and 2:07), and the drift of the X axis in that video was not greater than 0.25 cm. Because each cycle homes both axes on their limit switches, the errors do not add up from one cycle to the next. | Met |
-| R-03 | Execute one complete pick-dip-place cycle at the approved payload. | Workpiece does not visibly slip or detach at any point. | Shown in the viability video ("Screw not slipping test"): the piece does not slip or fall. Also tested informally with a weight of 2.5 lb or more and a minimal contact area, which was held through a full cycle. | Met |
-| R-04 | Execute one dip sequence and measure actual immersion depth against the programmed value. | Measured depth within ±1 cm of programmed depth. | Measured with a ruler during the ten-cycle unattended test: the vertical axis read 9.3 cm at the top and 19.3 cm at the bottom, an immersion depth of 10.0 cm against a programmed depth of 100 mm. Measured on one cycle. | Met |
-| R-05 | Execute one dip sequence and measure the dwell period with a stopwatch. | Measured dwell within ±1 s of programmed value. | Measured frame by frame on the video of the ten-cycle unattended test: the dwell lasted 2.10 s against a programmed 2000 ms, an error of +0.10 s. Measured on one cycle. | Met |
-| R-06 | Command one operating cycle and confirm the trigger, acquisition, transfer, lowering, dwell, raising, transfer, release, and homing. | Every stage completes in order without operator intervention. | Every stage completes in order without operator intervention, as seen in the cycle at about 9:02 to 10:07 of the ten-cycle test video. The cycle is started with the Start button, because the part-ready trigger is not added yet; that start is tested under R-01. | Met |
-| R-07 | Actuate the emergency stop while an axis is moving; measure power at both stepper drivers. | Driver power removed and all axis motion stops. | Met. The drivers' power LEDs are on and 24.14 V is measured at the drivers. Start is pressed and the motors move. With the emergency stop pressed, the motors stop, the LEDs go off, and the voltage falls to 0.000 V (1:18 to 1:28 of the emergency-stop test video). The voltage of the second driver was also measured, powered and after the stop. The press and the meter are in separate shots. | Met |
-| R-08 | Actuate the e-stop, reset the button, and attempt to command motion without the restart action. | No motion occurs until the deliberate restart action is performed. | Met. The monitor shows the emergency-stop fault latched. Start pressed under the emergency stop does not move the motor. After the reset, the drivers' LEDs come back on and the monitor still shows the fault. One Start press clears the fault and a second restarts the motor (emergency-stop test video, 1:42 to 2:11). | Met |
-| R-09 | Monitor the communications interface through one cycle and introduce a detectable fault. | Each state transition and the active fault are transmitted with correct labels. | State reporting over Modbus is shown working in the viability video and in the ten-cycle test video, where the monitor beside the gantry changes its operation index with each stage. The emergency-stop fault is shown latched and marked as the first fault in the ten-cycle test (11:51) and in the emergency-stop test (0:56 and 1:54). The other faults were not provoked. | Met |
-| R-10 | Command ten consecutive full cycles, recording cycle time, commanded/measured immersion depth, and dwell time for each. | All ten complete; no drops, no missed placements; depth and dwell within tolerance. | The ten-cycle test video shows ten complete cycles and part of an eleventh, back to back, about 65 s apart. The part was placed by hand at the input station, because there is no input table, and the trigger was kept asserted. Depth and dwell were measured on one cycle (R-04 and R-05). | Met |
-| R-11 | Attach a 1 lb workpiece and command one complete cycle. | Lifts, transports, lowers, retains, and releases without stalling, losing position, slipping, or dropping. | A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the ten-cycle test, a plate stamped 2.27 kg / 5 lb was carried through every cycle (photo in the write-up below). The weight is the stamped value, not a scale reading. | Met |
+| ID | Test Procedure | Pass Criteria | Measured Result | Trials passed | Pass/Fail |
+|---|---|---|---|---|---|
+| R-01 | Command a cycle with the trigger asserted by a push button; then release it, disconnect it, and command a cycle each time. | A cycle starts with the trigger asserted; no motion starts with it released or disconnected. | Pass. After a Start press, the sequencer waits in WAIT_FOR_PIECE and the gantry does not move while the trigger switch and its wire are handled. Motion starts only after the trigger is asserted. The asserted, released and disconnected cases are shown in the part-ready trigger test video. For the other tests the trigger is kept asserted, in most cases forced in software. | 3/3 | Pass |
+| R-02 | Command the system to the programmed pickup position and measure end-effector position relative to target. | Measured error within ±1 cm along both axes. | Measured with a ruler. X: drift under 0.5 cm. Y: harder to measure because the platform moves; judged within 1 cm, not measured precisely. A later video of the X axis shows a consistent reading of about 4 cm at home across repeated moves, with the ruler read at the input, dip, and output stops on two passes (0:21 and 1:29, 0:44 and 1:44, 1:09 and 2:07), and the drift of the X axis in that video was not greater than 0.25 cm. Because each cycle homes both axes on their limit switches, the errors do not add up from one cycle to the next. | 1/1 | Pass |
+| R-03 | Execute one complete pick-dip-place cycle at the approved payload. | Workpiece does not visibly slip or detach at any point. | Shown in the viability video ("Screw not slipping test"): the piece does not slip or fall. Also tested informally with a weight of 2.5 lb or more and a minimal contact area, which was held through a full cycle. | 1/1 | Pass |
+| R-04 | Execute one dip sequence and measure actual immersion depth against the programmed value. | Measured depth within ±1 cm of programmed depth. | Measured with a ruler during the ten-cycle unattended test: the vertical axis read 9.3 cm at the top and 19.3 cm at the bottom, an immersion depth of 10.0 cm against a programmed depth of 100 mm. Measured on one cycle. | 1/1 | Pass |
+| R-05 | Execute one dip sequence and measure the dwell period with a stopwatch. | Measured dwell within ±1 s of programmed value. | Measured frame by frame on the video of the ten-cycle unattended test: the dwell lasted 2.10 s against a programmed 2000 ms, an error of +0.10 s. Measured on one cycle. | 1/1 | Pass |
+| R-06 | Command one operating cycle and confirm the trigger, acquisition, transfer, lowering, dwell, raising, transfer, release, and homing. | Every stage completes in order without operator intervention. | Every stage completes in order without operator intervention, as seen in the cycle at about 9:02 to 10:07 of the ten-cycle test video. The cycle is started with the Start button, because the part-ready trigger is not added yet; that start is tested under R-01. | 1/1 | Pass |
+| R-07 | Actuate the emergency stop while an axis is moving; measure power at both stepper drivers. | Driver power removed and all axis motion stops. | Pass. The drivers' power LEDs are on and 24.14 V is measured at the drivers. Start is pressed and the motors move. With the emergency stop pressed, the motors stop, the LEDs go off, and the voltage falls to 0.000 V (1:18 to 1:28 of the emergency-stop test video). The voltage of the second driver was also measured, powered and after the stop. The press and the meter are in separate shots. | 1/1 | Pass |
+| R-08 | Actuate the e-stop, reset the button, and attempt to command motion without the restart action. | No motion occurs until the deliberate restart action is performed. | Pass. The monitor shows the emergency-stop fault latched. Start pressed under the emergency stop does not move the motor. After the reset, the drivers' LEDs come back on and the monitor still shows the fault. One Start press clears the fault and a second restarts the motor (emergency-stop test video, 1:42 to 2:11). | 1/1 | Pass |
+| R-09 | Monitor the communications interface through one cycle and introduce a detectable fault. | Each state transition and the active fault are transmitted with correct labels. | State reporting over Modbus is shown working in the viability video and in the ten-cycle test video, where the monitor beside the gantry changes its operation index with each stage. The emergency-stop fault is shown latched and marked as the first fault in the ten-cycle test (11:51) and in the emergency-stop test (0:56 and 1:54). The other faults were not provoked. | 1/1 | Pass |
+| R-10 | Command ten consecutive full cycles, recording cycle time, commanded/measured immersion depth, and dwell time for each. | All ten complete; no drops, no missed placements; depth and dwell within tolerance. | The ten-cycle test video shows ten complete cycles and part of an eleventh, back to back, about 65 s apart. The part was placed by hand at the input station, because there is no input table, and the trigger was kept asserted. Depth and dwell were measured on one cycle (R-04 and R-05). | 10/10 | Pass |
+| R-11 | Attach a 1 lb workpiece and command one complete cycle. | Lifts, transports, lowers, retains, and releases without stalling, losing position, slipping, or dropping. | A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the ten-cycle test, a plate stamped 2.27 kg / 5 lb was carried through every cycle (photo in the write-up below). The weight is the stamped value, not a scale reading. | 1/1 | Pass |
 
 ## Test write-ups
 
@@ -65,7 +65,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** After the Start press, the monitor shows the sequencer waiting in `WAIT_FOR_PIECE`, and the gantry does not move while the trigger switch and its wire are handled. The motion starts only after the trigger is asserted. A cycle therefore starts with the trigger asserted, and no motion starts with it released or disconnected.
 
-**Discussion.** The released and the disconnected cases are the same electrical state, because the input has a pull-up: both leave the input high, which means that no part is ready. The tests of the other requirements keep the trigger asserted, in most cases forced in software, so that they start from the Start button. Status: met.
+**Discussion.** The released and the disconnected cases are the same electrical state, because the input has a pull-up: both leave the input high, which means that no part is ready. The tests of the other requirements keep the trigger asserted, in most cases forced in software, so that they start from the Start button. Result: Pass.
 
 **Evidence.** The part-ready trigger test video.
 
@@ -88,7 +88,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** The X axis showed drift under 0.5 cm. The Y axis was harder to measure because the platform moves, and it was judged to be within 1 cm without a precise measurement.
 
-**Discussion.** The X result is a measurement and meets the criterion. The Y result is an estimate, and both axes will be measured again with a recording. A later video of the X axis shows a consistent reading of about 4 cm at home across repeated moves (the X-axis consistency video), which shows the ruler reading at the input, dip, and output stops on two passes. The drift of the X axis in that video was not greater than 0.25 cm. Because each cycle homes both axes on their limit switches, the errors do not add up from one cycle to the next. Status: met.
+**Discussion.** The X result is a measurement and meets the criterion. The Y result is an estimate, and both axes will be measured again with a recording. A later video of the X axis shows a consistent reading of about 4 cm at home across repeated moves (the X-axis consistency video), which shows the ruler reading at the input, dip, and output stops on two passes. The drift of the X axis in that video was not greater than 0.25 cm. Because each cycle homes both axes on their limit switches, the errors do not add up from one cycle to the next. Result: Pass.
 
 **Evidence.** The viability video, and the X-axis consistency video.
 
@@ -104,7 +104,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** The workpiece did not slip or fall in the test shown in the video. A weight of 2.5 lb or more with a minimal contact area was also held through a full cycle in an informal test.
 
-**Discussion.** Retention exceeded the requirement in the informal test. Status: met.
+**Discussion.** Retention exceeded the requirement in the informal test. Result: Pass.
 
 **Evidence.** The viability video ("Screw not slipping test").
 
@@ -120,7 +120,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** The vertical axis read 9.3 cm at the top and 19.3 cm at the bottom, which is an immersion depth of 10.0 cm. The programmed depth was 100 mm, so the measured depth is within the ±1 cm tolerance.
 
-**Discussion.** The depth was measured on one cycle. Status: met.
+**Discussion.** The depth was measured on one cycle. Result: Pass.
 
 **Evidence.** The ten-cycle test video, in the clip with the ruler that starts at 1:38 (the exact timestamps are still to be added).
 
@@ -136,7 +136,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** The dwell lasted 2.10 s, from 9:16:06 to 9:18:09 in minutes, seconds, and frames. The programmed dwell was 2000 ms, so the error is +0.10 s, within the ±1 s tolerance.
 
-**Discussion.** The dwell was measured on one cycle. Status: met.
+**Discussion.** The dwell was measured on one cycle. Result: Pass.
 
 **Evidence.** The ten-cycle test video, 9:16:06 to 9:18:09.
 
@@ -152,7 +152,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** Every stage completed in order without operator intervention, except the start from the part-ready trigger, because the trigger was held asserted and the cycle was started with the Start button. The cycle at about 9:02 to 10:07 of the ten-cycle test video shows every stage, and the operation index on the monitor beside the gantry advances through the cycle in order.
 
-**Discussion.** The trigger was held asserted for this test, and its effect on the start of a cycle is tested under R-01. Status: met.
+**Discussion.** The trigger was held asserted for this test, and its effect on the start of a cycle is tested under R-01. Result: Pass.
 
 **Evidence.** The viability video and the ten-cycle test video.
 
@@ -168,7 +168,7 @@ One write-up per requirement, in the order of the table above, as in Section 3.4
 
 **Results.** The motors stopped when the emergency stop was pressed, the power LEDs of the drivers went off, and the voltage at the drivers fell from 24.1 V to 0 V. The voltage of the second driver was also measured, powered and after the stop.
 
-**Discussion.** The press of the emergency stop and the meter appear in separate shots of the video, and the motion before the press is judged by eye. The meter reads 0 V and the LEDs are off after the press, so the driver power was removed. Status: met.
+**Discussion.** The press of the emergency stop and the meter appear in separate shots of the video, and the motion before the press is judged by eye. The meter reads 0 V and the LEDs are off after the press, so the driver power was removed. Result: Pass.
 
 **Evidence.** The emergency-stop and restart test video.
 
@@ -199,7 +199,7 @@ The voltage of the second driver is also measured, powered and after the stop, a
 
 **Results.** After the emergency stop, the monitor shows the emergency-stop fault latched and marked as the first fault. A press of the Start button while the emergency stop was still pressed did not move the motor. After the emergency stop was reset, the LEDs of the drivers came back on and the monitor still showed the fault. The next press of Start cleared the fault, and a second press restarted the motor.
 
-**Discussion.** The reset alone did not move the machine: a Start press was needed first to clear the fault, and a second one to restart, so no motion occurred until the deliberate restart action. Status: met.
+**Discussion.** The reset alone did not move the machine: a Start press was needed first to clear the fault, and a second one to restart, so no motion occurred until the deliberate restart action. Result: Pass.
 
 **Evidence.** The emergency-stop and restart test video.
 
@@ -228,7 +228,7 @@ The reset, clear and restart steps (1:51 to 2:11) were added to the original scr
 
 **Results.** State reporting was shown working in the video. State and faults were then checked informally over Modbus during a cycle. A screen recording of the monitor (Fig. 3.14 of the report) shows the operation index, the axis positions, the inputs that show whether each axis is on target, and the highlighted stage of the cycle changing while the cycle ran. It also shows the emergency-stop fault latched and marked as the first fault, with the instruction to press Start to clear it (Fig. 3.15 of the report).
 
-**Discussion.** Fault reporting was implemented after the viability video was recorded. The criterion asks for at least one detectable fault, and the emergency-stop fault is shown latched and marked as the first fault, both in the ten-cycle test and in the emergency-stop test. The other faults were not provoked. Status: met.
+**Discussion.** Fault reporting was implemented after the viability video was recorded. The criterion asks for at least one detectable fault, and the emergency-stop fault is shown latched and marked as the first fault, both in the ten-cycle test and in the emergency-stop test. The other faults were not provoked. Result: Pass.
 
 **Evidence.** The viability video for state reporting, the emergency-stop test video and Fig. 3.15 of the report for the fault. In the ten-cycle test video, the monitor shown beside the gantry changes its operation index as the X axis moves toward the dip (9:06) and as the Y axis goes down into the bath (9:10), and the emergency-stop fault is latched and marked as the first fault at 11:51, with the message to release the emergency stop and press Start.
 
@@ -244,7 +244,7 @@ The reset, clear and restart steps (1:51 to 2:11) were added to the original scr
 
 **Results.** The ten-cycle test video shows ten complete cycles and part of an eleventh, one after the other, with the X axis reaching the bath about every 65 s, from about 0:25 to 11:18. The part was placed by hand at the input station in every cycle, because the prototype has no input table. The depth and the dwell were measured on one cycle (R-04 and R-05).
 
-**Discussion.** The ten cycles ran back to back, with the part-ready trigger held asserted. Status: met.
+**Discussion.** The ten cycles ran back to back, with the part-ready trigger held asserted. Result: Pass.
 
 **Evidence.** The ten-cycle test video.
 
@@ -260,7 +260,7 @@ The reset, clear and restart steps (1:51 to 2:11) were added to the original scr
 
 **Results.** A weight of 2.5 lb or more, above the required 1 lb, was held through a full cycle in an informal test. In the ten-cycle test, a plate stamped 2.27 kg / 5 lb (photo below) was carried on the rod through every cycle.
 
-**Discussion.** Both tests exceeded the rated payload. The weight of the plate is the value stamped by its manufacturer, not a scale reading. Status: met.
+**Discussion.** Both tests exceeded the rated payload. The weight of the plate is the value stamped by its manufacturer, not a scale reading. Result: Pass.
 
 **Evidence.** The ten-cycle test video, the photo of the plate below, and the informal test recorded on the Final Testing and Results page of the website.
 
@@ -273,4 +273,4 @@ The reset, clear and restart steps (1:51 to 2:11) were added to the original scr
 
 ## Observations
 
-Most of the system worked on the first attempt. The limit switches were very noisy when first connected and caused false faults; a 3 ms software debounce and braided wires fixed it. The motor-supply relay welded closed under the inrush current of the stepper drivers and was replaced. All eleven requirements were verified in recorded tests. The write-ups above give the setup, the procedure and the proof of each, and they state the limits of each result: the depth and the dwell were measured on one cycle, the vertical positioning was estimated, fault reporting was shown for the emergency-stop fault only, and the weight of the payload plate is its stamped value.
+Most of the system worked on the first attempt. The limit switches were very noisy when first connected and caused false faults; a 3 ms software debounce and braided wires fixed it. The motor-supply relay welded closed under the inrush current of the stepper drivers and was replaced. All eleven requirements passed in recorded tests. The write-ups above give the setup, the procedure and the proof of each, and they state the limits of each result: the depth and the dwell were measured on one cycle, the vertical positioning was estimated, fault reporting was shown for the emergency-stop fault only, and the weight of the payload plate is its stamped value.
