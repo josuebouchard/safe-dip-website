@@ -122,7 +122,6 @@ The parts used in the final design, each at the cost of the quantity used.
 | Wires | 18 AWG 2-Conductor Wire, 100 ft | 1 | \$12.29 |
 | Heat Shrink | Eventronic Heat-Shrink Tubing 2:1 | 1 | \$6.99 |
 | Fuse Holder | FEBRYTOLD 0-Gauge Inline Fuse Holder | 1 | \$4.25 |
-| Resistor Kit | Upvivi Resistor Assortment Kit | 1 | \$6.99 |
 | Bolt and Nut Kit | M5 Screw and Nut Kit | 1 | \$16.99 |
 | Relay | DC 5V One-Channel Relay Module | 3 | \$3.60 |
 | Motor Mounting | NEMA 23 Steel Mounting Bracket | 4 | \$11.99 |
@@ -136,4 +135,4 @@ The parts used in the final design, each at the cost of the quantity used.
 | PLA Filament | PLA 3D Printer Filament Spool | 4 | \$53.96 |
 | Aluminum Beams | 4040 T-Slot Aluminum Profile 1000 mm | 4 | \$80.00 |
 
-**Total (before tax): \$712.87**
+**Total (before tax): \$705.88**
