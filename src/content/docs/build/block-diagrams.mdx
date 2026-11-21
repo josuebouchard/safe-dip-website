@@ -11,8 +11,10 @@ import mainStructure from '../../../assets/build/diagrams/software-main-structur
 import normalCycle from '../../../assets/build/diagrams/software-normal-cycle.svg';
 import sequencer from '../../../assets/build/diagrams/software-sequencer.svg';
 import motionPlanner from '../../../assets/build/diagrams/software-motion-planner.svg';
+import moveOperation from '../../../assets/build/diagrams/software-move-operation.svg';
+import homing from '../../../assets/build/diagrams/software-homing.svg';
 
-Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — under closed-loop control. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, limit switches, and a part-ready trigger input. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
+Safe Dip is built as a two-axis Cartesian gantry that carries a workpiece through three fixed stations — input, dipping, and output — with stepper motors that are homed against limit switches. An STM32 microcontroller runs a cooperative sequencer that coordinates stepper-driven timing belts and linear rails (horizontal motion), a stepper-driven leadscrew (vertical motion), an electromagnet end effector, limit switches, and a part-ready trigger input. Communication happens over serial and Modbus TCP. A Category 0 emergency-stop circuit protects the motor drivers independently of the microcontroller.
 
 ## System Block Diagram
 
@@ -39,35 +41,47 @@ The electrical schematic, drawn in KiCad, shows the wiring of the power supplies
 
 ## Software Flow
 
-The control software runs on the STM32 using a cooperative, nonblocking architecture. Rather than one blocking function for the whole pick-dip-place cycle, the work is split into modules (the cycle sequencer, one motion planner per axis, and the communications interface) that are each processed in bounded steps from a single main loop. The system therefore stays responsive to the emergency stop, the start button, and communications while a move or a dwell is still in progress.
+The control software runs on the STM32 using a cooperative, nonblocking architecture. Rather than one blocking function for the whole pick-dip-place cycle, the work is split into modules (the cycle sequencer, one motion controller per axis, and the communications interface) that are each processed in bounded steps from a single main loop. The system therefore stays responsive to the emergency stop, the limit switches, the Start button, and communications while a move or a dwell is still in progress.
 
 ### Main Software Execution Structure
 
-After initializing the GPIO, the W5500 Ethernet controller, the Modbus TCP task, and the motion planners, the firmware enters its main loop. Each pass reads the emergency-stop and start buttons first. If the emergency stop is pressed, the sequencer and both axes are stopped and the electromagnet is kept engaged, so a suspended part is never dropped. Otherwise, a start press while the sequencer is idle restarts the cycle from its first operation; the sequencer is then stepped and both motion planners are processed. Communications are serviced on every pass, even during an emergency stop.
+After initializing the Ethernet controller, the Modbus TCP task, and the motion controllers, and disengaging the electromagnet, the firmware enters its main loop. Each pass reads all the inputs and the time once, so that everything in that pass acts on the same values. The limit-switch inputs pass through a 3 ms debounce first. Two safety checks then run before the sequencer: any axis moving into its limit switch is stopped, and a pressed emergency stop raises a fault. A press of the Start button with the emergency stop released either clears the latched faults or, if there are none and the cycle is stopped, restarts the cycle.
+
+If no fault is latched, the sequencer is stepped, and the current operation may itself raise a fault. A second check follows immediately, so a fault acts on the same pass in which it is raised: the machine enters its safe state, with the sequencer and both axes stopped and the electromagnet kept engaged so that a suspended part is never dropped, instead of running the motion controllers. Communications are serviced on every pass, even during a fault. The duration of the whole pass, Modbus included, is recorded with the processor's cycle counter, and averages about 0.29 ms.
 
 <Image src={mainStructure} alt="Main software execution structure flowchart" />
 
 ### Normal Pick-Dip-Place Sequence
 
-The cycle is an ordered list of nonblocking operations grouped into five stages: home, pick, dip, deposit, and release. After the last operation, the sequence wraps back to the first and the gantry repeats the cycle. Each operation is an absolute objective rather than a blocking procedure: `MOVE_Y_UP`, for example, hands the upper position to the vertical axis's planner and returns immediately.
+The cycle is an ordered list of fourteen nonblocking operations grouped into five stages: home (`HOME_Y`, `HOME_X`), pick (`WAIT_FOR_PIECE`, `MOVE_Y_DOWN`, `EFFECTOR_ENGAGE`, `MOVE_Y_UP`), dip, deposit, and release. After the last operation, the sequence wraps back to the first and the gantry repeats the cycle, homing both axes again at the start of each one. Each operation is an absolute objective rather than a blocking procedure: `MOVE_Y_UP`, for example, hands the upper position to the vertical axis's controller and returns immediately.
+
+A press of the Start button starts the sequencer. After the two homing operations, `WAIT_FOR_PIECE` holds the cycle until the part-ready trigger is asserted, which means that the trigger input pin reads low; while it is not asserted, nothing moves. A disconnected trigger reads as no part ready, so it can never start a cycle.
 
 <Image src={normalCycle} alt="Normal pick-dip-place operation sequence flowchart" />
 
-Every operation implements the same two functions. `start()` begins the operation and returns immediately; `poll()` reports whether it is still running or has finished. The sequencer only ever calls these two, so it never needs to know how a move, the electromagnet, or a dwell actually works. Each operation copies the settings it depends on when it starts, so a value changed over Modbus takes effect the next time that operation runs and never alters one already in progress.
-
-Planned additions are homing on the limit switches (`HOME_Y`, `HOME_X`), run after every start press so each restart begins from a known position, and a wait for the part-ready trigger before the pick stage.
+Every operation implements the same two functions. `start()` begins the operation and returns immediately; `poll()` reports whether it is still running, has finished, or was aborted. The sequencer only ever calls these two, so it never needs to know how a move, the electromagnet, or a dwell actually works. Each operation copies the settings it depends on when it starts, so a value changed over Modbus takes effect the next time that operation runs and never alters one already in progress. An operation that cannot complete raises the fault that explains why before it reports that it was aborted.
 
 ### Cooperative Cycle Sequencer
 
-On each step, the sequencer does nothing if the system is not running. Otherwise, it either starts the current operation or polls it. While the operation reports running, the sequencer does no further work; once it reports finished, the sequencer clears its started flag and advances to the next operation.
+On each step, the sequencer does nothing if the system is not running. Otherwise, it either starts the current operation or polls it. While the operation reports running, the sequencer does no further work; once it reports finished, the sequencer clears its started flag and advances to the next operation. When an operation reports aborted, the sequencer stops and keeps its index on that operation, so the failed step can be read over Modbus.
 
 <Image src={sequencer} alt="Cooperative cycle sequencer flowchart" />
 
-### Motion Planner
+### Move and Homing Operations
 
-Each axis has its own motion planner, which turns a goal into a continuously updated step rate. In position mode, used for every move in the cycle, it drives the axis to a target step; in velocity mode, reserved for homing, it holds a commanded speed. The planner is called for each axis on every pass of the main loop.
+A move converts its position in millimeters to steps and sets the target. It finishes when the axis is on the target step. A move never expects its limit switch to be pressed, whichever way it is traveling: heading into the switch is a collision risk, and heading away from it means a stuck or miswired switch, lost steps, or an axis that was never homed. Either way, the move stops the axis and raises a fault.
 
-<Image src={motionPlanner} alt="Motion planner process() flowchart" />
+<Image src={moveOperation} alt="Move operation flowchart" />
+
+Homing drives the axis toward its limit switch at homing speed. When the switch trips, the origin is set a fixed back-off past the switch, 40 mm on the horizontal axis and 20 mm on the vertical axis, and the axis moves to that origin. If the switch is still pressed after backing off, it cannot be trusted and the operation fails. A time limit, derived from the axis travel, the back-off, and the homing speed, catches an axis that never reaches its switch.
+
+<Image src={homing} alt="Homing operation flowchart" />
+
+### Motion Controller
+
+Each axis has its own motion controller, which turns a goal into a continuously updated step rate. In position mode, used for every move in the cycle, it drives the axis to a target step; in velocity mode, used by the homing operations, it holds a commanded speed. The controller is called for each axis on every pass of the main loop in which no fault is latched.
+
+<Image src={motionPlanner} alt="Motion controller flowchart" />
 
 In position mode, the axis accelerates, cruises at its maximum speed, and brakes once the remaining distance falls within the braking distance
 
@@ -75,6 +89,10 @@ $$
 d_\text{brake} = \frac{v^2 - v_\text{land}^2}{2a}
 $$
 
-It then finishes at a slow landing speed, which lets it stop exactly on the target step instead of overshooting or stalling short of it. The individual STEP pulses are generated by a hardware timer in output-compare mode, so the planner only has to set the speed about once per millisecond.
+It then finishes at a slow landing speed, which lets it stop exactly on the target step instead of overshooting or stalling short of it. The individual STEP pulses are generated by a hardware timer in output-compare mode, so the controller only has to set the speed about once per millisecond.
 
-The emergency stop is enforced first by hardware: the normally closed button cuts the stepper drivers' 24 V supply directly, independently of the firmware. The firmware response above supplements that path; releasing the button never resumes motion on its own, and a deliberate start press is required.
+### Faults and the Emergency Stop
+
+Every abnormal condition is represented by one of seven latched faults: emergency stop, interrupted operation, timed-out operation, homing failure on either axis, and limit-switch hit on either axis. Whichever part of the firmware detects the condition raises the fault, but only the main loop reacts to faults and clears them. While any fault is latched, the machine stays in its safe state.
+
+The emergency stop is enforced first by hardware: the normally closed button releases the relay that supplies the stepper drivers' 24 V, independently of the firmware. A second relay signals the stop to the controller, which raises the emergency-stop fault. Releasing the button never resumes motion on its own: a first press of the Start button clears the latched faults, and a separate second press restarts the cycle from its first operation, so one press can never do both.
