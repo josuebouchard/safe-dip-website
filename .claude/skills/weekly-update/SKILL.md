@@ -77,9 +77,9 @@ everything else that leaves no commit.
 
 Use `AskUserQuestion` for short answers such as hours or "was there a meeting".
 
-The site is public and the firmware repository is private. Describe firmware
-work by what it achieved ("added homing on the limit switches"). Never paste
-code, commit hashes, credentials, or private URLs.
+The site is public, and so is the firmware repository, which the site links.
+Describe firmware work by what it achieved ("added homing on the limit
+switches"). Never paste code, commit hashes, or credentials.
 
 Then **show the user the drafts** (the Progress Log paragraphs, the Time &
 Effort lines, the minutes) and wait for their OK before writing any file.

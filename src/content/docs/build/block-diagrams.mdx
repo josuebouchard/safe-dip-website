@@ -41,7 +41,7 @@ The electrical schematic, drawn in KiCad, shows the wiring of the power supplies
 
 ## Software Flow
 
-The control software runs on the STM32 using a cooperative, nonblocking architecture. Rather than one blocking function for the whole pick-dip-place cycle, the work is split into modules (the cycle sequencer, one motion controller per axis, and the communications interface) that are each processed in bounded steps from a single main loop. The system therefore stays responsive to the emergency stop, the limit switches, the Start button, and communications while a move or a dwell is still in progress.
+The control software runs on the STM32 using a cooperative, nonblocking architecture. Rather than one blocking function for the whole pick-dip-place cycle, the work is split into modules (the cycle sequencer, one motion controller per axis, and the communications interface) that are each processed in bounded steps from a single main loop. The system therefore stays responsive to the emergency stop, the limit switches, the Start button, and communications while a move or a dwell is still in progress. The complete firmware is in the [safe-dip-firmware repository on GitHub](https://github.com/josuebouchard/safe-dip-firmware).
 
 ### Main Software Execution Structure
 
