@@ -8,6 +8,29 @@ import EffortWeek from '../../../components/EffortWeek.astro';
 Hours logged per team member each week during the build semester, so effort stays visible and roughly balanced across the team. Most recent week first — select a week to expand it.
 
 <EffortWeek
+	week="11/16 – 11/22, 2026"
+	weekNumber={13}
+	open
+	entries={[
+		{
+			name: 'Adriano Duque Mena',
+			hours: 3,
+			text: 'Documented each printed part and the frame, with its function and dimensions, and finished the CAD, including the dimensioned drawings of the as-built assembly.',
+		},
+		{
+			name: 'Josué Bouchard',
+			hours: 7,
+			text: 'Made code adjustments, calibrated the machine and improved the Modbus monitor. Spent most of the time on the final touches of the report: the requirements and the updates to some of the graphics.',
+		},
+		{
+			name: 'Group',
+			hours: 4,
+			text: 'Recorded the verification videos of all the requirements, installed the part-ready trigger (with a temporary SPST switch) and an external start button, and replaced the welded motor-supply relay.',
+		},
+	]}
+/>
+
+<EffortWeek
 	week="11/09 – 11/15, 2026"
 	weekNumber={12}
 	open

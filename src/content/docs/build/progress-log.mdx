@@ -37,6 +37,16 @@ import firmwareLoop from '../../../assets/build/progress/week-11/firmware-main-l
 
 A weekly journal of what was designed, built, tested, or debugged during the build semester. Most recent week first — select an entry to expand it.
 
+<Accordion title="Week 13 — 11/16/2026–11/22/2026" subtitle="Final report, trigger installed, relay replaced, requirement videos recorded, external start button">
+
+**Josué** — Made code adjustments, calibrated the machine, and improved the Modbus monitor. The firmware now waits for the part-ready trigger before the pick and derives its travel limits from the physical stroke, and the monitor shows the trigger and the wait stage of the cycle. His biggest contribution was the final touches on the report: the requirements and the updates to some of the graphics.
+
+**Adriano** — Documented each printed part and the frame, with its function and dimensions, and finished the CAD, including the dimensioned drawings of the as-built assembly.
+
+**Group** — Recorded the verification videos of all the requirements. Installed the part-ready trigger, using a temporary SPST switch for testing, and an external start button. Replaced the welded motor-supply relay with another one. The cause of the failure is still a working theory: the inrush current of the capacitive stepper drivers. Until it is confirmed, every time the system has to be reset, the motor power supply is disconnected and left to discharge, the system is reset, and the supply is reconnected.
+
+</Accordion>
+
 <Accordion title="Week 12 — 11/09/2026–11/15/2026" subtitle="Near-Finished Report, limit switches and homing, calibration, belt-transmission part, welded emergency-stop relay">
 
 **Josué** — Led the update of the report to the Near-Finished Report, using the progress log, the meeting minutes and the other project records. He researched why the motor-supply relay welded closed and traced it to the stepper drivers: they are a capacitive load that draws an inrush current, and the relay's ratings are for resistive loads only.
